@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>Iniciar Sesión</h2>
+    <form (ngSubmit)="login()" #loginForm="ngForm">
+        <div class="form-group">
+            <label for="usuario">Usuario:</label>
+            <input type="text" class="form-control" id="usuario" name="usuario" required [(ngModel)]="user"
+                name="usuario">
+            <div *ngIf="!userValid">
+                <span class="message-error">El usuario es incorrecto</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="contrasena">Contraseña:</label>
+            <input type="password" class="form-control" id="contraseña" name="contrasena" required
+                [(ngModel)]="password" name="contraseña">
+            <div *ngIf="!passValid">
+                <span class="message-error">La contraseña es incorrecta</span>
+            </div>
+        </div>
+        <input type="submit" value="Iniciar Sesión">
+    </form>
+    <button class="join-button" (click)="signup()">Registrarse</button>
+</div>
