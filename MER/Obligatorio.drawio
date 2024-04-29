@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-04-29T21:48:13.520Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="6T2TNqyItGojxSR1NlrG" version="24.0.4" type="device">
+<mxfile host="Electron" modified="2024-04-29T20:36:17.808Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="x8_updFXOg17OvkpVrHE" version="24.0.4" type="device">
   <diagram name="Página-1" id="dXuvZrCzdVewI1BWlygH">
-    <mxGraphModel dx="5357" dy="2535" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="3505" dy="1852" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -367,22 +367,17 @@
             <mxPoint x="-540" y="365" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="M3zGyAa31avvOrwBrVhZ-34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=oval;endFill=1;" edge="1" parent="1" source="zvLFGMxQSoV8-PF65h6c-75" target="M3zGyAa31avvOrwBrVhZ-35">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-530" y="360" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
         <mxCell id="zvLFGMxQSoV8-PF65h6c-75" value="Predice" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-580" y="485" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="zvLFGMxQSoV8-PF65h6c-85" value="Pantallas:&lt;div&gt;- Registro&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Inicio sesión&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Home&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Pantallas alumno:&lt;/span&gt;&lt;/div&gt;&lt;div&gt;- Predecir partido&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Predecir campeón y subcampeón&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Fixture&lt;/div&gt;&lt;div&gt;- Ver perfil (puntos, más los otros datos)&lt;/div&gt;&lt;div&gt;- Modificar prediccion partido&amp;nbsp;&lt;/div&gt;&lt;div&gt;Pantallas admin:&lt;/div&gt;&lt;div&gt;- Registrar fase (con sus partidos correspondientes)&lt;/div&gt;&lt;div&gt;- Registrar campeonato&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Registrar Campeon y subcampeón&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-2460" y="1040" width="450" height="240" as="geometry" />
+          <mxGeometry x="-1810" y="610" width="450" height="240" as="geometry" />
         </mxCell>
         <mxCell id="zvLFGMxQSoV8-PF65h6c-87" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Bitácora&lt;/h1&gt;&lt;p&gt;-El administrador registra los partidos, cuanto salieron y de que etapa eran&amp;nbsp;&lt;/p&gt;" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-2530" y="737.5" width="230" height="120" as="geometry" />
+          <mxGeometry x="-1940" y="270" width="230" height="120" as="geometry" />
         </mxCell>
         <mxCell id="zvLFGMxQSoV8-PF65h6c-88" value="&lt;div&gt;Endpoints:&lt;/div&gt;&lt;div&gt;- Registro&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Inicio de Sesión&lt;/div&gt;&lt;div&gt;- Registrar partido&lt;/div&gt;&lt;div&gt;- Predecir partido&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Modificar predicción&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Predecir Campeón y subcampeón&amp;nbsp; (no se puede modificar, según nosotros)&lt;/div&gt;&lt;div&gt;- Agregar campeonato&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Agregar etapa&amp;nbsp;&lt;/div&gt;&lt;div&gt;- Calcular estadisticas de los estudiantes&amp;nbsp;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="-2510" y="835" width="450" height="240" as="geometry" />
+          <mxGeometry x="-2050" y="415" width="450" height="240" as="geometry" />
         </mxCell>
         <mxCell id="M3zGyAa31avvOrwBrVhZ-1" value="(1,1)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="-1350" y="225" width="60" height="30" as="geometry" />
@@ -480,21 +475,6 @@
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-757" y="-60" as="sourcePoint" />
             <mxPoint x="-697" y="-135" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="M3zGyAa31avvOrwBrVhZ-35" value="Campeón" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="-510" y="360" width="70" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="M3zGyAa31avvOrwBrVhZ-36" value="Subcampeón" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="-510" y="405" width="90" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="M3zGyAa31avvOrwBrVhZ-37" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;endArrow=oval;endFill=1;" edge="1" parent="1" source="zvLFGMxQSoV8-PF65h6c-75" target="M3zGyAa31avvOrwBrVhZ-36">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-530" y="495" as="sourcePoint" />
-            <mxPoint x="-500" y="385" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="-540" y="420" />
-            </Array>
           </mxGeometry>
         </mxCell>
       </root>
