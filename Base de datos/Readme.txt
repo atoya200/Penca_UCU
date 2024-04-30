@@ -1,0 +1,4 @@
+- Para levantar el contenedor se levanta con docker-compose up.
+- La contraseña es obligatoriobd2 con usuario root.
+- El contenedor tiene persistencia ahora, entonces se puede borrar pero los datos van a seguir estando. 
+- Docker se fija si hay datos en el volumen, y si los hay, no ejecuta denuevo el script de creacion de la base de datos. Entonces, si se quiere modificar el script hay que eliminar el volumen que crea con el comando "docker volume rm basededatos_datamysql".
