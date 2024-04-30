@@ -1,9 +1,12 @@
-<mxfile host="Electron" modified="2024-04-30T18:30:48.352Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="_vMq3ASPNMhbPAAv20IA" version="24.0.4" type="device">
+<mxfile host="Electron" modified="2024-04-30T19:42:38.856Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="3j7vKw_D27RmLsxh21Uz" version="24.0.4" type="device">
   <diagram name="Página-1" id="dXuvZrCzdVewI1BWlygH">
-    <mxGraphModel dx="5220" dy="2444" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="7405" dy="3900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="W6pYR9iXb_RBRObpkIhJ-198" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-2790" y="-840" width="920" height="610" as="geometry" />
+        </mxCell>
         <mxCell id="zvLFGMxQSoV8-PF65h6c-11" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-1420" y="100" width="770" height="280" as="geometry" />
         </mxCell>
@@ -605,7 +608,7 @@
             <mxPoint x="-1977" y="110" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="W6pYR9iXb_RBRObpkIhJ-170" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="W6pYR9iXb_RBRObpkIhJ-128" target="W6pYR9iXb_RBRObpkIhJ-88">
+        <mxCell id="W6pYR9iXb_RBRObpkIhJ-170" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.884;entryY=1.004;entryDx=0;entryDy=0;endArrow=none;endFill=0;entryPerimeter=0;" edge="1" parent="1" source="W6pYR9iXb_RBRObpkIhJ-128" target="W6pYR9iXb_RBRObpkIhJ-198">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="-1977" y="-210" as="targetPoint" />
           </mxGeometry>
@@ -621,11 +624,11 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="W6pYR9iXb_RBRObpkIhJ-184" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="W6pYR9iXb_RBRObpkIhJ-129" target="W6pYR9iXb_RBRObpkIhJ-88">
+        <mxCell id="W6pYR9iXb_RBRObpkIhJ-184" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;entryX=1;entryY=0.522;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="W6pYR9iXb_RBRObpkIhJ-129" target="W6pYR9iXb_RBRObpkIhJ-198">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-1920" y="-410" as="targetPoint" />
+            <mxPoint x="-1840" y="-450" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-1754" y="-410" />
+              <mxPoint x="-1754" y="-409" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -647,7 +650,7 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="W6pYR9iXb_RBRObpkIhJ-134" value="Tiene" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="-2107" y="-570" width="80" height="80" as="geometry" />
+          <mxGeometry x="-2108" y="-570" width="80" height="80" as="geometry" />
         </mxCell>
         <mxCell id="W6pYR9iXb_RBRObpkIhJ-135" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=none;endFill=0;" edge="1" parent="1" source="W6pYR9iXb_RBRObpkIhJ-136" target="W6pYR9iXb_RBRObpkIhJ-83">
           <mxGeometry relative="1" as="geometry">
