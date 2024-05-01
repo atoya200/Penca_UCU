@@ -44,6 +44,8 @@
     "mime-types": "^2.1.35",
     "mongodb": "^6.2.0",
     "ms": "^2.0.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.7",
     "negotiator": "^0.6.3",
     "object-assign": "^4.1.1",
     "object-inspect": "^1.12.2",
