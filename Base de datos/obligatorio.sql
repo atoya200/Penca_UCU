@@ -8,6 +8,8 @@ create table user(
     primary key (ci)
 );
 
+
+
 create table student(
     ci varchar(8),
     firstname varchar(50),
@@ -37,13 +39,31 @@ create table studies(
     primary key (id_career, ci_student)
 );
 
-
 create table championship(
     id integer auto_increment,
     name varchar(50),
     year year,
     start_date datetime,
     primary key (id)
+);
+
+create table stage(
+    id integer auto_increment,
+    name varchar(50),
+    PRIMARY KEY (id)
+);
+
+create table predictions (
+    id integer auto_increment,
+    teamA varchar(10),
+    teamB varchar(10),
+    championship integer,
+    stage integer,
+    ci varchar(8),
+    primary key (id, championship, stage),
+    foreign key (ci) references user(ci),
+    foreign key (championship) references championship(id),
+    foreign key (stage) references stage(id)
 );
 
 insert into user(ci, password) values ('12345678','password');
