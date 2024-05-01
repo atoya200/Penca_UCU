@@ -1,0 +1,18 @@
+<div id="info-partido">
+</div>
+
+
+<div id="container-form-prediccion">
+    <p>Partido {{partido.numero}} - {{partido.fecha} en {{partido.lugar}}}</p>
+    <form action="" id="ingresar-prediccion" >
+        <p><span>{{partido.equipo1}}</span> vs <span>{{partido.equipo2}}</span></p>
+        <div>
+            <label for="">{{partido.nombreEquipo1}}</label> 
+            <input type="text" id="input-equipo1"[(ngModel)]="partido.valorEquipo1" (ngModelChange)="registrarCambio($event)">
+            <span> vs </span>
+            <label for="">{{partido.nombreEquipo2}}</label>
+            <input type="text" id="input-equipo2"[(ngModel)]="partido.valorEquipo2" (ngModelChange)="registrarCambio($event)">
+            <button type="submit">Registar</button>
+        </div>
+    </form>
+</div>
