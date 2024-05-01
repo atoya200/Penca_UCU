@@ -49,8 +49,8 @@ app.use(express.json())
 app.use(cors(corsOptions));
 
 // Routes
-app.use('/matches', matchesRouter)
-app.use('/users', usersRouter)
+app.use('/match', matchesRouter)
+app.use('/user', usersRouter)
 
 
 
