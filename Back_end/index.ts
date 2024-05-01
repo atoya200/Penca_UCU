@@ -1,6 +1,7 @@
 'use strict';
 import express, { Request, Response } from 'express';
 import { createServer } from "http";
+import matchesRouter from "./routes/matches"
 
 
 
@@ -27,6 +28,7 @@ var corsOptions = {
 
 app.use(express.json())
 app.use(cors(corsOptions));
+app.use('/matches', matchesRouter)
 
 
 
