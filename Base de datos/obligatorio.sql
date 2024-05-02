@@ -73,7 +73,7 @@ CREATE TABLE team_participation(
 )
 
 -- Es la agregación de juega equipo con la agregación de etapa con campeonato
-CREATE TABLE match(
+CREATE TABLE championshipMatch(
     idTeamA INTEGER,
     idTeamB INTEGER,
     matchDate DATE,
@@ -82,10 +82,10 @@ CREATE TABLE match(
     resultTeamA INTEGER, 
     resultTeamB INTEGER, 
     PRIMARY KEY (idTeamA, idTeamB,  idChampionship, idStage, matchDate),
-    FOREIGN KEY (championship) REFERENCES championship(id),
-    FOREIGN KEY (stage) REFERENCES stage(id),
-    FOREIGN KEY (teamA) REFERENCES championship(id),
-    FOREIGN KEY (teamB) REFERENCES championship(id)
+    FOREIGN KEY (idChampionship) REFERENCES championship(id),
+    FOREIGN KEY (idStage) REFERENCES stage(id),
+    FOREIGN KEY (idTeamA) REFERENCES team(id),
+    FOREIGN KEY (idTeamB) REFERENCES team(id)
 )
 
 CREATE TABLE predictions (
@@ -93,18 +93,18 @@ CREATE TABLE predictions (
     teamB INTEGER,
     matchDate DATE,
     championship INTEGER,
-     predictionResultTeamA INTEGER,
+    predictionResultTeamA INTEGER,
     predictionResultTeamB INTEGER,
-    scoreObtained INTEGER
+    scoreObtained INTEGER,
     stage INTEGER,
     ci VARCHAR(8),
     PRIMARY KEY (ci, teamA, teamB,  championship, stage, matchDate),
     FOREIGN KEY (ci) REFERENCES student(ci),
-    FOREIGN KEY (championship) REFERENCES championship(id),
-    FOREIGN KEY (stage) REFERENCES stage(id),
-    FOREIGN KEY (teamA) REFERENCES championship(id),
-    FOREIGN KEY (teamB) REFERENCES championship(id)
-    FOREIGN KEY (matchDate) REFERENCES match(matchDate)
+    FOREIGN KEY (championship) REFERENCES championshipMatch(id),
+    FOREIGN KEY (stage) REFERENCES championshipMatch(id),
+    FOREIGN KEY (teamA) REFERENCES championshipMatch(idTeamB),
+    FOREIGN KEY (teamB) REFERENCES championshipMatch(idTeamB)
+    FOREIGN KEY (matchDate) REFERENCES championshipMatch(matchDate)
 );
 
 -- Predice el campeón
