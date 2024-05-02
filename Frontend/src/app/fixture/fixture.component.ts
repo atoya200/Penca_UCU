@@ -13,13 +13,15 @@ import {FixtureService} from "../services/fixture.service";
 
 export class FixtureComponent {
 
-  constructor(private servicio: FixtureService) {
+  constructor(private service: FixtureService) {
   }
   GroupStage: boolean;
   matches: Match[] = [];
 
   ngOnInit(): void {
-    this.matches = this.servicio.getMatches()
+    this.service.getMatches().subscribe(matches => {
+      this.matches = matches
+    });
   }
 
 
