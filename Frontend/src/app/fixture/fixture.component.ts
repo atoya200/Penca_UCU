@@ -19,7 +19,7 @@ export class FixtureComponent {
   matches: Match[] = [];
 
   ngOnInit(): void {
-    this.service.getMatches().subscribe(matches => {
+    this.service.getPredictions().subscribe(matches => {
       this.matches = matches
     });
   }

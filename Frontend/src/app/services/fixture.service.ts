@@ -13,17 +13,20 @@ export class FixtureService {
 
    }
 
-  matches: Match[] = []
-  guesedMatches: Match[] = []
+  predictedMatches: Match[] = []
 
 
-
-
-  getMatches(): Observable<Match[]> {
+  // Obtener todas las predicciones del usuario
+  getPredictions(): Observable<Match[]> {
     return this.http.get<Match[]>("URL_DEL_SERVICIO")
   }
 
-  sendGuess(){
+  //Mandar preddicciones
+  sendPredictions(){
 
   }
+
+  //Editar predicción
+
+
 }
