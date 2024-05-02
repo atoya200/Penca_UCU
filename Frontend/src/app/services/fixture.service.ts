@@ -14,11 +14,11 @@ export class FixtureService {
 
   Matches: Match[] = []
   GuesedMatches: Match[] = []
-  
 
 
 
-  getMatches() {
+
+  getMatches(): Match[] {
     this.http.get<Match[]>("URL_DEL_SERVICIO").subscribe(matches => {
       this.Matches = matches;
     });
