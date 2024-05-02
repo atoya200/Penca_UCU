@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql:latest
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: obligatoriobd2
+    volumes:
+      - "./obligatorio.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "datamysql:/var/lib/mysql"
+volumes:
+    datamysql:
