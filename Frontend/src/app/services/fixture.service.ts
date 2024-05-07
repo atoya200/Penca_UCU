@@ -10,11 +10,11 @@ export class FixtureService {
 
   constructor(private http: HttpClient, private cookies: CookieService) {
 
-   }
+  }
 
   Matches: Match[] = []
   GuesedMatches: Match[] = []
-  
+
 
 
 
@@ -24,7 +24,9 @@ export class FixtureService {
     });
   }
 
-  sendGuess(){
 
+
+  sendGuess() {
+    
   }
 }

@@ -4,9 +4,10 @@ import { createServer } from "http";
 import matchesRouter from "./routes/matches"
 import usersRouter from "./routes/users"
 import { createPool, Pool } from 'mysql2/promise';
+import * as middleware from './middleware'
 
 
-//secreto esta en el middleware
+//secret is in middleware file
 export var jwt = require('jsonwebtoken');
 
 const cors = require('cors');
@@ -58,6 +59,8 @@ app.use('/user', usersRouter)
 // Test endpoint
 app.get('/test', (req: any, res: any) => {
     console.log("hello world");
+    var decoded = middleware.decode(req.headers['authorization'])
+    console.log(decoded)
     res.send('V 1.1')
 })
 
@@ -74,7 +77,7 @@ async function run() {
         // Connect the client to the server
 
         pool = createPool(connectionUri)
-        await pool.query('Select 1')
+        await pool.query('Select 1') // test connection to database
         console.log("Connected to database.")
         app.listen(PORT, () => {
             console.log("Server running on localhost:" + PORT)

@@ -16,7 +16,7 @@ export function verifyUser(req: any, res: any, next: any) {
                 } else {
                     res.status(400);
                     res.send("Error. Falta Bearer.");
-                 }
+                }
             } catch (error) {
                 res.status(401);
                 res.send("Error. Token no válido.");
@@ -39,8 +39,8 @@ export function decode(authheader: any) {
     return res;
 }
 
-export function sign(userid: any) {
+export function sign(userType: any) {
     return jwt.sign({
-        id: userid
+        user: userType
     }, secret, { expiresIn: '1h' });
 }

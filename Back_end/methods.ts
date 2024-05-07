@@ -58,14 +58,14 @@ export async function registerUser(user: any): Promise<boolean> {
 }
 
 export async function query(command: string, values: string[]): Promise<any> {
-    var res = null;
+    var response = null;
     try {
         const [res, fields] = await pool.query(command, values);
-        console.log(res)
+        response = res;
     } catch (error) {
         console.log(error);
     }
 
-    return res;
+    return response;
 }
 
