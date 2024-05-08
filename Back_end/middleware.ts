@@ -28,6 +28,22 @@ export function verifyUser(req: any, res: any, next: any) {
     }
 }
 
+export function verifyUserIsAdmin(req: any, res: any, next: any) {
+    //verifyUser(req, res, next)
+    let decoded = decode(req.headers['authorization'])
+
+    if (decoded.user == 'Admin') {
+        // is admin
+        next();
+
+    } else {
+        // is not admin
+        res.status(405);
+        res.send("Error. Funcion no permitida.");
+
+    }
+}
+
 
 export function decode(authheader: any) {
     var res = null

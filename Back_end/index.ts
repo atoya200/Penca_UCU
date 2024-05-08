@@ -57,10 +57,11 @@ app.use('/user', usersRouter)
 
 
 // Test endpoint
-app.get('/test', (req: any, res: any) => {
+app.get('/test', [middleware.verifyUser, middleware.verifyUserIsAdmin], (req: any, res: any) => {
+    // Solo los administradores pueden usar el endpoint
     console.log("hello world");
     var decoded = middleware.decode(req.headers['authorization'])
-    console.log(decoded)
+    console.log(decoded.user)
     res.send('V 1.1')
 })
 

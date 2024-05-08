@@ -8,7 +8,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { withInterceptors } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), { provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true }, provideHttpClient()]
+  providers: [provideRouter(routes), provideHttpClient(withInterceptors([InterceptorInterceptor]))]
 
 
 };

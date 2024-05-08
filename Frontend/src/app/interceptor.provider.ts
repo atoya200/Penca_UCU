@@ -6,4 +6,4 @@ import { InterceptorInterceptor } from './interceptor.interceptor';
 
 /** Provider for the Noop Interceptor. */
 export const InterceptorProvider: Provider =
-    { provide: HTTP_INTERCEPTORS, useClass: InterceptorInterceptor, multi: true };
+    { provide: HTTP_INTERCEPTORS, useClass: null, multi: true };

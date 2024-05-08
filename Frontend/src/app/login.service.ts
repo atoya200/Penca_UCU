@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-import { NgForm } from '@angular/forms';
-import { InterceptorInterceptor } from './interceptor.interceptor';
 
-// Hay que usar npm install ngx-cookie-service --save 
+
 import { CookieService } from "ngx-cookie-service";
+
+export let token = "abc";
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+
 
   constructor(private http: HttpClient, private cookies: CookieService) { }
 
@@ -22,8 +23,9 @@ export class LoginService {
     return this.http.post("http://localhost:3000/user/login", { "user": user });
   }
 
-  setToken(token: string) {
-    this.cookies.set("token", token);
+  setToken(tk: string) {
+    token = tk
+    this.cookies.set("token", tk);
   }
 
   getToken() {
@@ -40,12 +42,11 @@ export class LoginService {
 
   logOut() {
     this.cookies.delete("role");
-    this.cookies.delete("token")
-    this.cookies.delete("userID")
+    this.cookies.delete("token");
   }
 
   isLoggedIn() {
-    return this.cookies.check("userID")
+    return this.cookies.check("token")
   }
 
   test(): Observable<any> {
