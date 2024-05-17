@@ -1,8 +1,28 @@
-<div>
-    <h2>Campeonatos</h2>
-    <ul>
-        <li *ngFor="let champ of Championships">
-            <h3> {{ champ.name }} </h3>
-        </li>
-    </ul>
-</div>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">PencaUCU</a>
+    </div>
+    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
+        data-bs-placement="bottom" data-bs-content="Bottom popover" data-bs-title="Notificaciones">
+        Notificaciones
+    </button>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown button
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+        </ul>
+    </div>
+
+</nav>
+
+
+<h2>Campeonatos</h2>
+<ul>
+    <li *ngFor="let champ of Championships">
+        <h3> {{ champ.name }} </h3>
+    </li>
+</ul>

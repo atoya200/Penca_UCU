@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { LoginService } from '../login.service';
 import { ChampionshipService } from '../championship.service';
 import { NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-menu-principal',
@@ -11,12 +12,16 @@ import { CommonModule } from '@angular/common';
   templateUrl: './menu-principal.component.html',
   styleUrl: './menu-principal.component.css'
 })
-export class MenuPrincipalComponent {
+
+
+export class MenuPrincipalComponent implements AfterViewInit {
+
 
   @Input() isAdmin?: boolean;
 
   Championships: any;
   constructor(private loginService: LoginService, private championshipService: ChampionshipService) { }
+
 
   ngOnInit(): void {
     // verificar si el usuario tiene permisos, sino mandarlo al login
@@ -29,11 +34,20 @@ export class MenuPrincipalComponent {
         this.Championships = data.championships
       },
       error => {
-        alert(error.error.msg)
+        alert(error.error)
         console.log(error);
       });
 
   }
+
+  ngAfterViewInit() {
+    // por el popover de las notificaciones
+    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    const popoverList = popoverTriggerList.map((popoverTriggerEl) => {
+      return new bootstrap.Popover(popoverTriggerEl);
+    });
+  }
+
 
   // TODO: 
   // - agregar carrousel con imagenes de futbol en el menu principal
@@ -42,6 +56,5 @@ export class MenuPrincipalComponent {
   // Equipos (ingresar equipos, modificar equipos, consultar equipos), 
 
 
-
-
 }
+

@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
-
-
 import { CookieService } from "ngx-cookie-service";
-
-export let token = "abc";
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
 
+export class LoginService {
 
   constructor(private http: HttpClient, private cookies: CookieService) { }
 
@@ -23,9 +19,8 @@ export class LoginService {
     return this.http.post("http://localhost:3000/user/login", { "user": user });
   }
 
-  setToken(tk: string) {
-    token = tk
-    this.cookies.set("token", tk);
+  setToken(token: string) {
+    this.cookies.set("token", token);
   }
 
   getToken() {
