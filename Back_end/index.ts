@@ -3,6 +3,7 @@ import express, { Request, Response } from 'express';
 import { createServer } from "http";
 import matchesRouter from "./routes/matches"
 import usersRouter from "./routes/users"
+import championshipRouter from "./routes/championships"
 import { createPool, Pool } from 'mysql2/promise';
 import * as middleware from './middleware'
 
@@ -52,6 +53,8 @@ app.use(cors(corsOptions));
 // Routes
 app.use('/match', matchesRouter)
 app.use('/user', usersRouter)
+app.use('/championship', championshipRouter)
+
 
 
 

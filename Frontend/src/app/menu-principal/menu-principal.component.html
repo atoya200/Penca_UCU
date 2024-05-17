@@ -1,3 +1,8 @@
-<p>menu-principal works!</p>
-
-<button (click)="send()">HOLA</button>
+<div>
+    <h2>Campeonatos</h2>
+    <ul>
+        <li *ngFor="let champ of Championships">
+            <h3> {{ champ.name }} </h3>
+        </li>
+    </ul>
+</div>

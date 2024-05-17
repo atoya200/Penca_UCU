@@ -51,7 +51,7 @@ router.post('/login', async (req, res) => {
 
         if (user.length > 0) {
             // user exists
-            token = middleware.sign(user[0].role);
+            token = middleware.sign({ role: user[0].role, ci: user[0].ci });
             res.status(200)
             res.send(JSON.stringify({ "token": token, "user": user[0].role }));
 
