@@ -70,7 +70,7 @@ CREATE TABLE team_participation(
     PRIMARY KEY(idTeam, idChampionship),
     FOREIGN KEY (idTeam) REFERENCES team(id),
     FOREIGN KEY (idChampionship) REFERENCES championship(id)
-)
+);
 
 -- Es la agregación de juega equipo con la agregación de etapa con campeonato
 CREATE TABLE championshipMatch(
@@ -86,7 +86,7 @@ CREATE TABLE championshipMatch(
     FOREIGN KEY (idStage) REFERENCES stage(id),
     FOREIGN KEY (idTeamA) REFERENCES team(id),
     FOREIGN KEY (idTeamB) REFERENCES team(id)
-)
+);
 
 CREATE TABLE predictions (
     teamA INTEGER,

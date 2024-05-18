@@ -1,6 +1,110 @@
-<div class="input-group">
-  <span class="input-group-text">Equipo 1</span>
-  <input type="text" aria-label="First name" class="form-control">
-  <input type="text" aria-label="Last name" class="form-control">
-  <span class="input-group-text">Equipo 2</span>
+<!-- 
+<div class="card-container">
+  <div class="card" style="width: 18rem;"*ngFor="let stage of stages">
+    <div class="card-header">
+      {{stage.name}}
+    </div> 
+    <ul class="list-group list-group-flush" *ngFor="let match of stage.matches" >
+      {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }} ({{ match.played ? 'Played' : 'Not Played' }})
+    </ul>
+  </div>
+</div>
+
+Button trigger modal 
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+<div class="card-container">
+  <div class="card" style="width: 18rem;"*ngFor="let stage of stages">
+    <div class="card-header">
+      {{stage.name}}
+    </div> 
+    <ul class="list-group list-group-flush" *ngFor="let match of stage.matches" (click)="openModal(match)">
+      {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }} ({{ match.played ? 'Played' : 'Not Played' }})
+    </ul>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+  Launch static backdrop modal
+</button>
+
+Modal 
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Match Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h2>Match Details</h2>
+        <hr>
+        <p>{{ selectedMatch?.teamA }} vs {{ selectedMatch?.teamB }}</p>
+        <p>Score: {{ selectedMatch?.goalsA }} - {{ selectedMatch?.goalsB }}</p>
+        <p>Status: {{ selectedMatch?.played ? 'Played' : 'Not Played' }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+<div class="card-container">
+  <div class="card" style="width: 18rem;" *ngFor="let stage of stages">
+    <div class="card-header">
+      {{ stage.name }}
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let match of stage.matches" (click)="openModal(match, stage.name)">
+        {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }}
+      </li>
+    </ul>
+  </div>
+</div>aria-hidden="true" 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="true"
+[ngClass]="{'show d-block': showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ selectedMatch?.teamA }} vs {{ selectedMatch?.teamB }} ({{championship}}, {{actualStage}})</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <h2>Tu predicción</h2>
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="inputPassword6" class="col-form-label">{{ selectedMatch?.teamA }}</label>
+          </div>
+          <div class="col-auto">
+            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+          </div>
+        </div>
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label for="inputPassword6" class="col-form-label">{{ selectedMatch?.teamB }}</label>
+          </div>
+          <div class="col-auto">
+            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+          </div>
+          <div class="col-auto">
+            <span id="passwordHelpInline" class="form-text">
+              Predicciones para los equipos
+            </span>
+          </div>
+        <hr>
+        <h2>Datos oficiales</h2>
+        <p>Teams: {{ match?.teamA }} vs {{ match?.teamB }}</p>
+        <p>Score: {{ match?.goalsA }} - {{ match?.goalsB }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary">Guardar nueva predicción</button>
+      </div>
+    </div>
+  </div>
 </div>
