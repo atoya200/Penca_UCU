@@ -28,7 +28,7 @@ CREATE TABLE team(
     name VARCHAR(20)
 );
 
-CREATE TABLE carreer(
+CREATE TABLE career(
     id INTEGER AUTO_INCREMENT,
     carrer_name VARCHAR(100),
     PRIMARY KEY (id)
@@ -37,7 +37,7 @@ CREATE TABLE carreer(
 CREATE TABLE studies(
     id_career INTEGER,
     ci_student VARCHAR(8),
-    FOREIGN KEY (id_career) REFERENCES carreer(id),
+    FOREIGN KEY (id_career) REFERENCES career(id),
     FOREIGN KEY (ci_student) REFERENCES student(ci) ,
     PRIMARY KEY (id_career, ci_student)
 );
@@ -46,7 +46,7 @@ CREATE TABLE championship(
     id INTEGER AUTO_INCREMENT,
     name VARCHAR(50),
     start_date datetime,
-    end_date datatime, 
+    end_date datetime,
     PRIMARY KEY (id)
 );
 
@@ -65,7 +65,7 @@ CREATE TABLE stage_for_championship(
 
 
 CREATE TABLE team_participation(
-    idTeam INTEGER, 
+    idTeam INTEGER,
     idChampionship INTEGER,
     PRIMARY KEY(idTeam, idChampionship),
     FOREIGN KEY (idTeam) REFERENCES team(id),
@@ -78,9 +78,10 @@ CREATE TABLE championshipMatch(
     idTeamB INTEGER,
     matchDate DATE,
     idStage INTEGER,
-    idChampionship, 
-    resultTeamA INTEGER, 
-    resultTeamB INTEGER, 
+    idChampionship INTEGER,
+    resultTeamA INTEGER,
+    resultTeamB INTEGER,
+    INDEX idx_match (idChampionship, idStage, idTeamA, idTeamB, matchDate),
     PRIMARY KEY (idTeamA, idTeamB,  idChampionship, idStage, matchDate),
     FOREIGN KEY (idChampionship) REFERENCES championship(id),
     FOREIGN KEY (idStage) REFERENCES stage(id),
@@ -92,28 +93,24 @@ CREATE TABLE predictions (
     teamA INTEGER,
     teamB INTEGER,
     matchDate DATE,
-    championship INTEGER,
+    idchampionship INTEGER,
     predictionResultTeamA INTEGER,
     predictionResultTeamB INTEGER,
     scoreObtained INTEGER,
-    stage INTEGER,
+    idstage INTEGER,
     ci VARCHAR(8),
-    PRIMARY KEY (ci, teamA, teamB,  championship, stage, matchDate),
+    PRIMARY KEY (ci, teamA, teamB,  idchampionship, idstage, matchDate),
     FOREIGN KEY (ci) REFERENCES student(ci),
-    FOREIGN KEY (championship) REFERENCES championshipMatch(id),
-    FOREIGN KEY (stage) REFERENCES championshipMatch(id),
-    FOREIGN KEY (teamA) REFERENCES championshipMatch(idTeamB),
-    FOREIGN KEY (teamB) REFERENCES championshipMatch(idTeamB)
-    FOREIGN KEY (matchDate) REFERENCES championshipMatch(matchDate)
+    FOREIGN KEY (idchampionship, idstage, teamA, teamB, matchDate) REFERENCES championshipMatch(idChampionship, idStage, idTeamA, idTeamB, matchDate)
 );
 
 -- Predice el campeón
 CREATE TABLE predict_first(
     idTeam INTEGER,
     ci VARCHAR(8),
-    idChampionship INTEGER, 
-    PRIMARY KEY (idTeam, ci, idChampionship), 
-    -- Podría sacrse  idTeam de la PK, y solucionamos el problema de que un usuario ingrese dos veces 
+    idChampionship INTEGER,
+    PRIMARY KEY (idTeam, ci, idChampionship),
+    -- Podría sacrse  idTeam de la PK, y solucionamos el problema de que un usuario ingrese dos veces
     -- una predicción de campeoón por campeonato.
     FOREIGN KEY (ci) REFERENCES student(ci),
     FOREIGN KEY (idTeam) REFERENCES team_participation(idTeam),
@@ -126,9 +123,9 @@ CREATE TABLE predict_first(
 CREATE TABLE predict_second(
     idTeam INTEGER,
     ci VARCHAR(8),
-    idChampionship INTEGER, 
-    PRIMARY KEY (idTeam, ci, idChampionship), 
-    -- Podría sacrse  idTeam de la PK, y solucionamos el problema de que un usuario ingrese dos veces 
+    idChampionship INTEGER,
+    PRIMARY KEY (idTeam, ci, idChampionship),
+    -- Podría sacrse  idTeam de la PK, y solucionamos el problema de que un usuario ingrese dos veces
     -- una predicción de un subcampeón por campeonato.
     FOREIGN KEY (ci) REFERENCES student(ci),
     FOREIGN KEY (idTeam) REFERENCES team_participation(idTeam),

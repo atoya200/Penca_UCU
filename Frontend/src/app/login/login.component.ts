@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../login.service';
-import {NgIf} from '@angular/common';
-import {CommonModule} from '@angular/common';
+import { NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 
@@ -16,7 +16,11 @@ import { FormsModule } from '@angular/forms';
 export class LoginComponent {
   constructor(private loginService: LoginService, private router: Router) { }
 
-  user = ""
+  ngOnInit(): void {
+    this.loginService.logOut()
+  }
+
+  ci = ""
   password = ""
   userValid: Boolean = true
   passValid: Boolean = true
@@ -26,18 +30,20 @@ export class LoginComponent {
   }
 
   login() {
-    /*
-    this.loginService.login(this.user, this.password).subscribe(
+
+    this.loginService.login(this.ci, this.password).subscribe(
       data => {
         console.log(data)
-        this.loginService.setTipo(data.tipo)
+        this.loginService.setUserType(data.user)
+        this.loginService.setToken(data.token)
         this.router.navigateByUrl('/menu');
+
       },
       error => {
-        alert(error.error.error)
+
+        alert(error.error.msg)
         console.log(error);
-      });*/
-      this.router.navigate(['/menu']);
+      });
 
   }
 }

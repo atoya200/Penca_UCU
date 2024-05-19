@@ -16,7 +16,7 @@ export function verifyUser(req: any, res: any, next: any) {
                 } else {
                     res.status(400);
                     res.send("Error. Falta Bearer.");
-                 }
+                }
             } catch (error) {
                 res.status(401);
                 res.send("Error. Token no válido.");
@@ -25,6 +25,22 @@ export function verifyUser(req: any, res: any, next: any) {
     } catch (error) {
         res.status(400);
         res.send("Error. Bad request.");
+    }
+}
+
+export function verifyUserIsAdmin(req: any, res: any, next: any) {
+    //verifyUser(req, res, next)
+    let decoded = decode(req.headers['authorization'])
+
+    if (decoded.user == 'Admin') {
+        // is admin
+        next();
+
+    } else {
+        // is not admin
+        res.status(405);
+        res.send("Error. Funcion no permitida.");
+
     }
 }
 
@@ -39,8 +55,8 @@ export function decode(authheader: any) {
     return res;
 }
 
-export function sign(userid: any) {
+export function sign(userType: any) {
     return jwt.sign({
-        id: userid
+        user: userType
     }, secret, { expiresIn: '1h' });
 }

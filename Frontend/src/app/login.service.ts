@@ -1,34 +1,56 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
+
+
 import { CookieService } from "ngx-cookie-service";
-import { NgForm } from '@angular/forms';
+
+export let token = "abc";
+
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
+
   constructor(private http: HttpClient, private cookies: CookieService) { }
 
-  login(logid: string, contraseña: string): Observable<any> {
+  login(id: string, pwd: string): Observable<any> {
     let user = {
-      logId: logid,
-      password: contraseña
+      ci: id,
+      password: pwd
     }
-
-
-    return this.http.post("http://localhost:3005/login", user);
+    return this.http.post("http://localhost:3000/user/login", { "user": user });
   }
 
-  setTipo(tipo: string) {
-    this.cookies.set("rol", tipo);
+  setToken(tk: string) {
+    token = tk
+    this.cookies.set("token", tk);
   }
 
-  getTipoUsuario() {
-    return { tipo: this.cookies.get("rol") };
+  getToken() {
+    return this.cookies.get("token");
+  }
+
+  setUserType(type: string) {
+    this.cookies.set("role", type);
+  }
+
+  getUserType() {
+    return { type: this.cookies.get("role") };
   }
 
   logOut() {
-    this.cookies.delete("rol");
+    this.cookies.delete("role");
+    this.cookies.delete("token");
   }
+
+  isLoggedIn() {
+    return this.cookies.check("token")
+  }
+
+  test(): Observable<any> {
+    return this.http.get("http://localhost:3000/test");
+  }
+
 }

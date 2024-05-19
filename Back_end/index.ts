@@ -3,10 +3,12 @@ import express, { Request, Response } from 'express';
 import { createServer } from "http";
 import matchesRouter from "./routes/matches"
 import usersRouter from "./routes/users"
+import championshipRouter from "./routes/championships"
 import { createPool, Pool } from 'mysql2/promise';
+import * as middleware from './middleware'
 
 
-//secreto esta en el middleware
+//secret is in middleware file
 export var jwt = require('jsonwebtoken');
 
 const cors = require('cors');
@@ -49,15 +51,20 @@ app.use(express.json())
 app.use(cors(corsOptions));
 
 // Routes
-app.use('/matches', matchesRouter)
-app.use('/users', usersRouter)
+app.use('/match', matchesRouter)
+app.use('/user', usersRouter)
+app.use('/championship', championshipRouter)
+
 
 
 
 
 // Test endpoint
-app.get('/test', (req: any, res: any) => {
+app.get('/test', [middleware.verifyUser, middleware.verifyUserIsAdmin], (req: any, res: any) => {
+    // Solo los administradores pueden usar el endpoint
     console.log("hello world");
+    var decoded = middleware.decode(req.headers['authorization'])
+    console.log(decoded.user)
     res.send('V 1.1')
 })
 
@@ -74,7 +81,7 @@ async function run() {
         // Connect the client to the server
 
         pool = createPool(connectionUri)
-        await pool.query('Select 1')
+        await pool.query('Select 1') // test connection to database
         console.log("Connected to database.")
         app.listen(PORT, () => {
             console.log("Server running on localhost:" + PORT)
