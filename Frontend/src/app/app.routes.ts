@@ -12,6 +12,6 @@ export const routes: Routes = [{ path: '', redirectTo: 'login', pathMatch: 'full
 { path: 'registrar', component: RegistrarComponent},
 { path: 'menu', component: MenuPrincipalComponent},
 { path: 'prediccion', component: IngresarResultadosComponent},
-{ path: 'fixture', component: FixtureComponent},
-{ path: 'championships/:id', component: ChampionshipsComponent}
+{ path: 'fixture/:id', component: FixtureComponent},
+{ path: 'championships', component: ChampionshipsComponent}
 ];

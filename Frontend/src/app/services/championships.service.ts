@@ -13,9 +13,120 @@ export class ChampionshipsService {
 
   http: HttpClient;
 
+  championships: Championship[] = [{
+    id: 1,
+    name: "Copa Libertadores",
+    description: "Copa Libertadores 2021",
+    startDate: new Date(),
+    endDate: new Date(),
+    stages: [
+      { 
+        id: 1,
+        name: "Fase de Grupos", 
+        matches: [
+        {
+          id: 1,
+          teamA: "Real",
+          teamB: "Barca",
+          goalsA: 7,
+          goalsB: 0,
+          played: false
+        },
+        {
+          id: 2,
+          teamA: "Nacional",
+          teamB: "Peñarol",
+          goalsA: 1,
+          goalsB: 0,
+          played: false
+        },
+        {
+          id: 3,
+          teamA: "Plaza",
+          teamB: "Boca",
+          goalsA: 1,
+          goalsB: 1,
+          played: false
+        }
+      ]
+    },
+    {   
+      id: 2,
+      name: "Cuartos de final", 
+      matches: [
+      {
+        id: 4,
+        teamA: "Uruguay",
+        teamB: "Argentina",
+        goalsA: 23,
+        goalsB: 0,
+        played: false
+      },
+      {
+        id: 5,
+        teamA: "Brasil",
+        teamB: "Peru",
+        goalsA: 1,
+        goalsB: 5,
+        played: false
+      },
+      {
+        id: 6,
+        teamA: "Alemania",
+        teamB: "España",
+        goalsA: 10,
+        goalsB: 2,
+        played: false
+      }
+    ]
+  }
+  ]
+  },
+  {
+    id: 2,
+    name: "Copa Sudamericana",
+    description: "Copa Sudamericana 2021",
+    startDate: new Date(),
+    endDate: new Date(),
+    stages: [
+      { 
+        id: 1,
+        name: "Fase de Grupos", 
+        matches: [
+        {
+          id: 1,
+          teamA: "Real",
+          teamB: "Barca",
+          goalsA: 7,
+          goalsB: 0,
+          played: false
+        },
+        {
+          id: 2,
+          teamA: "Nacional",
+          teamB: "Peñarol",
+          goalsA: 1,
+          goalsB: 0,
+          played: false
+        },
+        {
+          id: 3,
+          teamA: "Plaza",
+          teamB: "Boca",
+          goalsA: 1,
+          goalsB: 1,
+          played: false
+        }
+        ]
+      }
+    ]
+  }
+];
+
   // Obtener campeonatos asociados a un usuario (unicamente los nombres e id's)
-  getChampionships(){
-    return this.http.get<Championship[]>('http://localhost:3000/user/championships')
+  getChampionships(): Observable<Championship[]>{
+    //return this.http.get<Championship[]>('http://localhost:3000/user/championships')
+    return of(this.championships);
   }
   
   // Anotar usuario a penca
