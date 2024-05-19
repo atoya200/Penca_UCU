@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Match } from "../../../Match";
-import {FixtureService} from "../services/fixture.service";
+import { FixtureService } from "../services/fixture.service";
 import { Stage } from 'Stage';
 import { NgFor } from '@angular/common';
 import {NgIf} from '@angular/common';

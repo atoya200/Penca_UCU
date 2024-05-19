@@ -1,58 +1,4 @@
-<!-- 
-<div class="card-container">
-  <div class="card" style="width: 18rem;"*ngFor="let stage of stages">
-    <div class="card-header">
-      {{stage.name}}
-    </div> 
-    <ul class="list-group list-group-flush" *ngFor="let match of stage.matches" >
-      {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }} ({{ match.played ? 'Played' : 'Not Played' }})
-    </ul>
-  </div>
-</div>
-
-Button trigger modal 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button>
-
-<div class="card-container">
-  <div class="card" style="width: 18rem;"*ngFor="let stage of stages">
-    <div class="card-header">
-      {{stage.name}}
-    </div> 
-    <ul class="list-group list-group-flush" *ngFor="let match of stage.matches" (click)="openModal(match)">
-      {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }} ({{ match.played ? 'Played' : 'Not Played' }})
-    </ul>
-  </div>
-</div>
-
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-  Launch static backdrop modal
-</button>
-
-Modal 
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Match Details</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <h2>Match Details</h2>
-        <hr>
-        <p>{{ selectedMatch?.teamA }} vs {{ selectedMatch?.teamB }}</p>
-        <p>Score: {{ selectedMatch?.goalsA }} - {{ selectedMatch?.goalsB }}</p>
-        <p>Status: {{ selectedMatch?.played ? 'Played' : 'Not Played' }}</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Understood</button>
-      </div>
-    </div>
-  </div>
-</div>
--->
+<h1 class="title">{{championship}}</h1>
 <div class="card-container">
   <div class="card" style="width: 18rem;" *ngFor="let stage of stages">
     <div class="card-header">
@@ -64,10 +10,9 @@ Modal
       </li>
     </ul>
   </div>
-</div>aria-hidden="true" 
+</div>
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="true"
-[ngClass]="{'show d-block': showModal}">
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="true" [ngClass]="{'show d-block': showModal}">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

@@ -21,10 +21,12 @@ export class FixtureService {
 
   s1 : Stage[] =[
   { 
+    id: 1,
     name: "Fase de Grupos", 
     championship: "libertadores", 
     matches: [
     {
+      id: 1,
       teamA: "Real",
       teamB: "Barca",
       goalsA: 7,
@@ -32,6 +34,7 @@ export class FixtureService {
       played: false
     },
     {
+      id: 2,
       teamA: "Nacional",
       teamB: "Peñarol",
       goalsA: 1,
@@ -39,6 +42,7 @@ export class FixtureService {
       played: false
     },
     {
+      id: 3,
       teamA: "Plaza",
       teamB: "Boca",
       goalsA: 1,
@@ -48,10 +52,12 @@ export class FixtureService {
   ]
 },
 { 
+  id: 2,
   name: "Cuartos de final", 
   championship: "libertadores", 
   matches: [
   {
+    id: 4,
     teamA: "Uruguay",
     teamB: "Argentina",
     goalsA: 23,
@@ -59,6 +65,7 @@ export class FixtureService {
     played: false
   },
   {
+    id: 5,
     teamA: "Brasil",
     teamB: "Peru",
     goalsA: 1,
@@ -66,6 +73,7 @@ export class FixtureService {
     played: false
   },
   {
+    id: 6,
     teamA: "Alemania",
     teamB: "España",
     goalsA: 10,

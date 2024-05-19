@@ -4,6 +4,7 @@ import { RegistrarComponent } from './registrar/registrar.component';
 import { MenuPrincipalComponent } from './menu-principal/menu-principal.component';
 import { IngresarResultadosComponent } from './ingresar-resultados/ingresar-resultados.component';
 import { FixtureComponent } from './fixture/fixture.component';
+import { ChampionshipsComponent } from './championships/championships.component';
 
 export const routes: Routes = [{ path: '', redirectTo: 'login', pathMatch: 'full'},
 
@@ -11,5 +12,6 @@ export const routes: Routes = [{ path: '', redirectTo: 'login', pathMatch: 'full
 { path: 'registrar', component: RegistrarComponent},
 { path: 'menu', component: MenuPrincipalComponent},
 { path: 'prediccion', component: IngresarResultadosComponent},
-{ path: 'fixture', component: FixtureComponent}
+{ path: 'fixture', component: FixtureComponent},
+{ path: 'championships/:id', component: ChampionshipsComponent}
 ];
