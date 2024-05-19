@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Championship } from 'Championship';
 import { ChampionshipsService } from '../services/championships.service';
 import { Router } from '@angular/router';
+import { FixtureService } from '../services/fixture.service';
 
 @Component({
   selector: 'app-championships',
@@ -12,7 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ChampionshipsComponent {
 
-  constructor(private service: ChampionshipsService, private router: Router) {}
+  constructor( private service: ChampionshipsService, private router: Router, private fixtureService: FixtureService ) {}
 
   championships: Championship[] = [];
 
@@ -23,9 +24,12 @@ export class ChampionshipsComponent {
   }
 
   viewDetails(id: number){
-    this.service.getChampionshipDetails(id);
+    this.fixtureService.getPredictions(id);
     this.router.navigate(['/championship', id]);
     console.log("Viewing details of championship with id: " + id);
   }
-
 }
+
+/*
+Este componente tendrá un botón flotante para anotarse a una nueva penca
+*/

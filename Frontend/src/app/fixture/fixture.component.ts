@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Match } from "../../../Match";
 import { FixtureService } from "../services/fixture.service";
 import { Stage } from 'Stage';
+import { Championship } from 'Championship';
 import { NgFor } from '@angular/common';
 import {NgIf} from '@angular/common';
 import {CommonModule} from '@angular/common';
@@ -21,8 +22,8 @@ export class FixtureComponent {
   constructor(private service: FixtureService) {
   }
 
+  championship: Championship = null
   actualStage: string = "";
-  championship : string = "";
   matches: Match[] = [];
   stages: Stage[] = [];
   selectedMatch: any;
@@ -30,15 +31,9 @@ export class FixtureComponent {
   showModal: boolean = false;
 
   ngOnInit(): void {
-    /*
-    this.service.getPredictions().subscribe(matches => {
-      this.matches = matches
-    });
-    */
-   this.service.getPredictions().subscribe((stages) => {
-    this.stages = stages
-    this.championship = stages[0].championship
-    console.log(stages);
+   this.service.viewDetails().subscribe((championship) => {
+    this.championship = championship
+    console.log(championship);
   });
   }
 
