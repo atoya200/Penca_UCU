@@ -1,28 +1,53 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">PencaUCU</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/menu">Participar en penca</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Campeonatos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/menu">Crear campeonato</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Equipos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/menu">Ingresar equipo</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
-        data-bs-placement="bottom" data-bs-content="Bottom popover" data-bs-title="Notificaciones">
-        Notificaciones
+        data-bs-placement="bottom" data-bs-content="Notifiacion 1" data-bs-title="Notificaciones">
+        Campanita
     </button>
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown button
+            Perfil
         </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
         </ul>
     </div>
-
 </nav>
+
 
 
 <h2>Campeonatos</h2>
 <ul>
     <li *ngFor="let champ of Championships">
-        <h3> {{ champ.name }} </h3>
+        <h3> <a [routerLink]="['/championship', champ.id]"> {{ champ.name }} </a> </h3>
     </li>
 </ul>
