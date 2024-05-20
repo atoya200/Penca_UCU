@@ -19,7 +19,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">{{ selectedMatch?.teamA }} vs {{ selectedMatch?.teamB }} ({{championship}}, {{actualStage}})</h5>
+        <h5 class="modal-title" id="staticBackdropLabel">{{ selectedMatch?.teamA }} vs {{ selectedMatch?.teamB }} ({{championship.name}}, {{actualStage}})</h5>
         <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
       </div>
       <div class="modal-body">
@@ -66,6 +66,9 @@
   a pasr esto que le aparezca un error en color rojo y que no se pueda guardar
   y hacer que se guarde en localsotrage o en alguna cookie, para que al recargar 
   no se te vaya todo, o tambien se puede hacer que se recupere el id del url
-  - Tambén hacer de que si el partido ya sucedio no se pueda modificar la predicción, que no
-  le que pegue a la api y que 
+  - Tambén hacer de que si el partido ya sucedio no se pueda modificar la 
+  predicción, que no le que pegue a la api y que le aparezca un mensaje de que ya 
+  sucedio el partido en letritas rojas
+  - Pulir más la logica de si sucedio o no, ver el tema de la hora antes del partido
+  si esta sucediendo o una hora antes ya no se pueda enviar 
 -->

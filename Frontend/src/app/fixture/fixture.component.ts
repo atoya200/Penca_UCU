@@ -35,6 +35,9 @@ export class FixtureComponent {
   //Esto se debe hacer ya que la predicción de algún usuario puede ser 0 - 0
   teamAGoals: number | null = null;
   teamBGoals: number | null = null;
+  // Se utilizan para validar que el usuario no ponga un resultado que sea un número y que lo haga en el plazo valido
+  isNear: boolean = false;
+  notValid: boolean = false;
 
   ngOnInit(): void {
    this.service.viewDetails().subscribe((championship) => {
@@ -60,39 +63,61 @@ export class FixtureComponent {
     this.actualStage = stage
     await this.getMatchData(match)
     console.log("Partido oficial : " +this.match)
-    if ( this.match.date > new Date()){
+    console.log("Sucedio : " + this.happend)
+    if ( match.date.getTime() < new Date()){
+      console.log("El partido ha sucedido"+ match.date + " < " + new Date());
       this.happend = true;
+    }else if (match.date >= new Date()){
+      console.log("El partido no ha sucedido" + match.date + " > " + new Date());
+      this.happend = false;
     }
-    console.log("Sucedio? : " + this.happend)
+    console.log("Sucedio : " + this.happend)
   }
 
   closeModal() {
     this.showModal = false;
-    this.happend = false
+    this.happend = false;
+    this.isNear= false;
+    this.notValid= false;
   }
 
   goBack(){
     this.router.navigate(['/championships']);
+    this.happend = false;
   }
 
   savePrediction() {
     console.log ('Guardando predicción:',)
-    const newMatch : Match = {
-      id: this.selectedMatch?.id,
-      teamA: this.selectedMatch?.teamA,
-      teamB: this.selectedMatch?.teamB,
-      goalsA: this.teamAGoals,
-      goalsB: this.teamBGoals,
-      date: this.selectedMatch?.date,
-    };
-    this.service.savePrediction(newMatch).subscribe(
-      response => {
-        console.log('Predicción guardada:', response);
-        this.closeModal();
-      },
-      error => {
-        console.error('Error guardando predicción:', error);
+    this.validateInput(this.teamAGoals.toString(), this.teamBGoals.toString());
+    if (this.notValid && !this.isNear) {
+      const newMatch : Match = {
+        id: this.selectedMatch?.id,
+        teamA: this.selectedMatch?.teamA,
+        teamB: this.selectedMatch?.teamB,
+        goalsA: this.teamAGoals,
+        goalsB: this.teamBGoals,
+        date: this.selectedMatch?.date,
+      };
+      this.service.savePrediction(newMatch).subscribe(
+        response => {
+          console.log('Predicción guardada:', response);
+          this.closeModal();
+        },
+        error => {
+          console.error('Error guardando predicción:', error);
+        }
+      );
+    }else{
+      if (this.isNear){
+        console.log("El partido ya ha sucedido")
+      }else{
+        console.log("El resultado no es valido")
       }
-    );
+    }
     };
+
+    validateInput(teamAGoals: string, teamBGoals: string) {
+      const goalsPattern = /^[0-9]*$/;
+      this.notValid = !goalsPattern.test(teamAGoals) || !goalsPattern.test(teamBGoals);
+    }
 }
