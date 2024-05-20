@@ -1,6 +1,74 @@
-<div class="input-group">
-  <span class="input-group-text">Equipo 1</span>
-  <input type="text" aria-label="First name" class="form-control">
-  <input type="text" aria-label="Last name" class="form-control">
-  <span class="input-group-text">Equipo 2</span>
+<h1 class="title">{{championship.name}}</h1>
+<div class="card-container">
+  <div class="card" style="width: 18rem;" *ngFor="let stage of championship.stages">
+    <div class="card-header">
+      {{ stage.name }}
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" *ngFor="let match of stage.matches" (click)="openModal(match, stage.name)">
+        {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }}
+      </li>
+    </ul>
+  </div>
 </div>
+
+<button class="floating-button" (click)="goBack()">Volver</button>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="true" [ngClass]="{'show d-block': showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ selectedMatch?.teamA }} vs {{ selectedMatch?.teamB }} ({{championship.name}}, {{actualStage}})</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <h2>Tu predicción</h2>
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <label for="teamAGoals" class="col-form-label">{{ selectedMatch?.teamA }}</label>
+          </div>
+          <div class="col-auto">
+            <input type="text" id="teamAGoals" class="form-control gteamAGoals-input" aria-describedby="gteamAGoalsHelp" [(ngModel)]="teamAGoals">
+          </div>
+          <div class="col-auto">
+            <span class="col-form-label">-</span>
+          </div>
+          <div class="col-auto">
+            <input type="text" id="teamBgteamAGoals" class="form-control gteamAGoals-input" aria-describedby="gteamAGoalsHelp" [(ngModel)]="teamBGoals">
+          </div>
+          <div class="col-auto">
+            <label for="teamBgteamAGoals" class="col-form-label">{{ selectedMatch?.teamB }}</label>
+          </div>
+        </div>
+        <hr>
+        <h2>Datos oficiales</h2>
+        <div *ngIf="happend; else matchDate">
+          <p>Equipos: {{ match?.teamA }} vs {{ match?.teamB }}</p>
+          <p>Partido: {{ match?.goalsA }} - {{ match?.goalsB }}</p>
+        </div>
+        <ng-template #matchDate>
+          <p>Fecha del partido: {{ selectedMatch?.date | date }}</p>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="savePrediction()">Guardar nueva predicción</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--
+  Aca hay que asegurarse que cuando persione guardar que se fije que lo que 
+  ingreso el usuario sea un numero y que no sea vacio y tmp letras, si llega 
+  a pasr esto que le aparezca un error en color rojo y que no se pueda guardar
+  y hacer que se guarde en localsotrage o en alguna cookie, para que al recargar 
+  no se te vaya todo, o tambien se puede hacer que se recupere el id del url
+  - Tambén hacer de que si el partido ya sucedio no se pueda modificar la 
+  predicción, que no le que pegue a la api y que le aparezca un mensaje de que ya 
+  sucedio el partido en letritas rojas
+  - Pulir más la logica de si sucedio o no, ver el tema de la hora antes del partido
+  si esta sucediendo o una hora antes ya no se pueda enviar 
+-->
