@@ -30,7 +30,7 @@ export class ChampionshipsService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
-          played: false
+          date: new Date()
         },
         {
           id: 2,
@@ -38,7 +38,7 @@ export class ChampionshipsService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
-          played: false
+          date: new Date()
         },
         {
           id: 3,
@@ -46,7 +46,7 @@ export class ChampionshipsService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
-          played: false
+          date: new Date()
         }
       ]
     },
@@ -60,7 +60,7 @@ export class ChampionshipsService {
         teamB: "Argentina",
         goalsA: 23,
         goalsB: 0,
-        played: false
+        date: new Date()
       },
       {
         id: 5,
@@ -68,7 +68,7 @@ export class ChampionshipsService {
         teamB: "Peru",
         goalsA: 1,
         goalsB: 5,
-        played: false
+        date: new Date()
       },
       {
         id: 6,
@@ -76,7 +76,7 @@ export class ChampionshipsService {
         teamB: "España",
         goalsA: 10,
         goalsB: 2,
-        played: false
+        date: new Date()
       }
     ]
   }
@@ -99,7 +99,7 @@ export class ChampionshipsService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
-          played: false
+          date: new Date()
         },
         {
           id: 2,
@@ -107,7 +107,7 @@ export class ChampionshipsService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
-          played: false
+          date: new Date()
         },
         {
           id: 3,
@@ -115,7 +115,7 @@ export class ChampionshipsService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
-          played: false
+          date: new Date()
         }
         ]
       }

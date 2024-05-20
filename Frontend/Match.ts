@@ -5,14 +5,14 @@ export class Match {
     teamB: string;
     goalsA: number;
     goalsB: number;
-    played: boolean;
+    date: Date;
 
-    constructor ( id: number, teamA: string,  teamB: string, goalsA: number, goalsB: number, played: boolean) {
+    constructor ( id: number, teamA: string,  teamB: string, goalsA: number, goalsB: number, date: Date) {
         this.id = id;
         this.teamA = teamA;
         this.teamB = teamB;
         this.goalsA = goalsA;
         this.goalsB = goalsB;
-        this.played = played;
+        this.date = date;
     }
 }

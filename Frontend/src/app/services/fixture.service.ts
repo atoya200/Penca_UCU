@@ -35,7 +35,8 @@ export class FixtureService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
-          played: false
+
+          date: new Date(2022, 5, 10)
         },
         {
           id: 2,
@@ -43,7 +44,8 @@ export class FixtureService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
-          played: false
+
+          date: new Date()
         },
         {
           id: 3,
@@ -51,7 +53,8 @@ export class FixtureService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
-          played: false
+
+          date: new Date()
         }
       ]
     },
@@ -65,7 +68,7 @@ export class FixtureService {
         teamB: "Argentina",
         goalsA: 23,
         goalsB: 0,
-        played: false
+        date: new Date()
       },
       {
         id: 5,
@@ -73,7 +76,7 @@ export class FixtureService {
         teamB: "Peru",
         goalsA: 1,
         goalsB: 5,
-        played: false
+        date: new Date()
       },
       {
         id: 6,
@@ -81,7 +84,7 @@ export class FixtureService {
         teamB: "España",
         goalsA: 10,
         goalsB: 2,
-        played: false
+        date: new Date(2024, 5, 10)
       }
     ]
   }
@@ -104,7 +107,7 @@ export class FixtureService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
-          played: false
+          date: new Date()
         },
         {
           id: 2,
@@ -112,7 +115,7 @@ export class FixtureService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
-          played: false
+          date: new Date()
         },
         {
           id: 3,
@@ -120,7 +123,7 @@ export class FixtureService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
-          played: false
+          date: new Date()
         }
         ]
       }
@@ -151,20 +154,14 @@ export class FixtureService {
   
 
   //Mandar preddicciones
-  sendPredictions(){
-
+  savePrediction(match: Match): Observable<any>{
+    console.log ('llego:', match)
+    return of (match);
   }
 
-  //Editar predicción
-  editPrediction(){
-
-    let data = {}
-    
-  }
+  
 
   getOficialMatchData(match: Match): Observable<Match>{
     return of (this.actualChampionship.stages[0].matches[0])
   }
-
-  
 }

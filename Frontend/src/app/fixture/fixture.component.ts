@@ -8,6 +8,7 @@ import {NgIf} from '@angular/common';
 import {CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-fixture',
@@ -19,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 export class FixtureComponent {
 
-  constructor(private service: FixtureService) {
+  constructor(private service: FixtureService, private router: Router) {
   }
 
   championship: Championship = null
@@ -27,8 +28,13 @@ export class FixtureComponent {
   matches: Match[] = [];
   stages: Stage[] = [];
   selectedMatch: any;
+  // El oficial
   match: Match = null;
   showModal: boolean = false;
+  happend : boolean = false;
+  //Esto se debe hacer ya que la predicción de algún usuario puede ser 0 - 0
+  teamAGoals: number | null = null;
+  teamBGoals: number | null = null;
 
   ngOnInit(): void {
    this.service.viewDetails().subscribe((championship) => {
@@ -54,11 +60,39 @@ export class FixtureComponent {
     this.actualStage = stage
     await this.getMatchData(match)
     console.log("Partido oficial : " +this.match)
-
+    if ( this.match.date > new Date()){
+      this.happend = true;
+    }
+    console.log("Sucedio? : " + this.happend)
   }
 
   closeModal() {
     this.showModal = false;
+    this.happend = false
   }
 
+  goBack(){
+    this.router.navigate(['/championships']);
+  }
+
+  savePrediction() {
+    console.log ('Guardando predicción:',)
+    const newMatch : Match = {
+      id: this.selectedMatch?.id,
+      teamA: this.selectedMatch?.teamA,
+      teamB: this.selectedMatch?.teamB,
+      goalsA: this.teamAGoals,
+      goalsB: this.teamBGoals,
+      date: this.selectedMatch?.date,
+    };
+    this.service.savePrediction(newMatch).subscribe(
+      response => {
+        console.log('Predicción guardada:', response);
+        this.closeModal();
+      },
+      error => {
+        console.error('Error guardando predicción:', error);
+      }
+    );
+    };
 }

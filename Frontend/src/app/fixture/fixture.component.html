@@ -11,6 +11,9 @@
     </ul>
   </div>
 </div>
+
+<button class="floating-button" (click)="goBack()">Volver</button>
+
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="true" [ngClass]="{'show d-block': showModal}">
   <div class="modal-dialog">
@@ -21,35 +24,48 @@
       </div>
       <div class="modal-body">
         <h2>Tu predicción</h2>
-        <div class="row g-3 align-items-center">
+        <div class="row align-items-center">
           <div class="col-auto">
-            <label for="inputPassword6" class="col-form-label">{{ selectedMatch?.teamA }}</label>
+            <label for="teamAGoals" class="col-form-label">{{ selectedMatch?.teamA }}</label>
           </div>
           <div class="col-auto">
-            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+            <input type="text" id="teamAGoals" class="form-control gteamAGoals-input" aria-describedby="gteamAGoalsHelp" [(ngModel)]="teamAGoals">
+          </div>
+          <div class="col-auto">
+            <span class="col-form-label">-</span>
+          </div>
+          <div class="col-auto">
+            <input type="text" id="teamBgteamAGoals" class="form-control gteamAGoals-input" aria-describedby="gteamAGoalsHelp" [(ngModel)]="teamBGoals">
+          </div>
+          <div class="col-auto">
+            <label for="teamBgteamAGoals" class="col-form-label">{{ selectedMatch?.teamB }}</label>
           </div>
         </div>
-        <div class="row g-3 align-items-center">
-          <div class="col-auto">
-            <label for="inputPassword6" class="col-form-label">{{ selectedMatch?.teamB }}</label>
-          </div>
-          <div class="col-auto">
-            <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
-          </div>
-          <div class="col-auto">
-            <span id="passwordHelpInline" class="form-text">
-              Predicciones para los equipos
-            </span>
-          </div>
         <hr>
         <h2>Datos oficiales</h2>
-        <p>Teams: {{ match?.teamA }} vs {{ match?.teamB }}</p>
-        <p>Score: {{ match?.goalsA }} - {{ match?.goalsB }}</p>
+        <div *ngIf="happend; else matchDate">
+          <p>Equipos: {{ match?.teamA }} vs {{ match?.teamB }}</p>
+          <p>Partido: {{ match?.goalsA }} - {{ match?.goalsB }}</p>
+        </div>
+        <ng-template #matchDate>
+          <p>Fecha del partido: {{ selectedMatch?.date | date }}</p>
+        </ng-template>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
-        <button type="button" class="btn btn-primary">Guardar nueva predicción</button>
+        <button type="button" class="btn btn-primary" (click)="savePrediction()">Guardar nueva predicción</button>
       </div>
     </div>
   </div>
 </div>
+
+
+<!--
+  Aca hay que asegurarse que cuando persione guardar que se fije que lo que 
+  ingreso el usuario sea un numero y que no sea vacio y tmp letras, si llega 
+  a pasr esto que le aparezca un error en color rojo y que no se pueda guardar
+  y hacer que se guarde en localsotrage o en alguna cookie, para que al recargar 
+  no se te vaya todo, o tambien se puede hacer que se recupere el id del url
+  - Tambén hacer de que si el partido ya sucedio no se pueda modificar la predicción, que no
+  le que pegue a la api y que 
+-->
