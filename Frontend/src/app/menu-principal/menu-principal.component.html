@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">PencaUCU</a>
+        <a class="navbar-brand" href="/menu">PencaUCU</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="!isAdmin">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/menu">Participar en penca</a>
                 </li>
             </ul>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isAdmin">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -22,8 +22,8 @@
                         aria-expanded="false">
                         Equipos
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/menu">Ingresar equipo</a></li>
+                    <ul class="dropdown-menu" data-bs-toggle="modal" data-bs-target="#modalEquipos">
+                        <li><a class="dropdown-item">Ingresar equipo</a></li>
                     </ul>
                 </li>
             </ul>
@@ -45,9 +45,48 @@
 
 
 
-<h2>Campeonatos</h2>
-<ul>
-    <li *ngFor="let champ of Championships">
-        <h3> <a [routerLink]="['/championship', champ.id]"> {{ champ.name }} </a> </h3>
-    </li>
-</ul>
+
+<!-- Modal Equipos -->
+<div class="modal fade" id="modalEquipos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form class="form" (ngSubmit)="onSubmit(actividadForm)" #actividadForm="ngForm">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar equipo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="descripcion">Equipo: </label>
+                        <input type="text" class="form-control" id="equipo" placeholder="Equipo" [(ngModel)]="equipo"
+                            name="equipo">
+
+                    </div>
+                    <div class="form-group">
+                        <label for="imagen">Imagen</label>
+                        <span class="input-group-text">Imagennn</span>
+                        <input (change)="previsualizarImagen()" type="file" class="form-control" id="imagen"
+                            placeholder="Imagen (Opcional)" [(ngModel)]="imagen" name="imagen" accept="image/">
+                        <span class="input-group-text">X</span>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">$</span>
+                        <input (change)="previsualizarImagen()" type="file" class="form-control" id="imagen"
+                            [(ngModel)]="imagen" name="imagen" accept="image/">
+                        <span class="input-group-text">X</span>
+                    </div>
+                    <img [src]="imagenCargada" width="200px" height="200px" alt="Image ">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" class="btn btn-primary">Ingresar equipo</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

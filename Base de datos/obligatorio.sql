@@ -76,7 +76,7 @@ CREATE TABLE team_participation(
 CREATE TABLE championshipMatch(
     idTeamA INTEGER,
     idTeamB INTEGER,
-    matchDate DATE,
+    matchDate DATETIME,
     idStage INTEGER,
     idChampionship INTEGER,
     resultTeamA INTEGER,
@@ -92,7 +92,7 @@ CREATE TABLE championshipMatch(
 CREATE TABLE predictions (
     teamA INTEGER,
     teamB INTEGER,
-    matchDate DATE,
+    matchDate DATETIME,
     idchampionship INTEGER,
     predictionResultTeamA INTEGER,
     predictionResultTeamB INTEGER,
