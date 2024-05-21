@@ -54,13 +54,6 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
   }
 
-  ngAfterViewInit() {
-    // por el popover de las notificaciones
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    const popoverList = popoverTriggerList.map((popoverTriggerEl) => {
-      return new bootstrap.Popover(popoverTriggerEl);
-    });
-  }
 
   limpiarDatos(): void {
     this.angForm.get('equipo').reset()
@@ -114,5 +107,19 @@ export class MenuPrincipalComponent implements AfterViewInit {
         console.log(error);
       });
   }
+
+
+  ngAfterViewInit() {
+    // Este codigo del popover bloquea que funcione lo resto de bootstrap.
+    // por el popover de las notificaciones
+    /*const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    const popoverList = popoverTriggerList.map((popoverTriggerEl) => {
+      return new bootstrap.Popover(popoverTriggerEl);
+    });*/
+
+
+    
+  }
+
 }
 

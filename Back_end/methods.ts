@@ -1,5 +1,6 @@
-import { QueryResult } from "mysql2";
+import { QueryResult, ResultSetHeader } from "mysql2";
 import { pool } from "./index";
+
 
 
 export function isNullOrEmpty(value: any) {
@@ -22,11 +23,10 @@ export async function userExist(ci: String, password: String): Promise<boolean> 
 
 
 export async function insert(command: string, values: string[]): Promise<boolean> {
-    var res = false;
+    var res: any = false;
     try {
         const [result, fields] = await pool.execute(command, values);
-
-        console.log(result);
+        res = (result as ResultSetHeader).insertId != 0
 
     } catch (error) {
         console.log(error);
