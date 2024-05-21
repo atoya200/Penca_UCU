@@ -33,11 +33,11 @@ export class FixtureComponent {
   showModal: boolean = false;
   happend : boolean = false;
   //Esto se debe hacer ya que la predicción de algún usuario puede ser 0 - 0
-  teamAGoals: number | null = null;
-  teamBGoals: number | null = null;
+  teamAGoals: string | null = null;
+  teamBGoals: string | null = null;
   // Se utilizan para validar que el usuario no ponga un resultado que sea un número y que lo haga en el plazo valido
   isNear: boolean = false;
-  notValid: boolean = false;
+  isValid: boolean = true;
 
   ngOnInit(): void {
    this.service.viewDetails().subscribe((championship) => {
@@ -61,15 +61,25 @@ export class FixtureComponent {
     this.showModal = true;
     console.log(match.stage)
     this.actualStage = stage
+    this.teamAGoals = match.goalsA.toString();
+    this.teamBGoals = match.goalsB.toString();
     await this.getMatchData(match)
     console.log("Partido oficial : " +this.match)
     console.log("Sucedio : " + this.happend)
     if ( match.date.getTime() < new Date()){
       console.log("El partido ha sucedido"+ match.date + " < " + new Date());
       this.happend = true;
+      this.isNear = true;
     }else if (match.date >= new Date()){
       console.log("El partido no ha sucedido" + match.date + " > " + new Date());
       this.happend = false;
+      if(this.selectedMatch.date.getTime() - new Date().getTime() < 1800000){
+        console.log("El partido esta por suceder")
+        this.isNear = true;
+      }else{
+        console.log("El partido no esta por suceder")
+        this.isNear = false;
+      }
     }
     console.log("Sucedio : " + this.happend)
   }
@@ -78,7 +88,9 @@ export class FixtureComponent {
     this.showModal = false;
     this.happend = false;
     this.isNear= false;
-    this.notValid= false;
+    this.isValid = true;
+    this.teamAGoals = null;
+    this.teamBGoals = null;
   }
 
   goBack(){
@@ -87,15 +99,14 @@ export class FixtureComponent {
   }
 
   savePrediction() {
-    console.log ('Guardando predicción:',)
-    this.validateInput(this.teamAGoals.toString(), this.teamBGoals.toString());
-    if (this.notValid && !this.isNear) {
+    console.log ('Guardando predicción:', this.teamAGoals, this.teamBGoals, "se acerca: " + this.isNear, "valido: " + this.validateInput(this.teamAGoals, this.teamBGoals));
+    if (this.validateInput(this.teamAGoals, this.teamBGoals)) {
       const newMatch : Match = {
         id: this.selectedMatch?.id,
         teamA: this.selectedMatch?.teamA,
         teamB: this.selectedMatch?.teamB,
-        goalsA: this.teamAGoals,
-        goalsB: this.teamBGoals,
+        goalsA: parseInt(this.teamAGoals),
+        goalsB: parseInt(this.teamBGoals),
         date: this.selectedMatch?.date,
       };
       this.service.savePrediction(newMatch).subscribe(
@@ -116,8 +127,13 @@ export class FixtureComponent {
     }
     };
 
-    validateInput(teamAGoals: string, teamBGoals: string) {
+    validateInput(teamAGoals: string, teamBGoals: string): boolean {
       const goalsPattern = /^[0-9]*$/;
-      this.notValid = !goalsPattern.test(teamAGoals) || !goalsPattern.test(teamBGoals);
+      let value = goalsPattern.test(teamAGoals) && goalsPattern.test(teamBGoals);
+      if (teamAGoals === null || teamAGoals === " " ||  teamAGoals === "" || teamBGoals === null || teamBGoals === "" || teamAGoals === " "){
+        value = false;
+      }
+      this.isValid = value;
+      return value;
     }
 }

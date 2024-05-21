@@ -141,3 +141,7 @@ INSERT INTO admin(ci) values ('12345678');
 INSERT INTO user(ci, password) values ('87654321','password');
 INSERT INTO student(ci) values ('87654321');
 
+
+
+select c.id, c.name from predict_first p inner join championship c on c.id=p.idChampionship where p.ci=?;
+

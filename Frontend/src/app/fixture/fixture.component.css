@@ -130,3 +130,7 @@
   .gteamAGoals-input {
     width: 50px;
   }
+
+  .warnning {
+    color: red;
+  }

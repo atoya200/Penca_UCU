@@ -152,13 +152,29 @@ export class FixtureService {
     return of (this.actualChampionship);
   } 
   
-
+  /*
   //Mandar preddicciones
   savePrediction(match: Match): Observable<any>{
     console.log ('llego:', match)
+
     return of (match);
   }
+  */
 
+  savePrediction(newMatch: Match): Observable<any> {
+    if (this.actualChampionship) {
+      for (let stage of this.actualChampionship.stages) {
+        let matchIndex = stage.matches.findIndex(match => match.id === newMatch.id);
+        if (matchIndex !== -1) {
+          stage.matches[matchIndex] = newMatch;
+          console.log('Predicción guardada:', newMatch);
+          return of(newMatch);
+        }
+      }
+    }
+    console.error('No se encontró el partido para actualizar');
+    return of(null);
+  }
   
 
   getOficialMatchData(match: Match): Observable<Match>{
