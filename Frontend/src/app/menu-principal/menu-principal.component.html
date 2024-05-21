@@ -23,7 +23,7 @@
                         Equipos
                     </a>
                     <ul class="dropdown-menu" data-bs-toggle="modal" data-bs-target="#modalEquipos">
-                        <li><a class="dropdown-item">Ingresar equipo</a></li>
+                        <li><a (click)="limpiarDatos()" class="dropdown-item">Ingresar equipo</a></li>
                     </ul>
                 </li>
             </ul>
@@ -49,7 +49,7 @@
 <!-- Modal Equipos -->
 <div class="modal fade" id="modalEquipos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <form class="form" (ngSubmit)="onSubmit(actividadForm)" #actividadForm="ngForm">
+    <form class="form" [formGroup]="angForm" novalidate>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -58,32 +58,38 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="descripcion">Equipo: </label>
-                        <input type="text" class="form-control" id="equipo" placeholder="Equipo" [(ngModel)]="equipo"
-                            name="equipo">
-
+                        <label for="descripcion">Nombre: </label>
+                        <input type="text" class="form-control" formControlName="equipo" id="equipo1" name="equipo"
+                            maxlength="20">
+                    </div>
+                    <div class="error" *ngIf="angForm.controls['equipo'].invalid && (angForm.controls['equipo'].dirty || 
+                    angForm.controls['equipo'].touched)">
+                        <div [hidden]="!angForm.controls['equipo'].errors.required">
+                            El nombre no puede estar vacío.
+                        </div>
+                        <div [hidden]="!angForm.controls['equipo'].errors.maxlength">
+                            Largo máximo de 20 caracteres.
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="imagen">Imagen</label>
-                        <span class="input-group-text">Imagennn</span>
-                        <input (change)="previsualizarImagen()" type="file" class="form-control" id="imagen"
-                            placeholder="Imagen (Opcional)" [(ngModel)]="imagen" name="imagen" accept="image/">
-                        <span class="input-group-text">X</span>
+                        <label for="imagen">Imagen: </label>
+                        <div class="input-group mb-3">
+                            <input (change)="previsualizarImagen()" formControlName="imagen" type="file"
+                                class="form-control" id="imagen" name="imagen" accept="image/">
+                            <button *ngIf="angForm.controls['imagen'].value" (click)="eliminarImagen()"
+                                class="input-group-text">X</button>
+                        </div>
                     </div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">$</span>
-                        <input (change)="previsualizarImagen()" type="file" class="form-control" id="imagen"
-                            [(ngModel)]="imagen" name="imagen" accept="image/">
-                        <span class="input-group-text">X</span>
-                    </div>
-                    <img [src]="imagenCargada" width="200px" height="200px" alt="Image ">
+                    <img *ngIf="angForm.controls['imagen'].value" [src]="imagenCargada" width="200px" height="200px"
+                        alt="Image ">
 
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
-                    <button type="button" class="btn btn-primary">Ingresar equipo</button>
+                    <button (click)="ingresarEquipo()" type="button" [disabled]="angForm.pristine || angForm.invalid"
+                        class="btn btn-primary">Ingresar equipo</button>
                 </div>
             </div>
         </div>

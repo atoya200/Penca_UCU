@@ -7,6 +7,7 @@ import * as bootstrap from 'bootstrap';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TeamService } from '../team.service';
 
 @Component({
   selector: 'app-menu-principal',
@@ -22,12 +23,21 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
   @Input() isAdmin?: boolean;
   equipo: String = "";
-  imagen: any;
   imagenCargada: any;
-  preImagen: String = "data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==";
-  constructor(private loginService: LoginService, private championshipService: ChampionshipService, private sanitizer: DomSanitizer) { }
+  angForm: FormGroup;
+  imagen: any = "";
 
-  
+  constructor(private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipService, private sanitizer: DomSanitizer) {
+    this.createForm();
+  }
+
+  createForm() {
+    this.angForm = this.fb.group({
+      equipo: ['', [Validators.required, Validators.maxLength(20)]],
+      imagen: ['']
+    });
+  }
+
   ngOnInit(): void {
     // verificar si el usuario tiene permisos, sino mandarlo al login
     // buscar las notificaciones que tiene el usuario (predicciones faltantes, etc)
@@ -42,7 +52,6 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
     this.isAdmin = this.loginService.getUserType().type == 'Admin';
 
-
   }
 
   ngAfterViewInit() {
@@ -53,24 +62,31 @@ export class MenuPrincipalComponent implements AfterViewInit {
     });
   }
 
+  limpiarDatos(): void {
+    this.angForm.get('equipo').reset()
+    this.angForm.get('imagen').reset()
+  }
+
+  eliminarImagen(): void {
+    this.angForm.get('imagen').reset()
+  }
+
   previsualizarImagen(): void {
     const reader = new FileReader();
     if (document.getElementById('imagen') != null) {
       let file = (<HTMLInputElement>document.getElementById('imagen')).files[0];
-      if (file == null) {
-        // this.servicio.crearActividad(form.value.titulo, form.value.descripcion, "")
 
-      }
       reader.addEventListener(
         "load",
         () => {
-          debugger;
+          //debugger;
           // convert image file to base64 string
-          console.log(reader.result)
-          //this.imagen = reader.result.toString();
+          //console.log(reader.result)
+
+          this.imagen = reader.result;
           try {
             this.imagenCargada = this.sanitizer.bypassSecurityTrustResourceUrl(reader.result.toString());
-            
+
           } catch {
             console.log("Error al cargar imagen")
           }
@@ -81,49 +97,22 @@ export class MenuPrincipalComponent implements AfterViewInit {
       if (file) {
         reader.readAsDataURL(file);
       }
-    } else {
-      //this.servicio.crearActividad(form.value.titulo, form.value.descripcion, "")
-
     }
-
   }
 
-  onSubmit(form: NgForm) {
+  ingresarEquipo() {
 
-    //this.servicio.crearActividad(form.value.titulo, form.value.descripcion, form.value.imagen)
+    this.teamService.registerTeam(this.angForm.get('equipo').value, this.imagen).subscribe(
+      data => {
 
-    const reader = new FileReader();
-    if (document.getElementById('imagen') != null) {
-      let file = (<HTMLInputElement>document.getElementById('imagen')).files[0];
-      if (file == null) {
-        // this.servicio.crearActividad(form.value.titulo, form.value.descripcion, "")
+        alert("Equipo registrado con exito");
 
-      }
-      reader.addEventListener(
-        "load",
-        () => {
-          // convert image file to base64 string
-          console.log(reader.result)
-          // this.servicio.crearActividad(form.value.titulo, form.value.descripcion, reader.result)
-        },
-        false,
-      );
+      },
+      error => {
 
-      if (file) {
-        reader.readAsDataURL(file);
-      }
-    } else {
-      //this.servicio.crearActividad(form.value.titulo, form.value.descripcion, "")
-
-    }
-
-    alert("¡Tu actividad fue creada con exito!")
-
-
+        alert(error.error.msg)
+        console.log(error);
+      });
   }
-
-
-
-
 }
 
