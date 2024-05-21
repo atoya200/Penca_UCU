@@ -25,7 +25,8 @@ CREATE TABLE admin(
 
 CREATE TABLE team(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(20)
+    name VARCHAR(20),
+    teamImage blob
 );
 
 CREATE TABLE career(
@@ -132,6 +133,14 @@ CREATE TABLE predict_second(
     FOREIGN KEY (idChampionship) REFERENCES team_participation(idChampionship)
 
 
+);
+
+CREATE TABLE points(ci VARCHAR(8),
+                    idChampionship INTEGER,
+                    points INTEGER default 0,
+                    PRIMARY KEY (ci,idChampionship),
+                    FOREIGN KEY (ci) references student(ci),
+                    foreign key (idChampionship) references championship(id)
 );
 
 INSERT INTO user(ci, password) values ('12345678','password');
