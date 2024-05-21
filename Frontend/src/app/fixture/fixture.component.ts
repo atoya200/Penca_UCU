@@ -130,7 +130,11 @@ export class FixtureComponent {
     validateInput(teamAGoals: string, teamBGoals: string): boolean {
       const goalsPattern = /^[0-9]*$/;
       let value = goalsPattern.test(teamAGoals) && goalsPattern.test(teamBGoals);
-      if (teamAGoals === null || teamAGoals === " " ||  teamAGoals === "" || teamBGoals === null || teamBGoals === "" || teamAGoals === " "){
+      if (teamAGoals === null || teamBGoals === null){ 
+        value = false;
+      }else if (teamAGoals === " " ||  teamBGoals === ""){
+        value = false;
+      }else if (teamAGoals === " " ||  teamBGoals === " "){
         value = false;
       }
       this.isValid = value;

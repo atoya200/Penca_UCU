@@ -22,6 +22,8 @@ export class ChampionshipsComponent {
   
   championships: Championship[] = [];
 
+  showModal: boolean = false;
+
   ngOnInit(): void {
     this.service.getChampionships().subscribe((championships) => {
       this.championships = championships
@@ -34,6 +36,15 @@ export class ChampionshipsComponent {
     this.fixtureService.getPredictions(id);
     this.router.navigate(['/fixture', id]);
     console.log("Viewing details of championship with id: " + id);
+  }
+
+  async openModal(){
+    console.log("Opening modal");
+    this.showModal = true;
+  }
+
+  closeModal(){
+    this.showModal = false;
   }
 }
 

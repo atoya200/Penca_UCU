@@ -76,7 +76,7 @@ export class FixtureService {
         teamB: "Peru",
         goalsA: 1,
         goalsB: 5,
-        date: new Date()
+        date: new Date(2025, 5, 10)
       },
       {
         id: 6,
