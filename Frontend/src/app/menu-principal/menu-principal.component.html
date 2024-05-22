@@ -26,6 +26,15 @@
                         <li><a (click)="limpiarDatos()" class="dropdown-item">Ingresar equipo</a></li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Fases
+                    </a>
+                    <ul class="dropdown-menu" data-bs-toggle="modal" data-bs-target="#modalCrearFases">
+                        <li><a (click)="limpiarDatos()" class="dropdown-item">Crear fase</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -47,6 +56,7 @@
 
 
 <!-- Modal Equipos -->
+
 <div class="modal fade" id="modalEquipos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <form class="form" [formGroup]="angForm" novalidate>
@@ -90,6 +100,46 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
                     <button (click)="ingresarEquipo()" type="button" [disabled]="angForm.pristine || angForm.invalid"
                         class="btn btn-primary">Ingresar equipo</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<!--Modal Crear Fases-->
+<div class="modal fade" id="modalCrearFases" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form class="form" [formGroup]="angFormCrearFase" novalidate>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear fase</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="descripcion">Nombre: </label>
+                        <input type="text" class="form-control" formControlName="nombreFase" id="nombreFase"
+                            name="nombreFase" maxlength="20">
+                    </div>
+                    <div class="error" *ngIf="angFormCrearFase.controls['nombreFase'].invalid && (angFormCrearFase.controls['nombreFase'].dirty || 
+                    angFormCrearFase.controls['nombreFase'].touched)">
+                        <div [hidden]="!angFormCrearFase.controls['nombreFase'].errors.required">
+                            El nombre no puede estar vacío.
+                        </div>
+                        <div [hidden]="!angFormCrearFase.controls['nombreFase'].errors.maxlength">
+                            Largo máximo de 20 caracteres.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button (click)="crearFase()" type="button"
+                        [disabled]="angFormCrearFase.pristine || angFormCrearFase.invalid" class="btn btn-primary">Crear
+                        fase</button>
                 </div>
             </div>
         </div>

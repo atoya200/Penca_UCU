@@ -22,7 +22,6 @@ router.post('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (r
                 }
                 let nombre = team.name
 
-                console.log(nombre.toUpperCase())
                 const result = await methods.insert('INSERT INTO `team`(`name`, `teamImage`) VALUES (?,?)', [nombre.toUpperCase(), img]);
                 if (!result) {
                     throw new Error("Falló el insert en la base de datos.")

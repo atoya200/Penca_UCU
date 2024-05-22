@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
-
+import { PhaseService } from '../phase.service';
 @Component({
   selector: 'app-menu-principal',
   standalone: true,
@@ -25,16 +25,25 @@ export class MenuPrincipalComponent implements AfterViewInit {
   equipo: String = "";
   imagenCargada: any;
   angForm: FormGroup;
+  angFormCrearFase: FormGroup;
+  angFormVerFase: FormGroup;
   imagen: any = "";
 
-  constructor(private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipService, private sanitizer: DomSanitizer) {
+  constructor(private phaseService: PhaseService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipService, private sanitizer: DomSanitizer) {
+
     this.createForm();
+
   }
 
   createForm() {
+    // Form crear equipo
     this.angForm = this.fb.group({
       equipo: ['', [Validators.required, Validators.maxLength(20)]],
       imagen: ['']
+    });
+    // Form crear fase
+    this.angFormCrearFase = this.fb.group({
+      nombreFase: ['', [Validators.required, Validators.maxLength(20)]]
     });
   }
 
@@ -52,13 +61,16 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
     this.isAdmin = this.loginService.getUserType().type == 'Admin';
 
+
   }
 
 
   limpiarDatos(): void {
     this.angForm.get('equipo').reset()
     this.angForm.get('imagen').reset()
+    this.angFormCrearFase.get('nombreFase').reset()
   }
+
 
   eliminarImagen(): void {
     this.angForm.get('imagen').reset()
@@ -108,17 +120,21 @@ export class MenuPrincipalComponent implements AfterViewInit {
       });
   }
 
+  crearFase() {
+    // ingresar fase
+  }
 
   ngAfterViewInit() {
     // Este codigo del popover bloquea que funcione lo resto de bootstrap.
     // por el popover de las notificaciones
-    /*const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+    /*
+    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
     const popoverList = popoverTriggerList.map((popoverTriggerEl) => {
       return new bootstrap.Popover(popoverTriggerEl);
-    });*/
+    });
+*/
 
 
-    
   }
 
 }
