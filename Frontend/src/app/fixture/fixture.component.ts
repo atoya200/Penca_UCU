@@ -64,7 +64,7 @@ export class FixtureComponent {
     this.teamAGoals = match.goalsA.toString();
     this.teamBGoals = match.goalsB.toString();
     await this.getMatchData(match)
-    console.log("Partido oficial : " +this.match)
+    console.log("Partido oficial : " + this.match)
     console.log("Sucedio : " + this.happend)
     if ( match.date.getTime() < new Date()){
       console.log("El partido ha sucedido"+ match.date + " < " + new Date());
@@ -108,6 +108,7 @@ export class FixtureComponent {
         goalsA: parseInt(this.teamAGoals),
         goalsB: parseInt(this.teamBGoals),
         date: this.selectedMatch?.date,
+        scoreObtained: this.selectedMatch?.scoreObtained
       };
       this.service.savePrediction(newMatch).subscribe(
         response => {

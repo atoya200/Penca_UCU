@@ -18,7 +18,7 @@ export class FixtureService {
 
   }
    // Datos de campeonatos de prueba 
-  championships: Championship[] = [{
+    championships: Championship[] = [{
     id: 1,
     name: "Copa Libertadores",
     description: "Copa Libertadores 2021",
@@ -35,7 +35,7 @@ export class FixtureService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
-
+          scoreObtained: 0,
           date: new Date(2022, 5, 10)
         },
         {
@@ -44,7 +44,7 @@ export class FixtureService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
-
+          scoreObtained: 0,
           date: new Date()
         },
         {
@@ -53,7 +53,7 @@ export class FixtureService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
-
+          scoreObtained: 0,
           date: new Date()
         }
       ]
@@ -68,6 +68,7 @@ export class FixtureService {
         teamB: "Argentina",
         goalsA: 23,
         goalsB: 0,
+        scoreObtained: 0,
         date: new Date()
       },
       {
@@ -76,6 +77,7 @@ export class FixtureService {
         teamB: "Peru",
         goalsA: 1,
         goalsB: 5,
+        scoreObtained: 0,
         date: new Date(2025, 5, 10)
       },
       {
@@ -84,6 +86,7 @@ export class FixtureService {
         teamB: "España",
         goalsA: 10,
         goalsB: 2,
+        scoreObtained: 0,
         date: new Date(2024, 5, 10)
       }
     ]
@@ -107,6 +110,7 @@ export class FixtureService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
+          scoreObtained: 0,
           date: new Date()
         },
         {
@@ -115,6 +119,7 @@ export class FixtureService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
+          scoreObtained: 0,
           date: new Date()
         },
         {
@@ -123,6 +128,7 @@ export class FixtureService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
+          scoreObtained: 0,
           date: new Date()
         }
         ]
@@ -134,7 +140,8 @@ export class FixtureService {
 
   // Obtener todas las predicciones del usuario del campeonato seleccionado
   getPredictions(id: number){
-    //this.http.get<Championship>('http://localhost:3000/user/predictions/' + id)
+    this.http.get<Championship>('http://localhost:3000/user/predictions/' + id)
+    /*
     for (let i = 0; i < this.championships.length; i++) {
       console.log("Campeonato: " + this.championships[i].name);
       if (this.championships[i].id === id) {
@@ -146,6 +153,7 @@ export class FixtureService {
       this.actualChampionship = null;
       console.log("No se encontró el campeonato seleccionado");
     }
+    */
   }
 
   viewDetails(): Observable<Championship>{
