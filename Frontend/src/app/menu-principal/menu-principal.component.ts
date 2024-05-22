@@ -9,10 +9,12 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, N
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
 import { StageService } from '../stage.service';
+import { ChampionshipsComponent } from '../championships/championships.component';
+
 @Component({
   selector: 'app-menu-principal',
   standalone: true,
-  imports: [NgIf, NgFor, CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [NgIf, NgFor, CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ChampionshipsComponent],
   templateUrl: './menu-principal.component.html',
   styleUrl: './menu-principal.component.css'
 })
@@ -161,6 +163,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
 
   }
+
 
 }
 

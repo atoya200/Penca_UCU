@@ -94,7 +94,7 @@ export class FixtureComponent {
   }
 
   goBack(){
-    this.router.navigate(['/championships']);
+    this.router.navigate(['/menu']);
     this.happend = false;
   }
 
