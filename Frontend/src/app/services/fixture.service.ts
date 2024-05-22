@@ -139,9 +139,12 @@ export class FixtureService {
   actualChampionship: Championship = null;
 
   // Obtener todas las predicciones del usuario del campeonato seleccionado
+  /*
   getPredictions(id: number){
-    this.http.get<Championship>('http://localhost:3000/user/predictions/' + id)
-    /*
+    let predictions = "http://localhost:3000/prediction/" + id;
+    console.log(predictions)
+    this.http.get<Championship>(predictions)
+    
     for (let i = 0; i < this.championships.length; i++) {
       console.log("Campeonato: " + this.championships[i].name);
       if (this.championships[i].id === id) {
@@ -153,9 +156,24 @@ export class FixtureService {
       this.actualChampionship = null;
       console.log("No se encontró el campeonato seleccionado");
     }
-    */
+    
   }
+  */
 
+  getPredictions(id: number){
+    let predictions = "http://localhost:3000/prediction/" + id;
+    console.log(predictions)
+    this.http.get<Championship>(predictions).subscribe(
+      data => {
+        this.actualChampionship = data;
+        console.log("Campeonato seleccionado: " + this.actualChampionship.name);
+      },
+      error => {
+        this.actualChampionship = null;
+        console.log("No se encontró el campeonato seleccionado");
+      }
+    );
+  }
   viewDetails(): Observable<Championship>{
     return of (this.actualChampionship);
   } 
