@@ -32,7 +32,7 @@ export function verifyUserIsAdmin(req: any, res: any, next: any) {
     //verifyUser(req, res, next)
     let decoded = decode(req.headers['authorization'])
 
-    if (decoded.user == 'Admin') {
+    if (decoded.user.role == 'Admin') {
         // is admin
         next();
 

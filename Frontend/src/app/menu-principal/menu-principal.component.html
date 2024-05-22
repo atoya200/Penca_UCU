@@ -1,8 +1,175 @@
-<div>
-    <h2>Campeonatos</h2>
-    <ul>
-        <li *ngFor="let champ of Championships">
-            <h3> {{ champ.name }} </h3>
-        </li>
-    </ul>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/menu">PencaUCU</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="!isAdmin">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/menu">Participar en penca</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isAdmin">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Campeonatos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/menu">Crear campeonato</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Equipos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalEquipos">Ingresar equipo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Fases
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalCrearFases">Crear fase</a></li>
+
+                        <li><a (click)="buscarFases()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalVerFases">Ver fases</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
+        data-bs-placement="bottom" data-bs-content="Notifiacion 1" data-bs-title="Notificaciones">
+        Campanita
+    </button>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Perfil
+        </button>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+        </ul>
+    </div>
+</nav>
+
+
+
+
+<!-- Modal Equipos -->
+
+<div class="modal fade" id="modalEquipos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form class="form" [formGroup]="angForm" novalidate>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar equipo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="descripcion">Nombre: </label>
+                        <input type="text" class="form-control" formControlName="equipo" id="equipo1" name="equipo"
+                            maxlength="20">
+                    </div>
+                    <div class="error" *ngIf="angForm.controls['equipo'].invalid && (angForm.controls['equipo'].dirty || 
+                    angForm.controls['equipo'].touched)">
+                        <div [hidden]="!angForm.controls['equipo'].errors.required">
+                            El nombre no puede estar vacío.
+                        </div>
+                        <div [hidden]="!angForm.controls['equipo'].errors.maxlength">
+                            Largo máximo de 20 caracteres.
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="imagen">Imagen: </label>
+                        <div class="input-group mb-3">
+                            <input (change)="previsualizarImagen()" formControlName="imagen" type="file"
+                                class="form-control" id="imagen" name="imagen" accept="image/">
+                            <button *ngIf="angForm.controls['imagen'].value" (click)="eliminarImagen()"
+                                class="input-group-text">X</button>
+                        </div>
+                    </div>
+
+                    <img *ngIf="angForm.controls['imagen'].value" [src]="imagenCargada" width="200px" height="200px"
+                        alt="Image ">
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button (click)="ingresarEquipo()" type="button" [disabled]="angForm.pristine || angForm.invalid"
+                        class="btn btn-primary">Ingresar equipo</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<!--Modal Crear Fases-->
+<div class="modal fade" id="modalCrearFases" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form class="form" [formGroup]="angFormCrearFase" novalidate>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear fase</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="descripcion">Nombre: </label>
+                        <input type="text" class="form-control" formControlName="nombreFase" id="nombreFase"
+                            name="nombreFase" maxlength="20">
+                    </div>
+                    <div class="error" *ngIf="angFormCrearFase.controls['nombreFase'].invalid && (angFormCrearFase.controls['nombreFase'].dirty || 
+                    angFormCrearFase.controls['nombreFase'].touched)">
+                        <div [hidden]="!angFormCrearFase.controls['nombreFase'].errors.required">
+                            El nombre no puede estar vacío.
+                        </div>
+                        <div [hidden]="!angFormCrearFase.controls['nombreFase'].errors.maxlength">
+                            Largo máximo de 20 caracteres.
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button (click)="crearFase()" type="button"
+                        [disabled]="angFormCrearFase.pristine || angFormCrearFase.invalid" class="btn btn-primary">Crear
+                        fase</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<!--Modal Ver Fases-->
+<div class="modal fade" tabindex="-1" id="modalVerFases" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Fases</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    <li *ngIf="Fases.length == 0" class="list-group-item">No hay fases.</li>
+                    <li *ngFor="let fase of Fases" class="list-group-item">{{fase.name}}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+            </div>
+        </div>
+    </div>
 </div>

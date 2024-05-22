@@ -68,5 +68,17 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.get('/career', async (req, res) => {
+    try {
+
+        var career = await methods.query("select * from career", []);
+        res.status(200)
+        res.send(JSON.stringify({ "career": career }));
+
+    } catch (error) {
+        res.status(500);
+        res.send(JSON.stringify({ msg: "Error. Intente de nuevo más tarde." }))
+    }
+})
 
 export default router

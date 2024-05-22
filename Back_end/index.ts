@@ -3,9 +3,13 @@ import express, { Request, Response } from 'express';
 import { createServer } from "http";
 import matchesRouter from "./routes/matches"
 import usersRouter from "./routes/users"
+import teamsRouter from "./routes/teams"
 import championshipRouter from "./routes/championships"
 import predictionsRouter from "./routes/predictions"
+import stageRouter from "./routes/stage"
+import notificationRouter from "./routes/notifications"
 import { createPool, Pool } from 'mysql2/promise';
+
 import * as middleware from './middleware'
 
 
@@ -47,15 +51,21 @@ var corsOptions = {
     optionsSuccessStatus: 200,
     methods: "GET, PUT, POST, DELETE, HEAD"
 }
-
+// Allow images 
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(express.json())
 app.use(cors(corsOptions));
+
 
 // Routes
 app.use('/match', matchesRouter)
 app.use('/user', usersRouter)
 app.use('/championship', championshipRouter)
 app.use('/prediction', predictionsRouter)
+app.use('/notification', notificationRouter)
+app.use('/team', teamsRouter)
+app.use('/stage', stageRouter)
 
 
 
@@ -70,12 +80,6 @@ app.get('/test', [middleware.verifyUser, middleware.verifyUserIsAdmin], (req: an
     res.send('V 1.1')
 })
 
-/*
-app.use('/actividades', actividadRouter)
-app.use('/salas', salaRouter)
-app.use('/user', userRouter)
-
-*/
 
 // Verify database connection and start listening
 async function run() {

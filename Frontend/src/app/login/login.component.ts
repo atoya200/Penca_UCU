@@ -36,6 +36,7 @@ export class LoginComponent {
         console.log(data)
         this.loginService.setUserType(data.user)
         this.loginService.setToken(data.token)
+        debugger
         this.router.navigateByUrl('/menu');
 
       },

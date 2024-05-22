@@ -25,7 +25,8 @@ CREATE TABLE admin(
 
 CREATE TABLE team(
     id INTEGER AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(20)
+    name VARCHAR(20),
+    teamImage blob
 );
 
 CREATE TABLE career(
@@ -76,7 +77,7 @@ CREATE TABLE team_participation(
 CREATE TABLE championshipMatch(
     idTeamA INTEGER,
     idTeamB INTEGER,
-    matchDate DATE,
+    matchDate DATETIME,
     idStage INTEGER,
     idChampionship INTEGER,
     resultTeamA INTEGER,
@@ -92,7 +93,7 @@ CREATE TABLE championshipMatch(
 CREATE TABLE predictions (
     teamA INTEGER,
     teamB INTEGER,
-    matchDate DATE,
+    matchDate DATETIME,
     idchampionship INTEGER,
     predictionResultTeamA INTEGER,
     predictionResultTeamB INTEGER,
@@ -134,9 +135,16 @@ CREATE TABLE predict_second(
 
 );
 
+CREATE TABLE points(ci VARCHAR(8),
+                    idChampionship INTEGER,
+                    points INTEGER default 0,
+                    PRIMARY KEY (ci,idChampionship),
+                    FOREIGN KEY (ci) references student(ci),
+                    foreign key (idChampionship) references championship(id)
+);
 
--- INSERT INTO user(ci, password) values ('12345678','password');
--- INSERT INTO admin(ci) values ('12345678');
+INSERT INTO user(ci, password) values ('12345678','password');
+INSERT INTO admin(ci) values ('12345678');
 
 
 -- INSERT INTO user(ci, password) values ('87654321','password');
