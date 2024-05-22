@@ -11,26 +11,24 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
         var predictions = await methods.query('SELECT tA.name AS teamAName, tB.name AS teamBName, cm.matchDate, ch.name AS championshipName, st.name AS stageName, p.predictionResultTeamA, p.predictionResultTeamB, p.scoreObtained FROM predictions p JOIN student s ON p.ci = s.ci JOIN championshipMatch cm ON p.idchampionship = cm.idChampionship AND p.idstage = cm.idStage AND p.teamA = cm.idTeamA AND p.teamB = cm.idTeamB AND p.matchDate = cm.matchDate JOIN team tA ON p.teamA = tA.id JOIN team tB ON p.teamB = tB.id JOIN championship ch ON p.idchampionship = ch.id JOIN stage st ON p.idstage = st.id WHERE p.ci = ? AND p.idchampionship = ?;', [decoded.user.ci, req.params.id]);
         const stages = [];
         for (const prediction of predictions) {
-            // Buscar si ya existe la etapa
             let stage = stages.find(stage => stage.name === prediction.stageName);
 
             if (!stage) {
-                // Si no existe, crear una nueva etapa
                 stage = {
-                    id: null, // Supongo que no tienes un ID específico para las etapas en tus datos de predicciones
+                    id: null, 
                     name: prediction.stageName,
                     matches: []
                 };
                 stages.push(stage);
             }
-
+d
             // Agregar el partido a la etapa
             stage.matches.push({
-                id: null, // Supongo que no tienes un ID específico para los partidos en tus datos de predicciones
+                id: prediction.matchId, 
                 teamA: prediction.teamAName,
                 teamB: prediction.teamBName,
-                goalsA: prediction.predictionResultTeamA, // Suponiendo que predictionResultTeamA es el número de goles del equipo A
-                goalsB: prediction.predictionResultTeamB, // Suponiendo que predictionResultTeamB es el número de goles del equipo B
+                goalsA: prediction.predictionResultTeamA, 
+                goalsB: prediction.predictionResultTeamB,
                 scoreObtained: prediction.scoreObtained,
                 date: prediction.matchDate
             });
