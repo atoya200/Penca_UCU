@@ -42,9 +42,12 @@ export async function registerUser(user: any): Promise<boolean> {
         con = await pool.getConnection()
         await con.beginTransaction();
 
-        await con.execute('INSERT INTO `user`(`ci`, `password`) VALUES (?, ?)', [user.ci, user.password]);
-        await con.execute('INSERT INTO `student`(`ci`, `firstname`,`lastname`, `email`) VALUES (?, ?, ?, ?)', [user.ci, user.firstname, user.lastname, user.email]);
-        await con.execute('INSERT INTO `studies`(`ci_student`, `id_career`) VALUES (?, ?)', [user.ci, user.career.id]);
+        await con.execute('INSERT INTO `user`(`ci`, `password`, `email`) VALUES (?, ?, ?)', [user.ci, user.password, user.email]);
+        await con.execute('INSERT INTO `student`(`ci`, `firstname`,`lastname`) VALUES (?, ?, ?)', [user.ci, user.firstname, user.lastname])
+
+        for (var i = 0; i < user.career.id.length; i++) {
+            await con.execute('INSERT INTO `studies`(`ci_student`, `id_career`) VALUES (?, ?)', [user.ci, user.career.id[i]]);
+        } // i is the index
 
         await con.commit();
 
