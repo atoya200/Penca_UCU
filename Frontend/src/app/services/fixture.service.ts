@@ -18,7 +18,7 @@ export class FixtureService {
 
   }
    // Datos de campeonatos de prueba 
-  championships: Championship[] = [{
+    championships: Championship[] = [{
     id: 1,
     name: "Copa Libertadores",
     description: "Copa Libertadores 2021",
@@ -35,7 +35,7 @@ export class FixtureService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
-
+          scoreObtained: 0,
           date: new Date(2022, 5, 10)
         },
         {
@@ -44,7 +44,7 @@ export class FixtureService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
-
+          scoreObtained: 0,
           date: new Date()
         },
         {
@@ -53,7 +53,7 @@ export class FixtureService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
-
+          scoreObtained: 0,
           date: new Date()
         }
       ]
@@ -68,6 +68,7 @@ export class FixtureService {
         teamB: "Argentina",
         goalsA: 23,
         goalsB: 0,
+        scoreObtained: 0,
         date: new Date()
       },
       {
@@ -76,7 +77,8 @@ export class FixtureService {
         teamB: "Peru",
         goalsA: 1,
         goalsB: 5,
-        date: new Date()
+        scoreObtained: 0,
+        date: new Date(2025, 5, 10)
       },
       {
         id: 6,
@@ -84,6 +86,7 @@ export class FixtureService {
         teamB: "España",
         goalsA: 10,
         goalsB: 2,
+        scoreObtained: 0,
         date: new Date(2024, 5, 10)
       }
     ]
@@ -107,6 +110,7 @@ export class FixtureService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
+          scoreObtained: 0,
           date: new Date()
         },
         {
@@ -115,6 +119,7 @@ export class FixtureService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
+          scoreObtained: 0,
           date: new Date()
         },
         {
@@ -123,6 +128,7 @@ export class FixtureService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
+          scoreObtained: 0,
           date: new Date()
         }
         ]
@@ -133,8 +139,12 @@ export class FixtureService {
   actualChampionship: Championship = null;
 
   // Obtener todas las predicciones del usuario del campeonato seleccionado
+  /*
   getPredictions(id: number){
-    //this.http.get<Championship>('http://localhost:3000/user/predictions/' + id)
+    let predictions = "http://localhost:3000/prediction/" + id;
+    console.log(predictions)
+    this.http.get<Championship>(predictions)
+    
     for (let i = 0; i < this.championships.length; i++) {
       console.log("Campeonato: " + this.championships[i].name);
       if (this.championships[i].id === id) {
@@ -146,19 +156,51 @@ export class FixtureService {
       this.actualChampionship = null;
       console.log("No se encontró el campeonato seleccionado");
     }
+    
   }
+  */
 
+  getPredictions(id: number){
+    let predictions = "http://localhost:3000/prediction/" + id;
+    console.log(predictions)
+    this.http.get<Championship>(predictions).subscribe(
+      data => {
+        this.actualChampionship = data;
+        console.log("Campeonato seleccionado: " + this.actualChampionship.name);
+      },
+      error => {
+        this.actualChampionship = null;
+        console.log("No se encontró el campeonato seleccionado");
+      }
+    );
+  }
   viewDetails(): Observable<Championship>{
     return of (this.actualChampionship);
   } 
   
-
+  /*
   //Mandar preddicciones
   savePrediction(match: Match): Observable<any>{
     console.log ('llego:', match)
+
     return of (match);
   }
+  */
 
+  savePrediction(newMatch: Match): Observable<any> {
+    if (this.actualChampionship) {
+      for (let stage of this.actualChampionship.stages) {
+        let matchIndex = stage.matches.findIndex(match => match.id === newMatch.id);
+        if (matchIndex !== -1) {
+          stage.matches[matchIndex] = newMatch;
+          console.log('Predicción guardada:', newMatch);
+          return of(newMatch);
+        }
+      }
+    }
+    console.error('No se encontró el partido para actualizar');
+    return of(null);
+  }
   
 
   getOficialMatchData(match: Match): Observable<Match>{

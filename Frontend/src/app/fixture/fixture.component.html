@@ -52,9 +52,22 @@
         </ng-template>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
-        <button type="button" class="btn btn-primary" (click)="savePrediction()">Guardar nueva predicción</button>
-      </div>
+        <div class="row">
+          <div *ngIf="isNear">
+            <p class="warnning">El partido ya sucedió o está muy cerca de arrancar, no puedes modificar tu predicción</p>
+          </div>
+        </div>
+        <div class="row">
+          <div *ngIf="!validateInput(teamAGoals, teamBGoals)">
+            <p class="warnning">Los resultados de su predicción no son validos</p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <div *ngIf="!isNear && validateInput(teamAGoals, teamBGoals)">
+            <button type="button" class="btn btn-primary" (click)="savePrediction()">Guardar nueva predicción</button>
+          </div>
+        </div>
     </div>
   </div>
 </div>
@@ -71,4 +84,6 @@
   sucedio el partido en letritas rojas
   - Pulir más la logica de si sucedio o no, ver el tema de la hora antes del partido
   si esta sucediendo o una hora antes ya no se pueda enviar 
+  -Despues se puede hacer que si no se puede envir la prediccion le desaparezca el voton de enviar 
+  y decir pq, que va a ser pq el partido sucedio o esta por suceder
 -->
