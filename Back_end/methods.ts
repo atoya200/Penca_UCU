@@ -1,5 +1,6 @@
-import { QueryResult } from "mysql2";
+import { QueryResult, ResultSetHeader } from "mysql2";
 import { pool } from "./index";
+
 
 
 export function isNullOrEmpty(value: any) {
@@ -22,11 +23,10 @@ export async function userExist(ci: String, password: String): Promise<boolean> 
 
 
 export async function insert(command: string, values: string[]): Promise<boolean> {
-    var res = false;
+    var res: any = false;
     try {
         const [result, fields] = await pool.execute(command, values);
-
-        console.log(result);
+        res = (result as ResultSetHeader).insertId != 0
 
     } catch (error) {
         console.log(error);
@@ -42,9 +42,12 @@ export async function registerUser(user: any): Promise<boolean> {
         con = await pool.getConnection()
         await con.beginTransaction();
 
-        await con.execute('INSERT INTO `user`(`ci`, `password`) VALUES (?, ?)', [user.ci, user.password]);
-        await con.execute('INSERT INTO `student`(`ci`, `firstname`,`lastname`, `email`) VALUES (?, ?, ?, ?)', [user.ci, user.firstname, user.lastname, user.email]);
-        await con.execute('INSERT INTO `studies`(`ci_student`, `id_career`) VALUES (?, ?)', [user.ci, user.career.id]);
+        await con.execute('INSERT INTO `user`(`ci`, `password`, `email`) VALUES (?, ?, ?)', [user.ci, user.password, user.email]);
+        await con.execute('INSERT INTO `student`(`ci`, `firstname`,`lastname`) VALUES (?, ?, ?)', [user.ci, user.firstname, user.lastname])
+
+        for (var i = 0; i < user.career.id.length; i++) {
+            await con.execute('INSERT INTO `studies`(`ci_student`, `id_career`) VALUES (?, ?)', [user.ci, user.career.id[i]]);
+        } // i is the index
 
         await con.commit();
 

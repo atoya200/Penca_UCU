@@ -1,7 +1,6 @@
 import { LoginService } from './login.service';
 import { HttpInterceptorFn } from '@angular/common/http';
-import { CookieService } from "ngx-cookie-service";
-import { token } from './login.service';
+import { inject } from '@angular/core';
 
 
 
@@ -9,14 +8,12 @@ export class interceptor {
 
   constructor(private loginService: LoginService) { }
 
-  token = this.loginService.getToken()
-
 }
 
-export const InterceptorInterceptor: HttpInterceptorFn = (req, next) => {
+export let InterceptorInterceptor: HttpInterceptorFn = (req, next) => {
+  const loginservice = inject(LoginService);
 
-  const authToken = token;
-
+  const authToken = loginservice.getToken();
   const authReq = req.clone({
     setHeaders: {
       Authorization: `Bearer ${authToken}`

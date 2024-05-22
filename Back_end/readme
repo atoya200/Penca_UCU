@@ -1,0 +1,8 @@
+Para esta API no pude usar el comando npm start,
+es algo que hay que configurar luego. 
+
+Por ahora basta con compilar con 
+npx tsc 
+el archivo .ts 
+
+y luego hay que correr el .js generado, con node nombre.js

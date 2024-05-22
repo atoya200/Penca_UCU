@@ -45,7 +45,7 @@
                 Apellido no puede estar vacío.
             </div>
         </div>
-   
+
         <div class="form-group">
             <label>Correo electrónico: </label>
             <input class="form-control" formControlName="email" type="text">
@@ -63,15 +63,14 @@
 
         <div class="form-group">
             <label>Carrera: </label>
-            <select #carne class="form-control" formControlName="carrera" name="carrera">
-                <option default value="no">No</option>
-                <option value="si">Si</option>
+            <select class="form-control" formControlName="carrera" name="carrera" multiple>
+                <option *ngFor="let career of Career" [value]="career.id">{{career.carrer_name}}</option>
             </select>
         </div>
         <div class="error" *ngIf="angForm.controls['carrera'].invalid && (angForm.controls['carrera'].dirty 
             || angForm.controls['carrera'].touched)">
-            <div [hidden]="!angForm.controls['carne'].errors.required">
-                Fecha de nacimiento no puede estar vacía.
+            <div [hidden]="!angForm.controls['carrera'].errors.required">
+                Debe seleccionar al menos una carrera.
             </div>
         </div>
 
@@ -87,14 +86,12 @@
             </div>
         </div>
 
-        <!-- FIN REGISTRARSE -->
-
         <div id="botones">
             <button type="submit" class="btn btn-secondary" (click)="volver()">
                 Volver
             </button>
             <button type="submit" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary"
-                (click)="enviarFormulario()">
+                (click)="registrar()">
                 Registrarse
             </button>
         </div>
