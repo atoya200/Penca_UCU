@@ -1,0 +1,13 @@
+<div class="championships-container">
+    <h2>Listado de Campeonatos</h2>
+    <ul class="championship-list">
+      <li *ngFor="let championship of championships" (click)="viewDetails(championship.id)">
+        <div class="championship-card">
+          <h3>{{ championship.name }}</h3>
+          <p>{{ championship.description }}</p>
+        </div>
+      </li>
+    </ul>
+</div>
+
+<button class="floating-button" >Entrar a nueva penca</button>

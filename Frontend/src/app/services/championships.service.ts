@@ -1,23 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Match } from 'Match';
-import { Stage } from 'Stage';
-import { Championship } from 'Championship';
 import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, of } from 'rxjs'
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { Championship } from 'Championship';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FixtureService {
+export class ChampionshipsService {
 
-  constructor(private http: HttpClient, private cookies: CookieService) {
+  constructor() { }
 
-  }
-   // Datos de campeonatos de prueba 
+  http: HttpClient;
+
   championships: Championship[] = [{
     id: 1,
     name: "Copa Libertadores",
@@ -35,8 +30,7 @@ export class FixtureService {
           teamB: "Barca",
           goalsA: 7,
           goalsB: 0,
-
-          date: new Date(2022, 5, 10)
+          date: new Date()
         },
         {
           id: 2,
@@ -44,7 +38,6 @@ export class FixtureService {
           teamB: "Peñarol",
           goalsA: 1,
           goalsB: 0,
-
           date: new Date()
         },
         {
@@ -53,7 +46,6 @@ export class FixtureService {
           teamB: "Boca",
           goalsA: 1,
           goalsB: 1,
-
           date: new Date()
         }
       ]
@@ -84,7 +76,7 @@ export class FixtureService {
         teamB: "España",
         goalsA: 10,
         goalsB: 2,
-        date: new Date(2024, 5, 10)
+        date: new Date()
       }
     ]
   }
@@ -130,38 +122,18 @@ export class FixtureService {
     ]
   }
 ];
-  actualChampionship: Championship = null;
 
-  // Obtener todas las predicciones del usuario del campeonato seleccionado
-  getPredictions(id: number){
-    //this.http.get<Championship>('http://localhost:3000/user/predictions/' + id)
-    for (let i = 0; i < this.championships.length; i++) {
-      console.log("Campeonato: " + this.championships[i].name);
-      if (this.championships[i].id === id) {
-          this.actualChampionship = this.championships[i];
-          console.log("Campeonato seleccionado: " + this.actualChampionship.name);
-      }
-    }
-    if (this.actualChampionship === null) {
-      this.actualChampionship = null;
-      console.log("No se encontró el campeonato seleccionado");
-    }
+  // Obtener campeonatos asociados a un usuario (unicamente los nombres e id's)
+  getChampionships(): Observable<Championship[]>{
+    //return this.http.get<Championship[]>('http://localhost:3000/user/championships')
+    return of(this.championships);
   }
-
-  viewDetails(): Observable<Championship>{
-    return of (this.actualChampionship);
-  } 
   
-
-  //Mandar preddicciones
-  savePrediction(match: Match): Observable<any>{
-    console.log ('llego:', match)
-    return of (match);
-  }
-
-  
-
-  getOficialMatchData(match: Match): Observable<Match>{
-    return of (this.actualChampionship.stages[0].matches[0])
+  // Anotar usuario a penca
+  joinChampionship(id: number){
+    //return this.http.post('http://localhost:3000/user/joinChampionship', {id})
   }
 }
+
+
+

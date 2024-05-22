@@ -1,14 +1,18 @@
 export class Match {
 
-    private teamA: string;
-    private teamB: string;
-    private goalsA: number;
-    private goalsB: number;
+    id : number;
+    teamA: string;
+    teamB: string;
+    goalsA: number;
+    goalsB: number;
+    date: Date;
 
-    constructor ( teamA: string,  teamB: string, goalsA: number, goalsB: number) {
+    constructor ( id: number, teamA: string,  teamB: string, goalsA: number, goalsB: number, date: Date) {
+        this.id = id;
         this.teamA = teamA;
         this.teamB = teamB;
         this.goalsA = goalsA;
         this.goalsB = goalsB;
+        this.date = date;
     }
 }
