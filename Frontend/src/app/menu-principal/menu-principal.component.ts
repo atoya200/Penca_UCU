@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
-import { PhaseService } from '../phase.service';
+import { StageService } from '../stage.service';
 @Component({
   selector: 'app-menu-principal',
   standalone: true,
@@ -28,8 +28,9 @@ export class MenuPrincipalComponent implements AfterViewInit {
   angFormCrearFase: FormGroup;
   angFormVerFase: FormGroup;
   imagen: any = "";
+  Fases: any = [];
 
-  constructor(private phaseService: PhaseService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipService, private sanitizer: DomSanitizer) {
+  constructor(private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipService, private sanitizer: DomSanitizer) {
 
     this.createForm();
 
@@ -122,6 +123,30 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
   crearFase() {
     // ingresar fase
+
+    this.stageService.registerStage(this.angFormCrearFase.get('nombreFase').value).subscribe(
+      data => {
+
+        alert("Fase creada con éxito.");
+
+      },
+      error => {
+
+        alert(error.error.msg)
+        console.log(error);
+      });
+  }
+
+  buscarFases() {
+    this.stageService.getAllStages().subscribe(
+      data => {
+        this.Fases = data.stages;
+      },
+      error => {
+        this.Fases = [];
+        alert(error.error.msg)
+        console.log(error);
+      });
   }
 
   ngAfterViewInit() {

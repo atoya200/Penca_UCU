@@ -22,8 +22,9 @@
                         aria-expanded="false">
                         Equipos
                     </a>
-                    <ul class="dropdown-menu" data-bs-toggle="modal" data-bs-target="#modalEquipos">
-                        <li><a (click)="limpiarDatos()" class="dropdown-item">Ingresar equipo</a></li>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalEquipos">Ingresar equipo</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -31,8 +32,12 @@
                         aria-expanded="false">
                         Fases
                     </a>
-                    <ul class="dropdown-menu" data-bs-toggle="modal" data-bs-target="#modalCrearFases">
-                        <li><a (click)="limpiarDatos()" class="dropdown-item">Crear fase</a></li>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalCrearFases">Crear fase</a></li>
+
+                        <li><a (click)="buscarFases()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalVerFases">Ver fases</a></li>
                     </ul>
                 </li>
             </ul>
@@ -145,4 +150,26 @@
         </div>
 
     </form>
+</div>
+
+<!--Modal Ver Fases-->
+<div class="modal fade" tabindex="-1" id="modalVerFases" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Fases</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    <li *ngIf="Fases.length == 0" class="list-group-item">No hay fases.</li>
+                    <li *ngFor="let fase of Fases" class="list-group-item">{{fase.name}}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+            </div>
+        </div>
+    </div>
 </div>
