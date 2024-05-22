@@ -26,9 +26,14 @@ export class MenuPrincipalComponent implements AfterViewInit {
   imagenCargada: any;
   angForm: FormGroup;
   angFormCrearFase: FormGroup;
+  angFormPencaId: FormGroup;
   angFormVerFase: FormGroup;
+  angFormElegirEquipos: FormGroup;
   imagen: any = "";
   Fases: any = [];
+  pencaValida: boolean = false;
+  Equipos: any = []
+
 
   constructor(private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipService, private sanitizer: DomSanitizer) {
 
@@ -42,10 +47,23 @@ export class MenuPrincipalComponent implements AfterViewInit {
       equipo: ['', [Validators.required, Validators.maxLength(20)]],
       imagen: ['']
     });
+
     // Form crear fase
     this.angFormCrearFase = this.fb.group({
       nombreFase: ['', [Validators.required, Validators.maxLength(20)]]
     });
+
+    // Form id penca
+    this.angFormPencaId = this.fb.group({
+      idPenca: ['', [Validators.required, Validators.pattern("/^[0-9]*$")]],
+    });
+
+    this.angFormElegirEquipos = this.fb.group({
+      equipoCampeon: ['', [Validators.required]],
+      equipoSubcampeon: ['', [Validators.required]]
+    });
+
+
   }
 
   ngOnInit(): void {
@@ -62,7 +80,6 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
     this.isAdmin = this.loginService.getUserType().type == 'Admin';
 
-
   }
 
 
@@ -70,6 +87,10 @@ export class MenuPrincipalComponent implements AfterViewInit {
     this.angForm.get('equipo').reset()
     this.angForm.get('imagen').reset()
     this.angFormCrearFase.get('nombreFase').reset()
+    this.angFormPencaId.get('idPenca').reset()
+    this.angFormElegirEquipos.get('equipoCampeon').reset()
+    this.angFormElegirEquipos.get('equipoSubcampeon').reset()
+
   }
 
 
@@ -147,6 +168,19 @@ export class MenuPrincipalComponent implements AfterViewInit {
         alert(error.error.msg)
         console.log(error);
       });
+  }
+
+  buscarEquipos(): void {
+
+
+  }
+
+  elegirEquipos(): void {
+
+  }
+
+  inscribirPenca(): void {
+
   }
 
   ngAfterViewInit() {
