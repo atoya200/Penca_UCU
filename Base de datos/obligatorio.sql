@@ -179,12 +179,12 @@ INSERT INTO team_participation (idTeam, idChampionship) VALUES (4, 1);
 INSERT INTO championshipMatch (idTeamA, idTeamB, matchDate, idStage, idChampionship, resultTeamA, resultTeamB)
 VALUES (1, 2, '2022-05-10', 1, 1, 2, 1);
 INSERT INTO championshipMatch (idTeamA, idTeamB, matchDate, idStage, idChampionship, resultTeamA, resultTeamB)
-VALUES (3, 4, '2022-05-11', 1, 1, 1, 0);
+VALUES (3, 4, '2025-05-11', 1, 1, 1, 0);
 
 INSERT INTO predictions (matchId ,teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, ci)
 VALUES (1, 1, 2, '2022-05-10', 1, 2, 1, 3, 1, '7654321');
 INSERT INTO predictions (matchId, teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, ci)
-VALUES (2, 3, 4, '2022-05-11', 1, 1, 0, 3, 1, '7654321');
+VALUES (2, 3, 4, '2025-05-11', 1, 1, 0, 3, 1, '7654321');
 
 
 SELECT

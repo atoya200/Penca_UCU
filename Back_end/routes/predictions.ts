@@ -8,7 +8,7 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
     var decoded = middleware.decode(req.headers['authorization'])
     console.log("campeonato: " + req.params.id)
     try {
-        var predictions = await methods.query('SELECT tA.name AS teamAName, tB.name AS teamBName, cm.matchDate, ch.name AS championshipName, st.name AS stageName, p.predictionResultTeamA, p.predictionResultTeamB, p.scoreObtained FROM predictions p JOIN student s ON p.ci = s.ci JOIN championshipMatch cm ON p.idchampionship = cm.idChampionship AND p.idstage = cm.idStage AND p.teamA = cm.idTeamA AND p.teamB = cm.idTeamB AND p.matchDate = cm.matchDate JOIN team tA ON p.teamA = tA.id JOIN team tB ON p.teamB = tB.id JOIN championship ch ON p.idchampionship = ch.id JOIN stage st ON p.idstage = st.id WHERE p.ci = ? AND p.idchampionship = ?;', [decoded.user.ci, req.params.id]);
+        var predictions = await methods.query('SELECT p.matchId AS matchId, tA.name AS teamAName, tB.name AS teamBName, cm.matchDate, ch.name AS championshipName, st.name AS stageName, p.predictionResultTeamA, p.predictionResultTeamB, p.scoreObtained FROM predictions p JOIN student s ON p.ci = s.ci JOIN championshipMatch cm ON p.idchampionship = cm.idChampionship AND p.idstage = cm.idStage AND p.teamA = cm.idTeamA AND p.teamB = cm.idTeamB AND p.matchDate = cm.matchDate JOIN team tA ON p.teamA = tA.id JOIN team tB ON p.teamB = tB.id JOIN championship ch ON p.idchampionship = ch.id JOIN stage st ON p.idstage = st.id WHERE p.ci = ? AND p.idchampionship = ?;', [decoded.user.ci, req.params.id]);
         const stages = [];
         for (const prediction of predictions) {
             let stage = stages.find(stage => stage.name === prediction.stageName);
@@ -21,8 +21,9 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
                 };
                 stages.push(stage);
             }
-d
+
             // Agregar el partido a la etapa
+            console.log("matchId: " + prediction.matchId)
             stage.matches.push({
                 id: prediction.matchId, 
                 teamA: prediction.teamAName,
@@ -44,7 +45,6 @@ d
 
         res.status(200).send(response);
         res.status(200)
-        res.send(JSON.stringify({ "predictions": response }));
 
     } catch (error) {
         res.status(500);
