@@ -160,23 +160,23 @@ export class FixtureService {
   }
   */
 
-  getPredictions(id: number){
+  getPredictions(id: number): Observable<Championship>{
     let predictions = "http://localhost:3000/prediction/" + id;
     console.log(predictions)
     this.http.get<Championship>(predictions).subscribe(
       data => {
         this.actualChampionship = data;
         console.log("Campeonato seleccionado: " + this.actualChampionship.name);
+        return of(this.actualChampionship);
       },
       error => {
         this.actualChampionship = null;
         console.log("No se encontró el campeonato seleccionado");
+        return of(null);
       }
     );
+    return of(null);
   }
-  viewDetails(): Observable<Championship>{
-    return of (this.actualChampionship);
-  } 
   
   /*
   //Mandar preddicciones

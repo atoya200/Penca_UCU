@@ -21,7 +21,7 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
                 };
                 stages.push(stage);
             }
-
+            
             // Agregar el partido a la etapa
             console.log("matchId: " + prediction.matchId)
             stage.matches.push({

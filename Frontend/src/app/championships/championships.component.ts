@@ -25,15 +25,19 @@ export class ChampionshipsComponent {
   showModal: boolean = false;
 
   ngOnInit(): void {
+
+    console.log("Getting championships");
+
     this.service.getChampionships().subscribe((championships) => {
-      this.championships = championships
-      console.log("campeonatos: " + championships);
-      console.log("campeonatos: " + this.championships[0].name +", " + this.championships[1].name);
+      console.log("Championships received: " + JSON.stringify(championships) );
+      championships.forEach(championship => {
+        this.championships.push(championship);
+      });
+      console.log("Championships: " + JSON.stringify(this.championships));
     });
   }
 
   viewDetails(id: number){
-    this.fixtureService.getPredictions(id);
     this.router.navigate(['/fixture', id]);
     console.log("Viewing details of championship with id: " + id);
   }

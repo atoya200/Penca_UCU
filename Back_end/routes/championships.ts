@@ -12,15 +12,14 @@ router.post('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (r
 router.get('/', [middleware.verifyUser], async (req, res) => {
     // returns championships user is/has participated in
     var decoded = middleware.decode(req.headers['authorization'])
-
     try {
-        var championships = await methods.query('select c.id, c.name from predict_first p inner join championship c on c.id=p.idChampionship where p.ci=?;', [decoded.user.ci]);
+        var championships = await methods.query('select c.id, c.name, c.description from predict_first p inner join championship c on c.id=p.idChampionship where p.ci=?;', [decoded.user.ci]);
         res.status(200)
-        res.send(JSON.stringify({ "championships": championships }));
+        res.send(JSON.stringify(championships));
 
     } catch (error) {
         res.status(500);
-        res.send(JSON.stringify({ msg: "Error. Intente más tarde." }))
+        res.send(JSON.stringify({ msg: "Error al obtener los campionatos inscriptos." }))
     }
 
 })

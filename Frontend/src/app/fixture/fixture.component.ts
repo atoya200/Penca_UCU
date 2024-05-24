@@ -9,6 +9,7 @@ import {CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-fixture',
@@ -20,7 +21,7 @@ import { Router } from '@angular/router';
 
 export class FixtureComponent {
 
-  constructor(private service: FixtureService, private router: Router) {
+  constructor(private service: FixtureService, private router: Router, private route: ActivatedRoute) {
   }
 
   championship: Championship = null
@@ -40,10 +41,15 @@ export class FixtureComponent {
   isValid: boolean = true;
 
   ngOnInit(): void {
-   this.service.viewDetails().subscribe((championship) => {
-    this.championship = championship
-    console.log(championship);
-  });
+    this.route.params.subscribe(params => {
+      const id = params['id']; // reemplaza 'id' con el nombre real del parámetro en tu URL
+      console.log("el id es: " + id);
+  
+      this.service.getPredictions(id).subscribe((championship) => {
+        this.championship = championship
+        console.log(championship);
+      });
+    });
   }
 
   getMatchData(match: Match){
@@ -74,12 +80,11 @@ export class FixtureComponent {
       console.log("El partido ha sucedido: " + matchDate + " < " + now);
       this.happened = true;
       this.isNear = true;
-      // Call to get the official result
     } else if (matchDate >= now) {
       console.log("El partido no ha sucedido: " + matchDate + " >= " + now);
       this.happened = false;
       
-      if (timeDifference < 1800000) { // 1800000 milliseconds = 30 minutes
+      if (timeDifference < 3600000) { 
         console.log("El partido está por suceder");
         this.isNear = true;
       } else {

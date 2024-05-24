@@ -3,15 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, of } from 'rxjs'
 import { Championship } from 'Championship';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChampionshipsService {
 
-  constructor() { }
-
-  http: HttpClient;
+  constructor(private http: HttpClient) { }
 
   championships: Championship[] = [{
     id: 1,
@@ -134,8 +133,7 @@ export class ChampionshipsService {
 
   // Obtener campeonatos asociados a un usuario (unicamente los nombres e id's)
   getChampionships(): Observable<Championship[]>{
-    //return this.http.get<Championship[]>('http://localhost:3000/user/championships')
-    return of(this.championships);
+    return this.http.get<Championship[]>('http://localhost:3000/championships')
   }
   
   // Anotar usuario a penca

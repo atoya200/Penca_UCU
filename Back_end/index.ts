@@ -61,7 +61,7 @@ app.use(cors(corsOptions));
 // Routes
 app.use('/match', matchesRouter)
 app.use('/user', usersRouter)
-app.use('/championship', championshipRouter)
+app.use('/championships', championshipRouter)
 app.use('/prediction', predictionsRouter)
 app.use('/notification', notificationRouter)
 app.use('/team', teamsRouter)
