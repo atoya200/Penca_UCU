@@ -42,7 +42,7 @@ export class FixtureComponent {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const id = params['id']; // reemplaza 'id' con el nombre real del parámetro en tu URL
+      const id = params['id'];
       console.log("el id es: " + id);
   
       this.service.getPredictions(id).subscribe((championship) => {

@@ -8,6 +8,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs'
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -138,54 +139,22 @@ export class FixtureService {
 ];
   actualChampionship: Championship = null;
 
-  // Obtener todas las predicciones del usuario del campeonato seleccionado
-  /*
-  getPredictions(id: number){
+  getPredictions(id: number): Observable<Championship> {
     let predictions = "http://localhost:3000/prediction/" + id;
     console.log(predictions)
-    this.http.get<Championship>(predictions)
-    
-    for (let i = 0; i < this.championships.length; i++) {
-      console.log("Campeonato: " + this.championships[i].name);
-      if (this.championships[i].id === id) {
-          this.actualChampionship = this.championships[i];
-          console.log("Campeonato seleccionado: " + this.actualChampionship.name);
-      }
-    }
-    if (this.actualChampionship === null) {
-      this.actualChampionship = null;
-      console.log("No se encontró el campeonato seleccionado");
-    }
-    
-  }
-  */
-
-  getPredictions(id: number): Observable<Championship>{
-    let predictions = "http://localhost:3000/prediction/" + id;
-    console.log(predictions)
-    this.http.get<Championship>(predictions).subscribe(
-      data => {
+    return this.http.get<Championship>(predictions).pipe(
+      tap(data => {
         this.actualChampionship = data;
         console.log("Campeonato seleccionado: " + this.actualChampionship.name);
-        return of(this.actualChampionship);
-      },
-      error => {
+      }),
+      catchError(error => {
         this.actualChampionship = null;
         console.log("No se encontró el campeonato seleccionado");
         return of(null);
-      }
+      })
     );
-    return of(null);
   }
-  
-  /*
-  //Mandar preddicciones
-  savePrediction(match: Match): Observable<any>{
-    console.log ('llego:', match)
 
-    return of (match);
-  }
-  */
 
   savePrediction(newMatch: Match): Observable<any> {
     if (this.actualChampionship) {
