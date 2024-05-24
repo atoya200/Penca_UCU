@@ -186,7 +186,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="form" [formGroup]="angFormPencaId" novalidate>
+                <form *ngIf="!pencaValida" class="form" [formGroup]="angFormPencaId" novalidate>
                     <div class="form-group">
                         <label for="descripcion">ID Penca: </label>
                         <input type="text" class="form-control" formControlName="idPenca" id="idPenca"
@@ -197,22 +197,20 @@
                         <div [hidden]="!angFormPencaId.controls['idPenca'].errors.required">
                             El ID penca no puede estar vacío.
                         </div>
-                        <div [hidden]="!angFormPencaId.controls['idPenca'].errors.pattern">
-                            El ID penca solo puede contener números.
+                        <div [hidden]="!angFormPencaId.controls['idPenca'].errors.notExists">
+                            Penca no existe.
                         </div>
                     </div>
-
                 </form>
-                <form class="form" [formGroup]="angFormElegirEquipos" novalidate>
 
+                <form *ngIf="pencaValida" class="form" [formGroup]="angFormElegirEquipos" novalidate>
                     <div class="form-group">
                         <label>Campeon: </label>
-
-                        <select class="form-select form-select" formControlName="equipoCampeon">
+                        <select class="form-select form-control" formControlName="equipoCampeon">
                             <option *ngFor="let equipo of Equipos" [value]="equipo.id">{{equipo.name}}</option>
                         </select>
-
                     </div>
+
                     <div class="error" *ngIf="angFormElegirEquipos.controls['equipoCampeon'].invalid && (angFormElegirEquipos.controls['equipoCampeon'].dirty || 
                     angFormElegirEquipos.controls['equipoCampeon'].touched)">
                         <div [hidden]="!angFormElegirEquipos.controls['equipoCampeon'].errors.required">
@@ -227,6 +225,7 @@
                             <option *ngFor="let equipo of Equipos" [value]="equipo.id">{{equipo.name}}</option>
                         </select>
                     </div>
+
                     <div class="error" *ngIf="angFormElegirEquipos.controls['equipoSubcampeon'].invalid && (angFormElegirEquipos.controls['equipoSubcampeon'].dirty || 
                     angFormElegirEquipos.controls['equipoSubcampeon'].touched)">
                         <div [hidden]="!angFormElegirEquipos.controls['equipoSubcampeon'].errors.required">

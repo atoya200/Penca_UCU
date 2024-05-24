@@ -1,14 +1,16 @@
 import { Component, Input, AfterViewInit } from '@angular/core';
 import { LoginService } from '../login.service';
-import { ChampionshipService } from '../championship.service';
+import { ChampionshipsService } from '../services/championships.service';
 import { NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
 import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm, AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
 import { StageService } from '../stage.service';
+import { Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-menu-principal',
   standalone: true,
@@ -35,7 +37,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   Equipos: any = []
 
 
-  constructor(private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipService, private sanitizer: DomSanitizer) {
+  constructor(private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipsService, private sanitizer: DomSanitizer) {
 
     this.createForm();
 
@@ -55,7 +57,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
     // Form id penca
     this.angFormPencaId = this.fb.group({
-      idPenca: ['', [Validators.required, Validators.pattern("/^[0-9]*$")]],
+      idPenca: ['', [Validators.required]],
     });
 
     this.angFormElegirEquipos = this.fb.group({
@@ -90,9 +92,9 @@ export class MenuPrincipalComponent implements AfterViewInit {
     this.angFormPencaId.get('idPenca').reset()
     this.angFormElegirEquipos.get('equipoCampeon').reset()
     this.angFormElegirEquipos.get('equipoSubcampeon').reset()
+    this.pencaValida = false;
 
   }
-
 
   eliminarImagen(): void {
     this.angForm.get('imagen').reset()
@@ -170,16 +172,62 @@ export class MenuPrincipalComponent implements AfterViewInit {
       });
   }
 
-  buscarEquipos(): void {
-
-
-  }
 
   elegirEquipos(): void {
+    // validar si el ID penca(campeonato) existe
+    // Si existe, ir a buscar los equiops del campeonato y cargarlos en el select
+
+    this.championshipService.getTeams(this.angFormPencaId.get('idPenca').value).subscribe(
+      data => {
+        this.Equipos = data.teams;
+        if (this.Equipos.length == 0) {
+          this.angFormPencaId.controls['idPenca'].setErrors({ 'notExists': 'true' });
+        } else {
+          this.angFormPencaId.controls['idPenca'].setErrors(null);
+          this.pencaValida = true;
+        }
+
+        console.log(this.Equipos);
+      },
+      error => {
+        this.pencaValida = false;
+        this.Equipos = [];
+        alert(error.error.msg)
+        console.log(error);
+      });
+
 
   }
 
+  /*
+  checkPencaExists(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors> | null => {
+      if (!control.value) {
+        return of(null);
+      }
+      debugger;
+      if (this.Equipos.length != 0) {
+        return of({ pencaExists: true });
+      } else {
+        return of({ pencaExists: false });
+      }
+
+    };
+  }
+*/
+
   inscribirPenca(): void {
+
+    this.championshipService.joinChampionship(this.angFormPencaId.get('idPenca').value, this.angFormElegirEquipos.get('equipoCampeon').value, this.angFormElegirEquipos.get('equipoSubcampeon').value).subscribe(
+      data => {
+        alert("Se inscribío con éxito a la penca.");
+
+      },
+      error => {
+        alert(error.error.msg)
+        console.log(error);
+      });
+
 
   }
 
