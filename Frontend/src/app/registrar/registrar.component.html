@@ -63,7 +63,7 @@
 
         <div class="form-group">
             <label>Carrera: </label>
-            <select class="form-control" formControlName="carrera" name="carrera" multiple>
+            <select class="form-select form-control" formControlName="carrera" name="carrera" size="2" multiple>
                 <option *ngFor="let career of Career" [value]="career.id">{{career.carrer_name}}</option>
             </select>
         </div>

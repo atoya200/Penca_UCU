@@ -60,6 +60,7 @@ export async function registerUser(user: any): Promise<boolean> {
     return res;
 }
 
+
 export async function query(command: string, values: string[]): Promise<any> {
     var response = null;
     try {
@@ -70,5 +71,29 @@ export async function query(command: string, values: string[]): Promise<any> {
     }
 
     return response;
+}
+
+export async function registerUserAsParicipant(championshipId: any, userCi: any, championId: any, runnerUpId: any): Promise<boolean> {
+    var res = false;
+    let con;
+    try {
+        con = await pool.getConnection()
+        await con.beginTransaction();
+
+        await con.execute('insert into `points` (`ci`, `idChampionship`) values (?, ?)', [userCi, championshipId]);
+
+        await con.execute('insert into `predict_first`(`idTeam`, `idChampionship`, `ci`) values (?, ?, ?)', [championId, championshipId, userCi]);
+
+        await con.execute('insert into `predict_second`(`idTeam`, `idChampionship`, `ci`) values (?, ?, ?)', [runnerUpId, championshipId, userCi]);
+
+        await con.commit();
+
+        res = true;
+    } catch (error) {
+        console.log(error);
+        await con.rollback(); // reverse operations
+    }
+
+    return res;
 }
 
