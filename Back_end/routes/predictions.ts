@@ -26,7 +26,7 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
             // Agregar el partido a la etapa
             console.log("matchId: " + prediction.matchId)
             stage.matches.push({
-                id: prediction.matchId, 
+                matchId: prediction.matchId, 
                 teamA: prediction.teamAName,
                 teamB: prediction.teamBName,
                 goalsA: prediction.predictionResultTeamA, 
@@ -114,7 +114,7 @@ router.post('/', [middleware.verifyUser], async (req, res) => {
             throw new Error("Falló la actualización en la base de datos.");
         }
 
-        res.status(200).send();
+        res.status(200).send({"success": true});
     } catch (error) {
         console.error(error);  // Para ayudar en la depuración
         res.status(500).json({ msg: "Error. Intente más tarde." });

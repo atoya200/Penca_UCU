@@ -45,7 +45,16 @@ export class FixtureService {
       "newMatch": newMatch
     }
     console.log(body);
-    return this.http.post(url, body); 
+    return this.http.post<any>(url, body).pipe(
+      map(response => {
+        console.log('Respuesta del servidor:', response);
+        return response.success === true;
+      }),
+      catchError(error => {
+        console.error('Error en la solicitud:', error);
+        return of(false);
+      })
+    );
 } 
 
   getOficialMatchData(match: Match): Observable<Match>{
