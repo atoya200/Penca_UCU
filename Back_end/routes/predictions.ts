@@ -121,5 +121,18 @@ router.post('/', [middleware.verifyUser], async (req, res) => {
     }
 });
 
+// Obtener los resultados oficiales de un partido
+router.get('/oficialMatch/:id', [middleware.verifyUser], async (req, res) => {
+    // returns championships user is/has participated in
+    var decoded = middleware.decode(req.headers['authorization'])
+    try {
+        var championships = await methods.query('SELECT resultTeamA,resultTeamB FROM championshipMatch WHERE id = ?;', [req.params.id]);
+        res.status(200)
+        res.send(JSON.stringify(championships));
+    } catch (error) {
+        res.status(500);
+        res.send(JSON.stringify({ msg: "Error al obtener los resultados del partido oficial." }))
+    }
+})
 
 export default router;
