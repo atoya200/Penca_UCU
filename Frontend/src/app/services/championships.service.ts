@@ -14,7 +14,7 @@ export class ChampionshipsService {
 
   // Obtener campeonatos asociados a un usuario (unicamente los nombres e id's)
   getChampionships(): Observable<Championship[]>{
-    return this.http.get<Championship[]>('http://localhost:3000/championships')
+    return this.http.get<Championship[]>('http://localhost:3000/championship')
   }
   
   // Anotar usuario a penca
