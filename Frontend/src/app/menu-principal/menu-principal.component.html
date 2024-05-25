@@ -4,7 +4,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="!isAdmin">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/menu">Participar en penca</a>
+                    <a (click)="limpiarDatos()" class="nav-link active" href="#modalParticiparPenca" aria-current="page"
+                        data-bs-toggle="modal" data-bs-target="#modalParticiparPenca">Participar en penca</a>
                 </li>
             </ul>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isAdmin">
@@ -174,4 +175,79 @@
             </div>
         </div>
     </div>
+</div>
+
+<!--Modal participar en penca-->
+<div class="modal fade" tabindex="-1" id="modalParticiparPenca" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Participar en penca</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form *ngIf="!pencaValida" class="form" [formGroup]="angFormPencaId" novalidate>
+                    <div class="form-group">
+                        <label for="descripcion">ID Penca: </label>
+                        <input type="text" class="form-control" formControlName="idPenca" id="idPenca"
+                            name="nombreFase">
+                    </div>
+                    <div class="error" *ngIf="angFormPencaId.controls['idPenca'].invalid && (angFormPencaId.controls['idPenca'].dirty || 
+                    angFormPencaId.controls['idPenca'].touched)">
+                        <div [hidden]="!angFormPencaId.controls['idPenca'].errors.required">
+                            El ID penca no puede estar vacío.
+                        </div>
+                        <div [hidden]="!angFormPencaId.controls['idPenca'].errors.notExists">
+                            Penca no existe.
+                        </div>
+                    </div>
+                </form>
+
+                <form *ngIf="pencaValida" class="form" [formGroup]="angFormElegirEquipos" novalidate>
+                    <div class="form-group">
+                        <label>Campeon: </label>
+                        <select class="form-select form-control" formControlName="equipoCampeon">
+                            <option *ngFor="let equipo of Equipos" [value]="equipo.id">{{equipo.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="error" *ngIf="angFormElegirEquipos.controls['equipoCampeon'].invalid && (angFormElegirEquipos.controls['equipoCampeon'].dirty || 
+                    angFormElegirEquipos.controls['equipoCampeon'].touched)">
+                        <div [hidden]="!angFormElegirEquipos.controls['equipoCampeon'].errors.required">
+                            Debe seleccionar un equipo campeon.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subcampeon: </label>
+                        <select class="form-select form-control" formControlName="equipoSubcampeon"
+                            name="equipoSubcampeon">
+                            <option *ngFor="let equipo of Equipos" [value]="equipo.id">{{equipo.name}}</option>
+                        </select>
+                    </div>
+
+                    <div class="error" *ngIf="angFormElegirEquipos.controls['equipoSubcampeon'].invalid && (angFormElegirEquipos.controls['equipoSubcampeon'].dirty || 
+                    angFormElegirEquipos.controls['equipoSubcampeon'].touched)">
+                        <div [hidden]="!angFormElegirEquipos.controls['equipoSubcampeon'].errors.required">
+                            Debe seleccionar un equipo subcampeon.
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                <button *ngIf="!pencaValida" (click)="elegirEquipos()" type="button"
+                    [disabled]="angFormPencaId.pristine || angFormPencaId.invalid"
+                    class="btn btn-primary">Siguiente</button>
+
+                <button *ngIf="pencaValida" (click)="inscribirPenca()" type="button"
+                    [disabled]="angFormElegirEquipos.pristine || angFormElegirEquipos.invalid"
+                    class="btn btn-primary">Participar en penca</button>
+            </div>
+        </div>
+    </div>
+
 </div>
