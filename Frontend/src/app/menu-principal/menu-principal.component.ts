@@ -178,7 +178,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   elegirEquipos(): void {
     // validar si el ID penca(campeonato) existe
     // Si existe, ir a buscar los equiops del campeonato y cargarlos en el select
-
+    /*
     this.championshipService.getTeams(this.angFormPencaId.get('idPenca').value).subscribe(
       data => {
         this.Equipos = data.teams;
@@ -197,7 +197,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
         alert(error.error.msg)
         console.log(error);
       });
-
+      */
 
   }
 
