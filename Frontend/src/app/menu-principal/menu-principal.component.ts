@@ -9,12 +9,14 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, N
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
 import { StageService } from '../stage.service';
+import { ChampionshipsComponent } from '../championships/championships.component';
+
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-menu-principal',
   standalone: true,
-  imports: [NgIf, NgFor, CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [NgIf, NgFor, CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ChampionshipsComponent],
   templateUrl: './menu-principal.component.html',
   styleUrl: './menu-principal.component.css'
 })
@@ -176,7 +178,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   elegirEquipos(): void {
     // validar si el ID penca(campeonato) existe
     // Si existe, ir a buscar los equiops del campeonato y cargarlos en el select
-
+    /*
     this.championshipService.getTeams(this.angFormPencaId.get('idPenca').value).subscribe(
       data => {
         this.Equipos = data.teams;
@@ -195,7 +197,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
         alert(error.error.msg)
         console.log(error);
       });
-
+      */
 
   }
 
@@ -243,6 +245,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
 
   }
+
 
 }
 

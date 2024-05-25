@@ -9,6 +9,7 @@ import {CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-fixture',
@@ -20,7 +21,7 @@ import { Router } from '@angular/router';
 
 export class FixtureComponent {
 
-  constructor(private service: FixtureService, private router: Router) {
+  constructor(private service: FixtureService, private router: Router, private route: ActivatedRoute) {
   }
 
   championship: Championship = null
@@ -31,7 +32,7 @@ export class FixtureComponent {
   // El oficial
   match: Match = null;
   showModal: boolean = false;
-  happend : boolean = false;
+  happened : boolean = false;
   //Esto se debe hacer ya que la predicción de algún usuario puede ser 0 - 0
   teamAGoals: string | null = null;
   teamBGoals: string | null = null;
@@ -40,10 +41,15 @@ export class FixtureComponent {
   isValid: boolean = true;
 
   ngOnInit(): void {
-   this.service.viewDetails().subscribe((championship) => {
-    this.championship = championship
-    console.log(championship);
-  });
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      console.log("el id es: " + id);
+  
+      this.service.getPredictions(id).subscribe((championship) => {
+        this.championship = championship
+        console.log(championship);
+      });
+    });
   }
 
   getMatchData(match: Match){
@@ -59,34 +65,39 @@ export class FixtureComponent {
   async openModal(match: any, stage: string) {
     this.selectedMatch = match;
     this.showModal = true;
-    console.log(match.stage)
+    console.log(match.teamA + " vs " + match.teamB + " en la etapa " + stage + " con fecha " + match.date)
     this.actualStage = stage
     this.teamAGoals = match.goalsA.toString();
     this.teamBGoals = match.goalsB.toString();
     await this.getMatchData(match)
-    console.log("Partido oficial : " + this.match)
-    console.log("Sucedio : " + this.happend)
-    if ( match.date.getTime() < new Date()){
-      console.log("El partido ha sucedido"+ match.date + " < " + new Date());
-      this.happend = true;
+    console.log("Partido oficial : " + this.match.goalsA + " - " + this.match.goalsB)
+    console.log("Sucedio : " + this.happened)
+    const matchDate = new Date(match.date);
+    const now = new Date();
+    const timeDifference = matchDate.getTime() - now.getTime();
+
+    if (matchDate < now) {
+      console.log("El partido ha sucedido: " + matchDate + " < " + now);
+      this.happened = true;
       this.isNear = true;
-    }else if (match.date >= new Date()){
-      console.log("El partido no ha sucedido" + match.date + " > " + new Date());
-      this.happend = false;
-      if(this.selectedMatch.date.getTime() - new Date().getTime() < 1800000){
-        console.log("El partido esta por suceder")
+    } else if (matchDate >= now) {
+      console.log("El partido no ha sucedido: " + matchDate + " >= " + now);
+      this.happened = false;
+      
+      if (timeDifference < 3600000) { 
+        console.log("El partido está por suceder");
         this.isNear = true;
-      }else{
-        console.log("El partido no esta por suceder")
+      } else {
+        console.log("El partido no está por suceder");
         this.isNear = false;
       }
     }
-    console.log("Sucedio : " + this.happend)
+    console.log("Sucedio : " + this.happened)
   }
 
   closeModal() {
     this.showModal = false;
-    this.happend = false;
+    this.happened = false;
     this.isNear= false;
     this.isValid = true;
     this.teamAGoals = null;
@@ -94,15 +105,17 @@ export class FixtureComponent {
   }
 
   goBack(){
-    this.router.navigate(['/championships']);
-    this.happend = false;
+    this.router.navigate(['/menu']);
+    this.happened = false;
   }
 
   savePrediction() {
     console.log ('Guardando predicción:', this.teamAGoals, this.teamBGoals, "se acerca: " + this.isNear, "valido: " + this.validateInput(this.teamAGoals, this.teamBGoals));
+    alert('Guardando predicción: ' + this.teamAGoals + ' - ' + this.teamBGoals);
     if (this.validateInput(this.teamAGoals, this.teamBGoals)) {
+      alert("entro")
       const newMatch : Match = {
-        id: this.selectedMatch?.id,
+        matchId: this.selectedMatch?.id,
         teamA: this.selectedMatch?.teamA,
         teamB: this.selectedMatch?.teamB,
         goalsA: parseInt(this.teamAGoals),
@@ -110,6 +123,7 @@ export class FixtureComponent {
         date: this.selectedMatch?.date,
         scoreObtained: this.selectedMatch?.scoreObtained
       };
+      console.log('Predicción1111:', newMatch);
       this.service.savePrediction(newMatch).subscribe(
         response => {
           console.log('Predicción guardada:', response);

@@ -48,6 +48,7 @@ CREATE TABLE championship(
     name VARCHAR(50),
     start_date datetime,
     end_date datetime,
+    description varchar(500),
     PRIMARY KEY (id)
 );
 
@@ -74,7 +75,8 @@ CREATE TABLE team_participation(
 );
 
 -- Es la agregación de juega equipo con la agregación de etapa con campeonato
-CREATE TABLE championshipMatch(
+CREATE TABLE championshipMatch (
+    id INTEGER AUTO_INCREMENT PRIMARY KEY,
     idTeamA INTEGER,
     idTeamB INTEGER,
     matchDate DATETIME,
@@ -83,7 +85,6 @@ CREATE TABLE championshipMatch(
     resultTeamA INTEGER,
     resultTeamB INTEGER,
     INDEX idx_match (idChampionship, idStage, idTeamA, idTeamB, matchDate),
-    PRIMARY KEY (idTeamA, idTeamB,  idChampionship, idStage, matchDate),
     FOREIGN KEY (idChampionship) REFERENCES championship(id),
     FOREIGN KEY (idStage) REFERENCES stage(id),
     FOREIGN KEY (idTeamA) REFERENCES team(id),
@@ -99,10 +100,11 @@ CREATE TABLE predictions (
     predictionResultTeamB INTEGER,
     scoreObtained INTEGER,
     idstage INTEGER,
+    matchId INTEGER PRIMARY KEY,
     ci VARCHAR(8),
-    PRIMARY KEY (ci, teamA, teamB,  idchampionship, idstage, matchDate),
     FOREIGN KEY (ci) REFERENCES student(ci),
-    FOREIGN KEY (idchampionship, idstage, teamA, teamB, matchDate) REFERENCES championshipMatch(idChampionship, idStage, idTeamA, idTeamB, matchDate)
+    FOREIGN KEY (idchampionship, idstage, teamA, teamB, matchDate) REFERENCES championshipMatch(idChampionship, idStage, idTeamA, idTeamB, matchDate),
+    FOREIGN KEY (matchId) REFERENCES championshipMatch(id)
 );
 
 -- Predice el campeón
@@ -146,63 +148,77 @@ CREATE TABLE points(ci VARCHAR(8),
 INSERT INTO user(ci, password) values ('12345678','password');
 INSERT INTO admin(ci) values ('12345678');
 
+insert into user(ci, password) values ('7654321','password');
+insert into student (ci, firstname, lastname) VALUES ('7654321', 'B', 'B');
 
--- INSERT INTO user(ci, password) values ('87654321','password');
--- INSERT INTO student(ci) values ('87654321');
+
 
 
 
 
 -- Insertar datos para pruebas:
 
--- Insertar usuarios
-INSERT INTO user (ci, email, password) VALUES ('87654321', 'student1@example.com', 'password123');
-INSERT INTO user (ci, email, password) VALUES ('12345678', 'admin1@example.com', 'password123');
-
--- Insertar estudiante
-INSERT INTO student (ci, firstname, lastname) VALUES ('87654321', 'John', 'Doe');
-
--- Insertar administrador
-INSERT INTO admin (ci) VALUES ('12345678');
-
--- Insertar equipos
 INSERT INTO team (name) VALUES ('Real');
 INSERT INTO team (name) VALUES ('Barca');
 INSERT INTO team (name) VALUES ('Nacional');
 INSERT INTO team (name) VALUES ('Peñarol');
 
--- Insertar campeonatos
-INSERT INTO championship (name, start_date, end_date) VALUES ('Copa Libertadores', '2022-01-01', '2022-12-31');
-INSERT INTO championship (name, start_date, end_date) VALUES ('Copa Sudamericana', '2022-01-01', '2022-12-31');
+INSERT INTO championship (name, start_date, end_date, description) VALUES ('Copa Libertadores', '2022-01-01', '2022-12-31', 'Copa Libertadores 2021');
+INSERT INTO championship (name, start_date, end_date, description) VALUES ('Copa Sudamericana', '2022-01-01', '2022-12-31', 'Copa Sudamericana 2021');
 
--- Insertar etapas
 INSERT INTO stage (name) VALUES ('Fase de Grupos');
 INSERT INTO stage (name) VALUES ('Cuartos de Final');
 
--- Insertar detalles del campeonato y la etapa
 INSERT INTO stage_for_championship (idStage, idChampionship) VALUES (1, 1);
 INSERT INTO stage_for_championship (idStage, idChampionship) VALUES (2, 1);
 
--- Insertar participaciones de equipos
 INSERT INTO team_participation (idTeam, idChampionship) VALUES (1, 1);
 INSERT INTO team_participation (idTeam, idChampionship) VALUES (2, 1);
 INSERT INTO team_participation (idTeam, idChampionship) VALUES (3, 1);
 INSERT INTO team_participation (idTeam, idChampionship) VALUES (4, 1);
 
--- Insertar partidos en campeonatoMatch
 INSERT INTO championshipMatch (idTeamA, idTeamB, matchDate, idStage, idChampionship, resultTeamA, resultTeamB)
 VALUES (1, 2, '2022-05-10', 1, 1, 2, 1);
 INSERT INTO championshipMatch (idTeamA, idTeamB, matchDate, idStage, idChampionship, resultTeamA, resultTeamB)
-VALUES (3, 4, '2022-05-11', 1, 1, 1, 0);
+VALUES (3, 4, '2025-05-11', 1, 1, 1, 0);
 
--- Insertar predicciones
-INSERT INTO predictions (teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, ci)
-VALUES (1, 2, '2022-05-10', 1, 2, 1, 3, 1, '87654321');
-INSERT INTO predictions (teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, ci)
-VALUES (3, 4, '2022-05-11', 1, 1, 0, 3, 1, '87654321');
+INSERT INTO predictions (matchId ,teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, ci)
+VALUES (1, 1, 2, '2022-05-10', 1, 2, 1, 3, 1, '7654321');
+INSERT INTO predictions (matchId, teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, ci)
+VALUES (2, 3, 4, '2025-05-11', 1, 1, 0, 3, 1, '7654321');
 
+INSERT INTO  predict_first (idTeam, ci, idChampionship) VALUES (1, '7654321', 1);
+
+INSERT INTO stage (name) VALUES ('Semifinal');
+INSERT INTO stage (name) VALUES ('Final');
+
+-- Linking stages to the second championship
+INSERT INTO stage_for_championship (idStage, idChampionship) VALUES (3, 2);
+INSERT INTO stage_for_championship (idStage, idChampionship) VALUES (4, 2);
+
+-- Team participation for the second championship
+INSERT INTO team_participation (idTeam, idChampionship) VALUES (1, 2);
+INSERT INTO team_participation (idTeam, idChampionship) VALUES (2, 2);
+INSERT INTO team_participation (idTeam, idChampionship) VALUES (3, 2);
+INSERT INTO team_participation (idTeam, idChampionship) VALUES (4, 2);
+
+-- Matches for the second championship
+INSERT INTO championshipMatch (idTeamA, idTeamB, matchDate, idStage, idChampionship, resultTeamA, resultTeamB)
+VALUES (1, 3, '2022-06-15', 3, 2, 3, 2);
+INSERT INTO championshipMatch (idTeamA, idTeamB, matchDate, idStage, idChampionship, resultTeamA, resultTeamB)
+VALUES (2, 4, '2022-06-16', 3, 2, 0, 1);
+
+-- Predictions for the second championship
+INSERT INTO predictions (matchId, teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, ci)
+VALUES (3, 1, 3, '2022-06-15', 2, 3, 2, 3, 3, '7654321');
+INSERT INTO predictions (matchId, teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, ci)
+VALUES (4, 2, 4, '2022-06-16', 2, 0, 1, 3, 3, '7654321');
+
+-- Predictions for the winner of the second championship
+INSERT INTO predict_first (idTeam, ci, idChampionship) VALUES (3, '7654321', 2);
 
 SELECT
+    p.matchId AS matchId,
     tA.name AS teamAName,
     tB.name AS teamBName,
     cm.matchDate,
@@ -230,5 +246,8 @@ JOIN
 JOIN
     stage st ON p.idstage = st.id
 WHERE
-    p.ci = '87654321'
+    p.ci = '7654321'
     AND p.idchampionship = 1;
+
+select c.id, c.name, c.description from predict_first p inner join championship c on c.id=p.idChampionship where p.ci='7654321';
+UPDATE predictions SET predictionResultTeamA = 3, predictionResultTeamB = 1 WHERE matchId = 2 AND ci = '7654321';
