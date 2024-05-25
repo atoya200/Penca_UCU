@@ -4,6 +4,7 @@ import * as middleware from '../middleware'
 
 const router = express.Router()
 
+// Obtener las predicciones de un campeonato
 router.get('/:id', [middleware.verifyUser], async (req, res) => {
     var decoded = middleware.decode(req.headers['authorization'])
     console.log("campeonato: " + req.params.id)
@@ -21,7 +22,7 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
                 };
                 stages.push(stage);
             }
-            
+
             // Agregar el partido a la etapa
             console.log("matchId: " + prediction.matchId)
             stage.matches.push({
@@ -51,5 +52,74 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
         res.send(JSON.stringify({ msg: "Error al obtener las predicciones." }))
     }
 })
+
+// Realizar o actualizar una predicción 
+router.post('/', [middleware.verifyUser], async (req, res) => {
+    
+    var decoded = middleware.decode(req.headers['authorization'])
+    /*
+    const newMatch = req.body.newMatch;
+
+    console.log(newMatch)
+    console.log(decoded.user.ci)
+    try {
+            if (methods.isNullOrEmpty(newMatch.matchId)){
+                res.status(400);
+                res.send(JSON.stringify({ msg: "Error. Faltan parametros (id)." }))
+            }else if (methods.isNullOrEmpty(newMatch.goalsA)){
+                res.status(400);
+                res.send(JSON.stringify({ msg: "Error. Faltan parametros (teamA)." }))
+            }else if (methods.isNullOrEmpty(newMatch.goalsB)){
+                res.status(400);
+                res.send(JSON.stringify({ msg: "Error. Faltan parametros (teamB)." }))
+
+            }else { 
+                console.log("UPDATE predictions SET predictionResultTeamA = " + newMatch.goalsA + ", predictionResultTeamB = " + newMatch.goalsB + " WHERE matchId = " + newMatch.matchId + " AND ci = " + decoded.user.ci)
+                const result = await methods.insert('UPDATE predictions SET predictionResultTeamA = ?, predictionResultTeamB = ? WHERE matchId = ? AND ci = ?', [newMatch.goalsA, newMatch.goalsB, newMatch.matchId, decoded.user.ci]);
+                console.log(result);
+                if (!result) {
+                    throw new Error("Falló el insert en la base de datos.")
+                }
+                res.status(200)
+                res.send();
+            }
+    } catch (error) {
+        res.status(500);
+        res.send(JSON.stringify({ msg: "Error. Intente más tarde." }))
+    }
+
+})
+*/
+
+    const ci = decoded.user.ci;
+
+    try {
+        // Validar que los parámetros necesarios estén presentes
+        if (methods.isNullOrEmpty(req.body.newMatch.matchId)) {
+            return res.status(400).json({ msg: "Error. Faltan parámetros (id)." });
+        } else if (methods.isNullOrEmpty(req.body.newMatch.goalsA)) {
+            return res.status(400).json({ msg: "Error. Faltan parámetros (teamA)." });
+        } else if (methods.isNullOrEmpty(req.body.newMatch.goalsB)) {
+            return res.status(400).json({ msg: "Error. Faltan parámetros (teamB)." });
+        }
+
+        // Ejecutar la actualización en la base de datos
+        const query = 'UPDATE predictions SET predictionResultTeamA = ?, predictionResultTeamB = ? WHERE matchId = ? AND ci = ?';
+        const params = [req.body.newMatch.goalsA, req.body.newMatch.goalsB, req.body.newMatch.matchId, ci];
+        console.log(`UPDATE predictions SET predictionResultTeamA = ${req.body.newMatch.goalsA}, predictionResultTeamB = ${req.body.newMatch.goalsB} WHERE matchId = ${req.body.newMatch.matchId} AND ci = ${ci}`);
+
+        const result = await methods.query(query, params);  // Asegúrate de que `methods.update` existe y es adecuado para UPDATE
+
+        if (!result) {
+            throw new Error("Falló la actualización en la base de datos.");
+        }
+
+        res.status(200).send();
+    } catch (error) {
+        console.error(error);  // Para ayudar en la depuración
+        res.status(500).json({ msg: "Error. Intente más tarde." });
+    }
+});
+
 
 export default router;

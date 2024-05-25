@@ -249,4 +249,5 @@ WHERE
     p.ci = '7654321'
     AND p.idchampionship = 1;
 
-select c.id, c.name, c.description from predict_first p inner join championship c on c.id=p.idChampionship where p.ci='7654321'
+select c.id, c.name, c.description from predict_first p inner join championship c on c.id=p.idChampionship where p.ci='7654321';
+UPDATE predictions SET predictionResultTeamA = 3, predictionResultTeamB = 1 WHERE matchId = 2 AND ci = '7654321';

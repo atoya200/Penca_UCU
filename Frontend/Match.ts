@@ -1,6 +1,6 @@
 export class Match {
 
-    id : number;
+    matchId : number;
     teamA: string;
     teamB: string;
     goalsA: number;
@@ -9,7 +9,7 @@ export class Match {
     scoreObtained: number;
 
     constructor ( id: number, teamA: string,  teamB: string, goalsA: number, goalsB: number, date: Date, scoreObtained: number) {
-        this.id = id;
+        this.matchId = id;
         this.teamA = teamA;
         this.teamB = teamB;
         this.goalsA = goalsA;

@@ -18,125 +18,7 @@ export class FixtureService {
   constructor(private http: HttpClient, private cookies: CookieService) {
 
   }
-   // Datos de campeonatos de prueba 
-    championships: Championship[] = [{
-    id: 1,
-    name: "Copa Libertadores",
-    description: "Copa Libertadores 2021",
-    startDate: new Date(),
-    endDate: new Date(),
-    stages: [
-      { 
-        id: 1,
-        name: "Fase de Grupos", 
-        matches: [
-        {
-          id: 1,
-          teamA: "Real",
-          teamB: "Barca",
-          goalsA: 7,
-          goalsB: 0,
-          scoreObtained: 0,
-          date: new Date(2022, 5, 10)
-        },
-        {
-          id: 2,
-          teamA: "Nacional",
-          teamB: "Peñarol",
-          goalsA: 1,
-          goalsB: 0,
-          scoreObtained: 0,
-          date: new Date()
-        },
-        {
-          id: 3,
-          teamA: "Plaza",
-          teamB: "Boca",
-          goalsA: 1,
-          goalsB: 1,
-          scoreObtained: 0,
-          date: new Date()
-        }
-      ]
-    },
-    {   
-      id: 2,
-      name: "Cuartos de final", 
-      matches: [
-      {
-        id: 4,
-        teamA: "Uruguay",
-        teamB: "Argentina",
-        goalsA: 23,
-        goalsB: 0,
-        scoreObtained: 0,
-        date: new Date()
-      },
-      {
-        id: 5,
-        teamA: "Brasil",
-        teamB: "Peru",
-        goalsA: 1,
-        goalsB: 5,
-        scoreObtained: 0,
-        date: new Date(2025, 5, 10)
-      },
-      {
-        id: 6,
-        teamA: "Alemania",
-        teamB: "España",
-        goalsA: 10,
-        goalsB: 2,
-        scoreObtained: 0,
-        date: new Date(2024, 5, 10)
-      }
-    ]
-  }
-  ]
-  },
-  {
-    id: 2,
-    name: "Copa Sudamericana",
-    description: "Copa Sudamericana 2021",
-    startDate: new Date(),
-    endDate: new Date(),
-    stages: [
-      { 
-        id: 1,
-        name: "Fase de Grupos", 
-        matches: [
-        {
-          id: 1,
-          teamA: "Real",
-          teamB: "Barca",
-          goalsA: 7,
-          goalsB: 0,
-          scoreObtained: 0,
-          date: new Date()
-        },
-        {
-          id: 2,
-          teamA: "Nacional",
-          teamB: "Peñarol",
-          goalsA: 1,
-          goalsB: 0,
-          scoreObtained: 0,
-          date: new Date()
-        },
-        {
-          id: 3,
-          teamA: "Plaza",
-          teamB: "Boca",
-          goalsA: 1,
-          goalsB: 1,
-          scoreObtained: 0,
-          date: new Date()
-        }
-        ]
-      }
-    ]
-  }
-];
+
   actualChampionship: Championship = null;
 
   getPredictions(id: number): Observable<Championship> {
@@ -157,20 +39,14 @@ export class FixtureService {
 
 
   savePrediction(newMatch: Match): Observable<any> {
-    if (this.actualChampionship) {
-      for (let stage of this.actualChampionship.stages) {
-        let matchIndex = stage.matches.findIndex(match => match.id === newMatch.id);
-        if (matchIndex !== -1) {
-          stage.matches[matchIndex] = newMatch;
-          console.log('Predicción guardada:', newMatch);
-          return of(newMatch);
-        }
-      }
+    console.log('Guardando predicción:', newMatch);
+    const url = "http://localhost:3000/prediction";
+    let body: any = {
+      "newMatch": newMatch
     }
-    console.error('No se encontró el partido para actualizar');
-    return of(null);
-  }
-  
+    console.log(body);
+    return this.http.post(url, body); 
+} 
 
   getOficialMatchData(match: Match): Observable<Match>{
     return of (this.actualChampionship.stages[0].matches[0])

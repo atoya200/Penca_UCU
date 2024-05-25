@@ -111,9 +111,11 @@ export class FixtureComponent {
 
   savePrediction() {
     console.log ('Guardando predicción:', this.teamAGoals, this.teamBGoals, "se acerca: " + this.isNear, "valido: " + this.validateInput(this.teamAGoals, this.teamBGoals));
+    alert('Guardando predicción: ' + this.teamAGoals + ' - ' + this.teamBGoals);
     if (this.validateInput(this.teamAGoals, this.teamBGoals)) {
+      alert("entro")
       const newMatch : Match = {
-        id: this.selectedMatch?.id,
+        matchId: this.selectedMatch?.id,
         teamA: this.selectedMatch?.teamA,
         teamB: this.selectedMatch?.teamB,
         goalsA: parseInt(this.teamAGoals),
@@ -121,6 +123,7 @@ export class FixtureComponent {
         date: this.selectedMatch?.date,
         scoreObtained: this.selectedMatch?.scoreObtained
       };
+      console.log('Predicción1111:', newMatch);
       this.service.savePrediction(newMatch).subscribe(
         response => {
           console.log('Predicción guardada:', response);
