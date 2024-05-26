@@ -57,7 +57,8 @@ export class FixtureService {
     );
 } 
 
-  getOficialMatchData(match: Match): Observable<Match>{
-    return of (this.actualChampionship.stages[0].matches[0])
+  getOficialMatchData(matchId: number): Observable<any> {
+    const url = "http://localhost:3000/oficialMatch/" + matchId;
+    return this.http.get<any>(url);
   }
 }

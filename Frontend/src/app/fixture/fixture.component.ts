@@ -52,12 +52,11 @@ export class FixtureComponent {
     });
   }
 
-  getMatchData(match: Match){
-    return new Promise((resolve, reject) => {
-      this.service.getOficialMatchData(match).subscribe((match) => {
-        this.match = match
-        resolve(match);
-      }, reject);
+  getMatchData(match: Match) {
+    console.log("Obteniendo datos del partido oficial")
+    this.service.getOficialMatchData(match.matchId).subscribe((match) => {
+      this.match = match
+      console.log("Partido oficial : " + this.match.goalsA + " - " + this.match.goalsB)
     });
   }
 
@@ -92,6 +91,7 @@ export class FixtureComponent {
         this.isNear = false;
       }
     }
+    
     console.log("Sucedio : " + this.happened)
   }
 
