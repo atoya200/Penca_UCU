@@ -43,11 +43,8 @@ export class FixtureComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
-      console.log("el id es: " + id);
-
       this.service.getPredictions(id).subscribe((championship) => {
         this.championship = championship
-        console.log("Campeonato : " + JSON.stringify(championship));
       });
     });
   }
@@ -63,36 +60,37 @@ export class FixtureComponent {
 
   async openModal(match: any, stage: string) {
     this.selectedMatch = match;
-    this.showModal = true;
-    console.log(match.teamA + " vs " + match.teamB + " en la etapa " + stage + " con fecha " + match.date)
-    this.actualStage = stage
+    
     this.teamAGoals = match.goalsA.toString();
     this.teamBGoals = match.goalsB.toString();
-    await this.getMatchData(match)
-    console.log("Partido oficial : " + this.match.goalsA + " - " + this.match.goalsB)
-    console.log("Sucedio : " + this.happened)
+
     const matchDate = new Date(match.date);
     const now = new Date();
     const timeDifference = matchDate.getTime() - now.getTime();
 
     if (matchDate < now) {
-      console.log("El partido ha sucedido: " + matchDate + " < " + now);
       this.happened = true;
       this.isNear = true;
+      this.match = {
+        matchId: this.selectedMatch.matchId,
+        teamA: this.selectedMatch.teamA,
+        teamB: this.selectedMatch.teamB,
+        goalsA: parseInt(this.teamAGoals),
+        goalsB: parseInt(this.teamBGoals),
+        date: this.selectedMatch.date,
+        scoreObtained: this.selectedMatch.scoreObtained
+      }
     } else if (matchDate >= now) {
-      console.log("El partido no ha sucedido: " + matchDate + " >= " + now);
       this.happened = false;
 
       if (timeDifference < 3600000) {
-        console.log("El partido está por suceder");
         this.isNear = true;
       } else {
-        console.log("El partido no está por suceder");
         this.isNear = false;
       }
     }
     
-    console.log("Sucedio : " + this.happened)
+    this.showModal = true;
   }
 
   closeModal() {

@@ -80,7 +80,7 @@ router.post('/', [middleware.verifyUser], async (req, res) => {
         if (!result) {
             throw new Error("Falló la actualización en la base de datos.");
         }
-
+        
         res.status(200).send({"success": true});
     } catch (error) {
         console.error(error);  // Para ayudar en la depuración
