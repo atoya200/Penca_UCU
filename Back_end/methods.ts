@@ -1,4 +1,4 @@
-import { QueryResult } from "mysql2";
+import { QueryResult, ResultSetHeader } from "mysql2";
 import { pool } from "./index";
 
 
@@ -24,16 +24,19 @@ export async function userExist(ci: String, password: String): Promise<boolean> 
 export async function insert(command: string, values: string[]): Promise<boolean> {
     var res = false;
     try {
-        const [result, fields] = await pool.execute(command, values);
+        //const [result, fields] = await pool.execute(command, values);
+        const [result]: [ResultSetHeader, any] = await pool.execute(command, values);
 
         console.log(result);
 
+        return result.affectedRows != 0;
     } catch (error) {
         console.log(error);
     }
 
     return res;
 }
+
 
 export async function registerUser(user: any): Promise<boolean> {
     var res = false;
@@ -68,4 +71,3 @@ export async function query(command: string, values: string[]): Promise<any> {
 
     return response;
 }
-

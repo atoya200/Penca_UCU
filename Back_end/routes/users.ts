@@ -69,4 +69,25 @@ router.post('/login', async (req, res) => {
 })
 
 
+router.get("/getRanking/:idChampionship", [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) =>{
+
+    // Obtenemos el id del campeonato
+    let idChampionship = req.params.idChampionship
+
+    // Comprobamos que los datos sean correctos
+    if(!Number.isInteger(Number.parseInt(idChampionship))){
+        return res.status(400).json({message: "El formato de los datos ingresados no es valido"})
+    }
+
+    // Pasamos a devolver el ranking del campeonato indicado
+    let sql = "SELECT s.*, p.points FROM student s, points p WHERE p.ci = s.ci AND p.idChampionship = ? order by p.points desc;"
+    let result = await methods.query(sql, [idChampionship])
+    if (result == null || result.length == 0){
+        return res.status(500).json({message: "Ha ocurrido un error en el sistema"})
+    } 
+
+    return res.status(200).json({message: result})
+})
+
+
 export default router
