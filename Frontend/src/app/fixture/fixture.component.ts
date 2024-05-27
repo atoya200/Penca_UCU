@@ -43,56 +43,54 @@ export class FixtureComponent {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
-      console.log("el id es: " + id);
-  
       this.service.getPredictions(id).subscribe((championship) => {
         this.championship = championship
-        console.log(championship);
       });
     });
   }
 
-  getMatchData(match: Match){
-    return new Promise((resolve, reject) => {
-      this.service.getOficialMatchData(match).subscribe((match) => {
-        this.match = match
-        resolve(match);
-      }, reject);
+  getMatchData(match: Match) {
+    console.log("Obteniendo datos del partido oficial")
+    this.service.getOficialMatchData(match.matchId).subscribe((match) => {
+      this.match = match
+      console.log("Partido oficial : " + this.match.goalsA + " - " + this.match.goalsB)
     });
   }
-  
+
 
   async openModal(match: any, stage: string) {
     this.selectedMatch = match;
-    this.showModal = true;
-    console.log(match.teamA + " vs " + match.teamB + " en la etapa " + stage + " con fecha " + match.date)
-    this.actualStage = stage
+    
     this.teamAGoals = match.goalsA.toString();
     this.teamBGoals = match.goalsB.toString();
-    await this.getMatchData(match)
-    console.log("Partido oficial : " + this.match.goalsA + " - " + this.match.goalsB)
-    console.log("Sucedio : " + this.happened)
+
     const matchDate = new Date(match.date);
     const now = new Date();
     const timeDifference = matchDate.getTime() - now.getTime();
 
     if (matchDate < now) {
-      console.log("El partido ha sucedido: " + matchDate + " < " + now);
       this.happened = true;
       this.isNear = true;
+      this.match = {
+        matchId: this.selectedMatch.matchId,
+        teamA: this.selectedMatch.teamA,
+        teamB: this.selectedMatch.teamB,
+        goalsA: parseInt(this.teamAGoals),
+        goalsB: parseInt(this.teamBGoals),
+        date: this.selectedMatch.date,
+        scoreObtained: this.selectedMatch.scoreObtained
+      }
     } else if (matchDate >= now) {
-      console.log("El partido no ha sucedido: " + matchDate + " >= " + now);
       this.happened = false;
-      
-      if (timeDifference < 3600000) { 
-        console.log("El partido está por suceder");
+
+      if (timeDifference < 3600000) {
         this.isNear = true;
       } else {
-        console.log("El partido no está por suceder");
         this.isNear = false;
       }
     }
-    console.log("Sucedio : " + this.happened)
+    
+    this.showModal = true;
   }
 
   closeModal() {
@@ -110,42 +108,58 @@ export class FixtureComponent {
   }
 
   savePrediction() {
-    console.log ('Guardando predicción:', this.teamAGoals, this.teamBGoals, "se acerca: " + this.isNear, "valido: " + this.validateInput(this.teamAGoals, this.teamBGoals));
-    alert('Guardando predicción: ' + this.teamAGoals + ' - ' + this.teamBGoals);
-    if (this.validateInput(this.teamAGoals, this.teamBGoals)) {
-      alert("entro")
-      const newMatch : Match = {
-        matchId: this.selectedMatch?.id,
-        teamA: this.selectedMatch?.teamA,
-        teamB: this.selectedMatch?.teamB,
-        goalsA: parseInt(this.teamAGoals),
-        goalsB: parseInt(this.teamBGoals),
-        date: this.selectedMatch?.date,
-        scoreObtained: this.selectedMatch?.scoreObtained
-      };
-      console.log('Predicción1111:', newMatch);
-      this.service.savePrediction(newMatch).subscribe(
-        response => {
-          console.log('Predicción guardada:', response);
-          this.closeModal();
-        },
-        error => {
-          console.error('Error guardando predicción:', error);
-        }
-      );
-    }else{
-      if (this.isNear){
-        console.log("El partido ya ha sucedido")
+    if (this.selectedMatch) {
+      console.log ('Guardando predicción:', this.teamAGoals, this.teamBGoals, "se acerca: " + this.isNear, "valido: " + this.validateInput(this.teamAGoals, this.teamBGoals));
+      if (this.validateInput(this.teamAGoals, this.teamBGoals)) {
+        const newMatch : Match = {
+          matchId: this.selectedMatch.matchId,
+          teamA: this.selectedMatch.teamA,
+          teamB: this.selectedMatch.teamB,
+          goalsA: parseInt(this.teamAGoals),
+          goalsB: parseInt(this.teamBGoals),
+          date: this.selectedMatch.date,
+          scoreObtained: this.selectedMatch.scoreObtained
+        };
+        console.log("Selected match: ", this.selectedMatch)
+        console.log("New match: ", newMatch)
+        this.service.savePrediction(newMatch).subscribe(
+          response => {
+            console.log('Predicción guardada:', response);
+            console.log(this.selectedMatch.matchId)
+            for (let stage of this.championship.stages) {
+              for (let match of stage.matches) {
+                console.log(match)
+                console.log(`Comparando ${match.matchId} con ${this.selectedMatch.matchId}`);
+                if (match.matchId === this.selectedMatch.matchId ) {
+                  match.goalsA = parseInt(this.teamAGoals);
+                  match.goalsB = parseInt(this.teamBGoals);
+                  console.log(`Partido actualizado con el ID: ${this.selectedMatch.id}`);
+                  break;
+                }
+              }
+            }
+            this.closeModal();
+          },
+          error => {
+            console.error('Error guardando predicción:', error);
+          }
+        );
       }else{
-        console.log("El resultado no es valido")
+        if (this.isNear){
+          console.log("El partido ya ha sucedido")
+        }else{
+          console.log("El resultado no es valido")
+        }
       }
+    } else {
+      console.log('selectedMatch es undefined');
     }
-    };
+  };
 
     validateInput(teamAGoals: string, teamBGoals: string): boolean {
       const goalsPattern = /^[0-9]*$/;
       let value = goalsPattern.test(teamAGoals) && goalsPattern.test(teamBGoals);
-      if (teamAGoals === null || teamBGoals === null){ 
+      if (teamAGoals === null || teamBGoals === null){
         value = false;
       }else if (teamAGoals === " " ||  teamBGoals === ""){
         value = false;

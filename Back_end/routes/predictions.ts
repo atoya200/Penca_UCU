@@ -26,7 +26,7 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
             // Agregar el partido a la etapa
             console.log("matchId: " + prediction.matchId)
             stage.matches.push({
-                id: prediction.matchId, 
+                matchId: prediction.matchId, 
                 teamA: prediction.teamAName,
                 teamB: prediction.teamBName,
                 goalsA: prediction.predictionResultTeamA, 
@@ -57,39 +57,6 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
 router.post('/', [middleware.verifyUser], async (req, res) => {
     
     var decoded = middleware.decode(req.headers['authorization'])
-    /*
-    const newMatch = req.body.newMatch;
-
-    console.log(newMatch)
-    console.log(decoded.user.ci)
-    try {
-            if (methods.isNullOrEmpty(newMatch.matchId)){
-                res.status(400);
-                res.send(JSON.stringify({ msg: "Error. Faltan parametros (id)." }))
-            }else if (methods.isNullOrEmpty(newMatch.goalsA)){
-                res.status(400);
-                res.send(JSON.stringify({ msg: "Error. Faltan parametros (teamA)." }))
-            }else if (methods.isNullOrEmpty(newMatch.goalsB)){
-                res.status(400);
-                res.send(JSON.stringify({ msg: "Error. Faltan parametros (teamB)." }))
-
-            }else { 
-                console.log("UPDATE predictions SET predictionResultTeamA = " + newMatch.goalsA + ", predictionResultTeamB = " + newMatch.goalsB + " WHERE matchId = " + newMatch.matchId + " AND ci = " + decoded.user.ci)
-                const result = await methods.insert('UPDATE predictions SET predictionResultTeamA = ?, predictionResultTeamB = ? WHERE matchId = ? AND ci = ?', [newMatch.goalsA, newMatch.goalsB, newMatch.matchId, decoded.user.ci]);
-                console.log(result);
-                if (!result) {
-                    throw new Error("Falló el insert en la base de datos.")
-                }
-                res.status(200)
-                res.send();
-            }
-    } catch (error) {
-        res.status(500);
-        res.send(JSON.stringify({ msg: "Error. Intente más tarde." }))
-    }
-
-})
-*/
 
     const ci = decoded.user.ci;
 
@@ -113,13 +80,26 @@ router.post('/', [middleware.verifyUser], async (req, res) => {
         if (!result) {
             throw new Error("Falló la actualización en la base de datos.");
         }
-
-        res.status(200).send();
+        
+        res.status(200).send({"success": true});
     } catch (error) {
         console.error(error);  // Para ayudar en la depuración
         res.status(500).json({ msg: "Error. Intente más tarde." });
     }
 });
 
+// Obtener los resultados oficiales de un partido
+router.get('/oficialMatch/:id', [middleware.verifyUser], async (req, res) => {
+    // returns championships user is/has participated in
+    var decoded = middleware.decode(req.headers['authorization'])
+    try {
+        var championships = await methods.query('SELECT resultTeamA,resultTeamB FROM championshipMatch WHERE id = ?;', [req.params.id]);
+        res.status(200)
+        res.send(JSON.stringify(championships));
+    } catch (error) {
+        res.status(500);
+        res.send(JSON.stringify({ msg: "Error al obtener los resultados del partido oficial." }))
+    }
+})
 
 export default router;

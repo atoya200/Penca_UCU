@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="86a99066-0c8c-43c2-8324-ede4b7911518" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Back_end/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Back_end/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Base de datos/obligatorio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/Base de datos/obligatorio.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Back_end/routes/predictions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Back_end/routes/predictions.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/.angular/cache/17.3.5/Penca_UCU/.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.angular/cache/17.3.5/Penca_UCU/.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/fixture/fixture.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/fixture/fixture.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/services/fixture.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/services/fixture.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,25 +22,31 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 4
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="2gnHwmZIj2GFJTFMN3xFXOPkePX" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Bruno",
-    "kotlin-language-version-configured": "true",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Bruno&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\bruno\\Desktop\\Penca_UCU\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -44,6 +56,8 @@
       <option name="presentableId" value="Default" />
       <updated>1716326666782</updated>
       <workItem from="1716326670308" duration="60000" />
+      <workItem from="1716642957069" duration="856000" />
+      <workItem from="1716670046272" duration="4277000" />
     </task>
     <servers />
   </component>
