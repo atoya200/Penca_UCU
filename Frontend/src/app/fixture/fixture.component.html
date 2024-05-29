@@ -1,4 +1,5 @@
 <h1 class="title">{{championship.name}}</h1>
+<h1 class="title"> Tus predicciones </h1>
 <div class="card-container">
   <div class="card" style="width: 18rem;" *ngFor="let stage of championship.stages">
     <div class="card-header">
@@ -46,6 +47,7 @@
         <div *ngIf="happened || isNear; else matchDate">
           <p>Equipos: {{ match?.teamA }} vs {{ match?.teamB }}</p>
           <p>Partido: {{ match?.goalsA }} - {{ match?.goalsB }}</p>
+          <p class="success">Has ganado {{ selectedMatch.scoreObtained }} puntos</p>
         </div>
         <ng-template #matchDate>
           <p>Fecha del partido: {{ selectedMatch?.date | date }}</p>
