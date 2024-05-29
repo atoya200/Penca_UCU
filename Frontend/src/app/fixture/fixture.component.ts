@@ -46,17 +46,9 @@ export class FixtureComponent {
       this.service.getPredictions(id).subscribe((championship) => {
         this.championship = championship
       });
+      this.match = new Match(0, "", "", 0, 0, new Date(), 0);
     });
   }
-
-  getMatchData(match: Match) {
-    console.log("Obteniendo datos del partido oficial")
-    this.service.getOficialMatchData(match.matchId).subscribe((match) => {
-      this.match = match
-      console.log("Partido oficial : " + this.match.goalsA + " - " + this.match.goalsB)
-    });
-  }
-
 
   async openModal(match: any, stage: string) {
     this.selectedMatch = match;
@@ -71,15 +63,17 @@ export class FixtureComponent {
     if (matchDate < now) {
       this.happened = true;
       this.isNear = true;
-      this.match = {
-        matchId: this.selectedMatch.matchId,
-        teamA: this.selectedMatch.teamA,
-        teamB: this.selectedMatch.teamB,
-        goalsA: parseInt(this.teamAGoals),
-        goalsB: parseInt(this.teamBGoals),
-        date: this.selectedMatch.date,
-        scoreObtained: this.selectedMatch.scoreObtained
-      }
+      this.service.getOficialMatchData(match.matchId).subscribe((matchData) => {
+        console.log("Datos del partido oficial: ", matchData);
+        this.match.date = match.date;
+        this.match.goalsA = matchData[0].resultTeamA;
+        this.match.goalsB = matchData[0].resultTeamB;
+        this.match.teamA = match.teamA; 
+        this.match.teamB = match.teamB;
+        this.match.matchId = match.matchId;
+        this.match.scoreObtained = match.scoreObtained;
+        console.log("Match: ", this.match);
+      });
     } else if (matchDate >= now) {
       this.happened = false;
 
@@ -89,7 +83,7 @@ export class FixtureComponent {
         this.isNear = false;
       }
     }
-    
+
     this.showModal = true;
   }
 

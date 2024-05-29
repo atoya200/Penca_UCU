@@ -55,10 +55,10 @@ export class FixtureService {
         return of(false);
       })
     );
-} 
+ } 
 
   getOficialMatchData(matchId: number): Observable<any> {
-    const url = "http://localhost:3000/oficialMatch/" + matchId;
+    const url = "http://localhost:3000/prediction/oficialMatch/" + matchId;
     return this.http.get<any>(url);
   }
 }

@@ -130,7 +130,19 @@
   .gteamAGoals-input {
     width: 50px;
   }
-
+  
   .warnning {
     color: red;
+  }
+  
+  .success {
+    color: green;
+  }
+  
+  .gteamAGoals-input {
+    width: 50px;
+  }
+  
+  .row {
+    margin-bottom: 10px;
   }

@@ -31,7 +31,7 @@
 
     CREATE TABLE career(
         id INTEGER AUTO_INCREMENT,
-        carrer_name VARCHAR(100),
+        career_name VARCHAR(100),
         PRIMARY KEY (id)
     );
 
@@ -100,8 +100,9 @@
         predictionResultTeamB INTEGER,
         scoreObtained INTEGER,
         idstage INTEGER,
-        matchId INTEGER PRIMARY KEY,
+        matchId INTEGER,
         ci VARCHAR(8),
+        primary key (ci, matchId),
         FOREIGN KEY (ci) REFERENCES student(ci),
         FOREIGN KEY (idchampionship, idstage, teamA, teamB, matchDate) REFERENCES championshipMatch(idChampionship, idStage, idTeamA, idTeamB, matchDate),
         FOREIGN KEY (matchId) REFERENCES championshipMatch(id)
@@ -145,19 +146,20 @@
                         foreign key (idChampionship) references championship(id)
     );
 
+/*
     INSERT INTO user(ci, password) values ('12345678','password');
     INSERT INTO admin(ci) values ('12345678');
 
     insert into user(ci, password) values ('7654321','password');
     insert into student (ci, firstname, lastname) VALUES ('7654321', 'B', 'B');
-
+*/
 
 
 
 
 
     -- Insertar datos para pruebas:
-
+/*
     INSERT INTO team (name) VALUES ('Real');
     INSERT INTO team (name) VALUES ('Barca');
     INSERT INTO team (name) VALUES ('Nacional');
@@ -253,3 +255,123 @@
     UPDATE predictions SET predictionResultTeamA = 3, predictionResultTeamB = 1 WHERE matchId = 2 AND ci = '7654321';
 
 SELECT resultTeamA,resultTeamB FROM championshipMatch WHERE id = ?;
+*/
+
+-- Inserta datos de ejemplo en la tabla user.
+INSERT INTO user(ci, email, password) VALUES
+('12345678', 'admin@example.com', 'adminpass'),
+('76543210', 'student1@example.com', 'studentpass1'),
+('87654321', 'student2@example.com', 'studentpass2');
+
+-- Inserta datos de ejemplo en la tabla admin.
+INSERT INTO admin(ci) VALUES ('12345678');
+
+-- Inserta datos de ejemplo en la tabla student.
+INSERT INTO student(ci, firstname, lastname) VALUES
+('76543210', 'John', 'Doe'),
+('87654321', 'Jane', 'Smith');
+
+-- Inserta datos de ejemplo en la tabla team.
+INSERT INTO team(name, teamImage) VALUES
+('Team Alpha', NULL),
+('Team Beta', NULL),
+('Team Gamma', NULL),
+('Team Delta', NULL);
+
+-- Inserta datos de ejemplo en la tabla career.
+INSERT INTO career(career_name) VALUES
+('Computer Science'),
+('Mechanical Engineering');
+
+-- Inserta datos de ejemplo en la tabla studies.
+INSERT INTO studies(id_career, ci_student) VALUES
+(1, '76543210'),
+(2, '87654321');
+
+-- Inserta datos de ejemplo en la tabla championship.
+INSERT INTO championship(name, start_date, end_date, description) VALUES
+('Championship 1', '2024-01-01 10:00:00', '2024-01-15 18:00:00', 'First championship of the year'),
+('Championship 2', '2024-05-01 10:00:00', '2024-05-15 18:00:00', 'Second championship of the year');
+
+-- Inserta datos de ejemplo en la tabla stage.
+INSERT INTO stage(name) VALUES
+('Quarter Finals'),
+('Semi Finals'),
+('Finals');
+
+-- Inserta datos de ejemplo en la tabla stage_for_championship.
+INSERT INTO stage_for_championship(idStage, idChampionship) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(1, 2),
+(2, 2),
+(3, 2);
+
+-- Inserta datos de ejemplo en la tabla team_participation.
+INSERT INTO team_participation(idTeam, idChampionship) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(1, 2),
+(2, 2),
+(3, 2),
+(4, 2);
+
+-- Inserta datos de ejemplo en la tabla championshipMatch.
+INSERT INTO championshipMatch(idTeamA, idTeamB, matchDate, idStage, idChampionship, resultTeamA, resultTeamB) VALUES
+-- Championship 1 matches
+(1, 2, '2024-01-02 15:00:00', 1, 1, 5, 7),
+(3, 4, '2024-01-03 15:00:00', 1, 1, 1, 4),
+(1, 3, '2024-01-04 15:00:00', 2, 1, 2, 45),
+(2, 4, '2024-01-05 15:00:00', 2, 1, 70, 1),
+(1, 4, '2024-01-10 15:00:00', 3, 1, 278, 1),
+-- Championship 2 matches
+(1, 2, '2024-05-02 15:00:00', 1, 2, NULL, NULL),
+(3, 4, '2024-05-03 15:00:00', 1, 2, NULL, NULL),
+(1, 3, '2024-05-04 15:00:00', 2, 2, NULL, NULL),
+(2, 4, '2024-05-05 15:00:00', 2, 2, NULL, NULL),
+(1, 4, '2024-05-10 15:00:00', 3, 2, NULL, NULL);
+
+-- Inserta datos de ejemplo en la tabla predictions.
+-- Predicciones para dos usuarios para todos los partidos de ambos campeonatos.
+INSERT INTO predictions(teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, matchId, ci) VALUES
+-- Championship 1 predictions for user 76543210
+(1, 2, '2024-01-02 15:00:00', 1, 3, 2, 5, 1, 1, '76543210'),
+(3, 4, '2024-01-03 15:00:00', 1, 1, 1, 10, 1, 2, '76543210'),
+(1, 3, '2024-01-04 15:00:00', 1, 2, 2, 5, 2, 3, '76543210'),
+(2, 4, '2024-01-05 15:00:00', 1, 0, 1, 0, 2, 4, '76543210'),
+(1, 4, '2024-01-10 15:00:00', 1, 2, 1, 10, 3, 5, '76543210'),
+-- Championship 1 predictions for user 87654321
+(1, 2, '2024-01-02 15:00:00', 1, 2, 2, 0, 1, 1, '87654321'),
+(3, 4, '2024-01-03 15:00:00', 1, 0, 1, 0, 1, 2, '87654321'),
+(1, 3, '2024-01-04 15:00:00', 1, 3, 3, 5, 2, 3, '87654321'),
+(2, 4, '2024-01-05 15:00:00', 1, 2, 2, 0, 2, 4, '87654321'),
+(1, 4, '2024-01-10 15:00:00', 1, 3, 1, 10, 3, 5, '87654321'),
+-- Championship 2 predictions for user 76543210
+(1, 2, '2024-05-02 15:00:00', 2, 1, 1, NULL, 1, 6, '76543210'),
+(3, 4, '2024-05-03 15:00:00', 2, 2, 0, NULL, 1, 7, '76543210'),
+(1, 3, '2024-05-04 15:00:00', 2, 0, 3, NULL, 2, 8, '76543210'),
+(2, 4, '2024-05-05 15:00:00', 2, 1, 2, NULL, 2, 9, '76543210'),
+(1, 4, '2024-05-10 15:00:00', 2, 3, 3, NULL, 3, 10, '76543210'),
+-- Championship 2 predictions for user 87654321
+(1, 2, '2024-05-02 15:00:00', 2, 0, 0, NULL, 1, 6, '87654321'),
+(3, 4, '2024-05-03 15:00:00', 2, 1, 1, NULL, 1, 7, '87654321'),
+(1, 3, '2024-05-04 15:00:00', 2, 1, 2, NULL, 2, 8, '87654321'),
+(2, 4, '2024-05-05 15:00:00', 2, 3, 1, NULL, 2, 9, '87654321'),
+(1, 4, '2024-05-10 15:00:00', 2, 2, 2, NULL, 3, 10, '87654321');
+
+-- Inserta datos de ejemplo en la tabla predict_first.
+INSERT INTO predict_first(idTeam, ci, idChampionship) VALUES
+(1, '76543210', 1),
+(2, '87654321', 1),
+(1, '76543210', 2),
+(2, '87654321', 2);
+
+-- Inserta datos de ejemplo en la tabla predict_second.
+INSERT INTO predict_second(idTeam, ci, idChampionship) VALUES
+(2, '76543210', 1),
+(3, '87654321', 1),
+(2, '76543210', 2),
+(3, '87654321', 2);
