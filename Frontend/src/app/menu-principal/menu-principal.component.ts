@@ -9,14 +9,13 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, N
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
 import { StageService } from '../stage.service';
-import { ChampionshipsComponent } from '../championships/championships.component';
 
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-menu-principal',
   standalone: true,
-  imports: [NgIf, NgFor, CommonModule, RouterModule, FormsModule, ReactiveFormsModule, ChampionshipsComponent],
+  imports: [NgIf, NgFor, CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   templateUrl: './menu-principal.component.html',
   styleUrl: './menu-principal.component.css'
 })
