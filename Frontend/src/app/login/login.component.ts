@@ -36,7 +36,7 @@ export class LoginComponent {
         console.log(data)
         this.loginService.setUserType(data.user)
         this.loginService.setToken(data.token)
-        this.router.navigateByUrl('/menu');
+        this.router.navigateByUrl('/championships');
 
       },
       error => {

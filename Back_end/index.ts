@@ -7,6 +7,7 @@ import teamsRouter from "./routes/teams"
 import championshipRouter from "./routes/championships"
 import predictionsRouter from "./routes/predictions"
 import stageRouter from "./routes/stage"
+import rankingRouter from "./routes/ranking";
 import notificationRouter from "./routes/notifications"
 import { createPool, Pool } from 'mysql2/promise';
 
@@ -66,6 +67,7 @@ app.use('/prediction', predictionsRouter)
 app.use('/notification', notificationRouter)
 app.use('/team', teamsRouter)
 app.use('/stage', stageRouter)
+app.use('/ranking', rankingRouter)
 
 
 

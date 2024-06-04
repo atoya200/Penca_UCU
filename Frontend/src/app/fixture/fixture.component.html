@@ -1,19 +1,25 @@
-<h1 class="title">{{championship.name}}</h1>
-<h1 class="title"> Tus predicciones </h1>
-<div class="card-container">
-  <div class="card" style="width: 18rem;" *ngFor="let stage of championship.stages">
-    <div class="card-header">
-      {{ stage.name }}
+<app-menu-principal></app-menu-principal>
+
+
+<div class="image">
+  <h1 class="title">{{championship.name}}</h1>
+  <h1 class="title"> Tus predicciones </h1>
+  <div class="card-container">
+    <div class="card" style="width: 18rem;" *ngFor="let stage of championship.stages">
+      <div class="card-header">
+        {{ stage.name }}
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" *ngFor="let match of stage.matches" (click)="openModal(match, stage.name)">
+          {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }}
+        </li>
+      </ul>
     </div>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item" *ngFor="let match of stage.matches" (click)="openModal(match, stage.name)">
-        {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }}
-      </li>
-    </ul>
   </div>
+  
+  <button class="floating-button" (click)="goBack()">Volver</button>
 </div>
 
-<button class="floating-button" (click)="goBack()">Volver</button>
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="true" [ngClass]="{'show d-block': showModal}">

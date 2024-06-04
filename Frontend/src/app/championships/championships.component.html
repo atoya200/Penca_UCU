@@ -1,4 +1,7 @@
-<div class="championships-container">
+<app-menu-principal></app-menu-principal>
+
+<div class="image">
+  <div class="championships-container">
     <h2>Listado de Campeonatos</h2>
     <ul class="championship-list">
       <li *ngFor="let championship of championships" (click)="viewDetails(championship.id)">
@@ -11,6 +14,8 @@
 </div>
 
 <button class="floating-button" click="openModal()">Entrar a nueva penca</button>
+</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="true" [ngClass]="{'show d-block': showModal}">

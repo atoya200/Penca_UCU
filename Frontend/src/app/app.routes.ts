@@ -5,12 +5,13 @@ import { MenuPrincipalComponent } from './menu-principal/menu-principal.componen
 import { IngresarResultadosComponent } from './ingresar-resultados/ingresar-resultados.component';
 import { FixtureComponent } from './fixture/fixture.component';
 import { Championship } from 'Championship';
+import { ChampionshipsComponent } from './championships/championships.component';
 export const routes: Routes = [{ path: '', redirectTo: 'login', pathMatch: 'full' },
 { path: 'login', component: LoginComponent },
 { path: 'registrar', component: RegistrarComponent },
 { path: 'menu', component: MenuPrincipalComponent },
 { path: 'prediccion', component: IngresarResultadosComponent },
 { path: 'fixture/:id', component: FixtureComponent },
-{ path: 'championships', component: Championship },
+{ path: 'championships', component: ChampionshipsComponent },
 { path: '**', redirectTo: '/login' }
 ];

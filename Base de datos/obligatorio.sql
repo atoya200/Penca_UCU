@@ -328,14 +328,12 @@ INSERT INTO championshipMatch(idTeamA, idTeamB, matchDate, idStage, idChampionsh
 (2, 4, '2024-01-05 15:00:00', 2, 1, 70, 1),
 (1, 4, '2024-01-10 15:00:00', 3, 1, 278, 1),
 -- Championship 2 matches
-(1, 2, '2024-05-02 15:00:00', 1, 2, NULL, NULL),
-(3, 4, '2024-05-03 15:00:00', 1, 2, NULL, NULL),
-(1, 3, '2024-05-04 15:00:00', 2, 2, NULL, NULL),
-(2, 4, '2024-05-05 15:00:00', 2, 2, NULL, NULL),
-(1, 4, '2024-05-10 15:00:00', 3, 2, NULL, NULL);
+(1, 2, '2024-09-02 15:00:00', 1, 2, NULL, NULL),
+(3, 4, '2024-09-03 15:00:00', 1, 2, NULL, NULL),
+(1, 3, '2024-09-04 15:00:00', 2, 2, NULL, NULL),
+(2, 4, '2024-09-05 15:00:00', 2, 2, NULL, NULL),
+(1, 4, '2024-09-10 15:00:00', 3, 2, NULL, NULL);
 
--- Inserta datos de ejemplo en la tabla predictions.
--- Predicciones para dos usuarios para todos los partidos de ambos campeonatos.
 INSERT INTO predictions(teamA, teamB, matchDate, idchampionship, predictionResultTeamA, predictionResultTeamB, scoreObtained, idstage, matchId, ci) VALUES
 -- Championship 1 predictions for user 76543210
 (1, 2, '2024-01-02 15:00:00', 1, 3, 2, 5, 1, 1, '76543210'),
@@ -350,17 +348,17 @@ INSERT INTO predictions(teamA, teamB, matchDate, idchampionship, predictionResul
 (2, 4, '2024-01-05 15:00:00', 1, 2, 2, 0, 2, 4, '87654321'),
 (1, 4, '2024-01-10 15:00:00', 1, 3, 1, 10, 3, 5, '87654321'),
 -- Championship 2 predictions for user 76543210
-(1, 2, '2024-05-02 15:00:00', 2, 1, 1, NULL, 1, 6, '76543210'),
-(3, 4, '2024-05-03 15:00:00', 2, 2, 0, NULL, 1, 7, '76543210'),
-(1, 3, '2024-05-04 15:00:00', 2, 0, 3, NULL, 2, 8, '76543210'),
-(2, 4, '2024-05-05 15:00:00', 2, 1, 2, NULL, 2, 9, '76543210'),
-(1, 4, '2024-05-10 15:00:00', 2, 3, 3, NULL, 3, 10, '76543210'),
+(1, 2, '2024-09-02 15:00:00', 2, 1, 1, NULL, 1, 6, '76543210'),
+(3, 4, '2024-09-03 15:00:00', 2, 2, 0, NULL, 1, 7, '76543210'),
+(1, 3, '2024-09-04 15:00:00', 2, 0, 3, NULL, 2, 8, '76543210'),
+(2, 4, '2024-09-05 15:00:00', 2, 1, 2, NULL, 2, 9, '76543210'),
+(1, 4, '2024-09-10 15:00:00', 2, 3, 3, NULL, 3, 10, '76543210'),
 -- Championship 2 predictions for user 87654321
-(1, 2, '2024-05-02 15:00:00', 2, 0, 0, NULL, 1, 6, '87654321'),
-(3, 4, '2024-05-03 15:00:00', 2, 1, 1, NULL, 1, 7, '87654321'),
-(1, 3, '2024-05-04 15:00:00', 2, 1, 2, NULL, 2, 8, '87654321'),
-(2, 4, '2024-05-05 15:00:00', 2, 3, 1, NULL, 2, 9, '87654321'),
-(1, 4, '2024-05-10 15:00:00', 2, 2, 2, NULL, 3, 10, '87654321');
+(1, 2, '2024-09-02 15:00:00', 2, 0, 0, NULL, 1, 6, '87654321'),
+(3, 4, '2024-09-03 15:00:00', 2, 1, 1, NULL, 1, 7, '87654321'),
+(1, 3, '2024-09-04 15:00:00', 2, 1, 2, NULL, 2, 8, '87654321'),
+(2, 4, '2024-09-05 15:00:00', 2, 3, 1, NULL, 2, 9, '87654321'),
+(1, 4, '2024-09-10 15:00:00', 2, 2, 2, NULL, 3, 10, '87654321');
 
 -- Inserta datos de ejemplo en la tabla predict_first.
 INSERT INTO predict_first(idTeam, ci, idChampionship) VALUES
@@ -375,3 +373,21 @@ INSERT INTO predict_second(idTeam, ci, idChampionship) VALUES
 (3, '87654321', 1),
 (2, '76543210', 2),
 (3, '87654321', 2);
+
+-- Inserting calculated points for user 76543210 in Championship 1
+INSERT INTO points (ci, idChampionship, points)
+VALUES ('76543210', 1, 6);
+
+-- Inserting calculated points for user 87654321 in Championship 1
+INSERT INTO points (ci, idChampionship, points)
+VALUES ('87654321', 1, 8);
+
+-- Inserting calculated points for user 76543210 in Championship 2
+INSERT INTO points (ci, idChampionship, points)
+VALUES ('76543210', 2, 4);
+
+-- Inserting calculated points for user 87654321 in Championship 2
+INSERT INTO points (ci, idChampionship, points)
+VALUES ('87654321', 2, 5);
+
+select ci, points from points where points.idChampionship =  order by points desc ;

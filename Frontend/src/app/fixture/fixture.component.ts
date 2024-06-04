@@ -10,11 +10,12 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
+import { MenuPrincipalComponent } from '../menu-principal/menu-principal.component';
 
 @Component({
   selector: 'app-fixture',
   standalone: true,
-  imports: [NgFor,CommonModule, NgIf, FormsModule],
+  imports: [NgFor,CommonModule, NgIf, FormsModule, ReactiveFormsModule, MenuPrincipalComponent],
   templateUrl: './fixture.component.html',
   styleUrl: './fixture.component.css'
 })
@@ -97,7 +98,7 @@ export class FixtureComponent {
   }
 
   goBack(){
-    this.router.navigate(['/menu']);
+    this.router.navigate(['/championships']);
     this.happened = false;
   }
 

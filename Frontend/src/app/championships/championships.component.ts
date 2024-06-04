@@ -8,11 +8,12 @@ import { CommonModule } from '@angular/common';
 import { NgFor } from '@angular/common';
 import {NgIf} from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MenuPrincipalComponent } from '../menu-principal/menu-principal.component';
 
 @Component({
   selector: 'app-championships',
   standalone: true,
-  imports: [NgFor,CommonModule, NgIf, FormsModule],
+  imports: [NgFor,CommonModule, NgIf, FormsModule, MenuPrincipalComponent],
   templateUrl: './championships.component.html',
   styleUrl: './championships.component.css'
 })

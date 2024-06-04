@@ -1,4 +1,13 @@
-    .championships-container {
+  .image {
+    background-image: url('../../assets/estadio.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    width: 100%;
+  }
+  
+  .championships-container {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -17,11 +26,13 @@
     margin: 10px 0;
     cursor: pointer;
     transition: 0.3s;
-  }
-  
+    background-color: rgba(255, 255, 255, 0.5);
+  } 
+
   .championship-card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.8);
   }
+
   .floating-button {
     position: fixed;
     bottom: 20px;
