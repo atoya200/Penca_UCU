@@ -1,11 +1,12 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/menu">PencaUCU</a>
+        <a class="navbar-brand" href="/championships">PencaUCU</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="!isAdmin">
                 <li class="nav-item">
-                    <a (click)="limpiarDatos()" class="nav-link active" href="#modalParticiparPenca" aria-current="page"
-                        data-bs-toggle="modal" data-bs-target="#modalParticiparPenca">Participar en penca</a>
+                    <a (click)="buscarCampeonatos()" class="nav-link active" href="#modalParticiparPenca"
+                        aria-current="page" data-bs-toggle="modal" data-bs-target="#modalParticiparPenca">Participar en
+                        penca</a>
                 </li>
             </ul>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isAdmin">
@@ -16,6 +17,16 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/menu">Crear campeonato</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Estadísticas
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="buscarCampeonatos()" class="dropdown-item" href="/menu" data-bs-toggle="modal"
+                                data-bs-target="#modalEstadisticas">Ver estadísticas</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -48,11 +59,12 @@
         data-bs-placement="bottom" data-bs-content="Notifiacion 1" data-bs-title="Notificaciones">
         Campanita
     </button>
+
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Perfil
         </button>
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu dropdown-menu-end">
             <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
         </ul>
     </div>
@@ -96,9 +108,32 @@
                                 class="input-group-text">X</button>
                         </div>
                     </div>
+                    <!--
+                    <div class="form-group" *ngIf="angForm.controls['imagen'].value">
+                        <label for="imagen">Preview: </label>
+                        <div class="input-group mb-3">
+                            <img [src]="imagenCargada" class="rounded float-start" width="200px" height="200px">
+                            <p>EQUIPO</p>
+                        </div>
+                    </div>-->
+                    <!--<img *ngIf="angForm.controls['imagen'].value" [src]="imagenCargada" width="200px" height="200px"
+                        alt="Image ">-->
 
-                    <img *ngIf="angForm.controls['imagen'].value" [src]="imagenCargada" width="200px" height="200px"
-                        alt="Image ">
+                    <div *ngIf="angForm.controls['imagen'].value" class="form-group">
+                        <label for="imagen">Preview: </label>
+                        <div clas="container mt-5">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="d-flex align-items-center">
+                                        <img [src]="imagenCargada" class="img-fluid align-self-start mr-3 imagenEquipo">
+                                        <div id="nombreEquipo">
+                                            <h1>{{angForm.get('equipo').value|uppercase}}</h1>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -248,4 +283,74 @@
         </div>
     </div>
 
+</div>
+
+<!--Modal Ver estadisticas-->
+<div class="modal fade modal-dialog-scrollable" id="modalEstadisticas" data-bs-backdrop="static"
+    data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form class="form" [formGroup]="angFormEstadisticas" novalidate>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Estadísticas</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Campeonato: </label>
+                        <select class="form-select form-control" formControlName="campeonato">
+                            <option *ngFor="let campeonato of Campeonatos" [value]="campeonato.id">{{campeonato.name}}
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="error" *ngIf="angFormEstadisticas.controls['campeonato'].invalid && (angFormEstadisticas.controls['campeonato'].dirty || 
+                    angFormEstadisticas.controls['campeonato'].touched)">
+                        <div [hidden]="!angFormEstadisticas.controls['campeonato'].errors.required">
+                            Debe seleccionar un campeonato.
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Consulta: </label>
+                        <select class="form-select form-control" formControlName="consulta">
+                            <option value="aciertos">Aciertos por carrera</option>
+                        </select>
+                    </div>
+
+                    <table *ngIf="Estadistica" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th *ngFor="let campo of Estadistica[0] | keyvalue" scope="col">{{campo.key}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let stat of Estadistica">
+                                <td *ngFor="let campo of stat | keyvalue">{{campo.value}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="error" *ngIf="angFormEstadisticas.controls['consulta'].invalid && (angFormEstadisticas.controls['consulta'].dirty || 
+                    angFormEstadisticas.controls['consulta'].touched)">
+                        <div [hidden]="!angFormEstadisticas.controls['consulta'].errors.required">
+                            Debe seleccionar una consulta.
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="button" (click)="buscarEstatistica()"
+                        [disabled]="angFormEstadisticas.pristine || angFormEstadisticas.invalid"
+                        class="btn btn-primary">Consultar</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
 </div>
