@@ -10,6 +10,7 @@ import stageRouter from "./routes/stage"
 import rankingRouter from "./routes/ranking";
 import notificationRouter from "./routes/notifications"
 import { createPool, Pool } from 'mysql2/promise';
+import statisticsRouter from "./routes/statistics"
 
 import * as middleware from './middleware'
 
@@ -68,6 +69,7 @@ app.use('/notification', notificationRouter)
 app.use('/team', teamsRouter)
 app.use('/stage', stageRouter)
 app.use('/ranking', rankingRouter)
+app.use('/statistics', statisticsRouter)
 
 
 

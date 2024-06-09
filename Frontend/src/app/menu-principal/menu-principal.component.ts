@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, N
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
 import { StageService } from '../stage.service';
+import { StatisticsService } from '../statistics.service';
 
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
@@ -32,13 +33,14 @@ export class MenuPrincipalComponent implements AfterViewInit {
   angFormPencaId: FormGroup;
   angFormVerFase: FormGroup;
   angFormElegirEquipos: FormGroup;
+  angFormEstadisticas: FormGroup;
   imagen: any = "";
   Fases: any = [];
   pencaValida: boolean = false;
   Equipos: any = []
-
-
-  constructor(private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipsService, private sanitizer: DomSanitizer) {
+  Campeonatos: any = []
+  Estadistica: any = []
+  constructor(private statisticsService: StatisticsService, private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipsService, private sanitizer: DomSanitizer) {
 
     this.createForm();
 
@@ -66,6 +68,10 @@ export class MenuPrincipalComponent implements AfterViewInit {
       equipoSubcampeon: ['', [Validators.required]]
     });
 
+    this.angFormEstadisticas = this.fb.group({
+      campeonato: ['', [Validators.required]],
+      consulta: ['', [Validators.required]]
+    });
 
   }
 
@@ -94,7 +100,9 @@ export class MenuPrincipalComponent implements AfterViewInit {
     this.angFormElegirEquipos.get('equipoCampeon').reset()
     this.angFormElegirEquipos.get('equipoSubcampeon').reset()
     this.pencaValida = false;
-
+    this.angFormEstadisticas.get('campeonato').reset()
+    this.angFormEstadisticas.get('consulta').reset()
+    this.Estadistica = []
   }
 
   eliminarImagen(): void {
@@ -177,7 +185,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   elegirEquipos(): void {
     // validar si el ID penca(campeonato) existe
     // Si existe, ir a buscar los equiops del campeonato y cargarlos en el select
-    /*
+
     this.championshipService.getTeams(this.angFormPencaId.get('idPenca').value).subscribe(
       data => {
         this.Equipos = data.teams;
@@ -196,7 +204,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
         alert(error.error.msg)
         console.log(error);
       });
-      */
+
 
   }
 
@@ -232,19 +240,53 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
   }
 
+  buscarCampeonatos(): void {
+
+    this.limpiarDatos()
+    // buscar campeonatos
+    this.championshipService.getAllChampionships().subscribe(data => {
+
+      this.Campeonatos = data;
+
+    }, error => {
+
+      alert(error.error.msg)
+      console.log(error);
+    })
+  }
+
+  buscarEstatistica() {
+    this.statisticsService.getStatistic(this.angFormEstadisticas.get('campeonato').value, this.angFormEstadisticas.get('consulta').value).subscribe(
+      data => {
+        // cargar datos
+        this.Estadistica = data.consulta;
+
+        for (let index = 0; index < this.Estadistica.length; index++) {
+          const element = this.Estadistica[index];
+          console.log(element)
+        }
+
+        for (let element of this.Estadistica) {
+          console.log(element)
+        }
+
+      }, error => {
+        alert(error.error.msg)
+        console.log(error);
+      })
+  }
+
   ngAfterViewInit() {
     // Este codigo del popover bloquea que funcione lo resto de bootstrap.
     // por el popover de las notificaciones
     /*
-    const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-    const popoverList = popoverTriggerList.map((popoverTriggerEl) => {
-      return new bootstrap.Popover(popoverTriggerEl);
-    });
-*/
+      const popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+      const popoverList = popoverTriggerList.map((popoverTriggerEl) => {
+        return new bootstrap.Popover(popoverTriggerEl);
+      });
+  */
 
 
   }
-
-
 }
 

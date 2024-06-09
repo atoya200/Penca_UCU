@@ -19,10 +19,25 @@ router.get('/', [middleware.verifyUser], async (req, res) => {
 
     } catch (error) {
         res.status(500);
-        res.send(JSON.stringify({ msg: "Error al obtener los campionatos inscriptos." }))
+        res.send(JSON.stringify({ msg: "Error al obtener los campeonatos inscriptos." }))
     }
 
 })
+
+router.get('/all', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) => {
+    // returns all championships 
+    try {
+        var championships = await methods.query('select * from championship', []);
+        res.status(200)
+        res.send(JSON.stringify(championships));
+
+    } catch (error) {
+        res.status(500);
+        res.send(JSON.stringify({ msg: "Error al obtener los campeonatos." }))
+    }
+
+})
+
 
 router.post('/:id/register', [middleware.verifyUser], async (req, res) => {
     // admins cannot access this endpoint
