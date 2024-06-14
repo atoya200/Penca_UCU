@@ -21,7 +21,7 @@ services:
       - DB_NAME=obligatoriodb2
 
   mysql:
-    image: mysql:latest
+    image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
