@@ -7,6 +7,9 @@ services:
       - "4200:80"
     depends_on:
       - node-app
+    networks:
+      my-network:
+        ipv4_address: 172.28.0.1
 
   node-app:
     build: "../Back_end"
@@ -19,10 +22,12 @@ services:
       - DB_USER=root
       - DB_PASSWORD=obligatoriodb2
       - DB_NAME=obligatoriodb2
+    networks:
+      my-network:
+        ipv4_address: 172.28.0.2
 
   mysql:
     image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
     restart: always
     ports:
       - "3306:3306"
@@ -35,5 +40,17 @@ services:
       - "../Base de datos/obligatorio.sql:/docker-entrypoint-initdb.d/1.sql"
       - "datamysql:/var/lib/mysql"
       - "../Base de datos/my.cnf:/etc/mysql/my.cnf"
+    networks:
+      my-network:
+        ipv4_address: 172.28.0.3
+
 volumes:
     datamysql:
+
+
+networks:
+  my-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.28.0.0/16
