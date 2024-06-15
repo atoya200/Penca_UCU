@@ -13,7 +13,7 @@ router.get('/:id', [middleware.verifyUser], async (req, res) => {
         res.status(200)
     } catch (error) {
         res.status(500);
-        res.send(JSON.stringify({ msg: "Error al obtener las predicciones." }))
+        res.send(JSON.stringify({ msg: "Error al obtener el ranking del campeonato " + req.params.id  }))
     }
 })
 
