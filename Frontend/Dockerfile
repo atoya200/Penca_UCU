@@ -10,7 +10,7 @@ RUN npm run build --prod
 
 # Use the official Nginx image to serve the Angular app
 FROM nginx:alpine
-COPY --from=build /app/dist/penca-ucu /usr/share/nginx/html
+COPY --from=build /app/dist/ /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]

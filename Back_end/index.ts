@@ -30,7 +30,7 @@ const PORT = 3000;
 export let pool: Pool;
 
 const connectionUri = {
-    host: '172.28.0.3',
+    host: 'mysql',
     user: 'obligatoriobd2',
     database: 'obligatoriobd2',
     password: 'obligatoriobd2',
@@ -87,7 +87,6 @@ app.get('/test', [middleware.verifyUser, middleware.verifyUserIsAdmin], (req: an
 
 // Verify database connection and start listening
 async function run() {
-    while (true) {
         try {
             // Connect the client to the server
 
@@ -101,7 +100,6 @@ async function run() {
         } catch (error) {
             console.log(error);
         }
-    }
 }
 
 // Run server
