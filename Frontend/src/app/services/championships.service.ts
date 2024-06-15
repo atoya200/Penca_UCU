@@ -13,8 +13,13 @@ export class ChampionshipsService {
   constructor(private http: HttpClient) { }
 
   // Obtener campeonatos asociados a un usuario (unicamente los nombres e id's)
-  getChampionships(): Observable<Championship[]>{
+  getChampionships(): Observable<Championship[]> {
     return this.http.get<Championship[]>('http://localhost:3000/championship')
+  }
+
+  // Obtener todos los campeonatos
+  getAllChampionships(): Observable<any> {
+    return this.http.get<any>('http://localhost:3000/championship/all')
   }
 
   // Anotar usuario a penca
@@ -26,7 +31,10 @@ export class ChampionshipsService {
     })
 
   }
-
+  // Obtener equipos pertenecientes a un campeonato
+  getTeams(idchampionship: any): Observable<any> {
+    return this.http.get(`http://localhost:3000/championship/${idchampionship}/team`)
+  }
 
 }
 

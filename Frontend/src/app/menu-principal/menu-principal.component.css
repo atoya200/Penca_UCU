@@ -19,3 +19,13 @@ select.ng-valid.ng-touched {
 button {
   margin-right: 10px;
 }
+
+.imagenEquipo{
+  max-width: 100px;
+  max-height: 100px;
+}
+
+#nombreEquipo{
+  margin-left: 10px;
+}
+
