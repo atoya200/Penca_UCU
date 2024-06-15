@@ -1,0 +1,75 @@
+.ranking-item {
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: background-color 0.5s, border 0.5s; 
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+.user-List {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ranking-item {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-align: center;
+}
+
+button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px auto;
+  transition-duration: 0.4s;
+  display: block;
+}
+
+button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.highlighted {
+  border: 2px solid #000000; 
+  background-color: #ffffff; 
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #312f2f;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+}
+
+.floating-button:hover {
+  background-color: #0254cf; 
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}

@@ -16,6 +16,7 @@ export class LoginService {
       ci: id,
       password: pwd
     }
+    this.cookies.set("user", id);
     return this.http.post("http://localhost:3000/user/login", { "user": user });
   }
 

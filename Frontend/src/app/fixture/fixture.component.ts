@@ -53,7 +53,7 @@ export class FixtureComponent {
 
   async openModal(match: any, stage: string) {
     this.selectedMatch = match;
-    
+
     this.teamAGoals = match.goalsA.toString();
     this.teamBGoals = match.goalsB.toString();
 
@@ -69,7 +69,7 @@ export class FixtureComponent {
         this.match.date = match.date;
         this.match.goalsA = matchData[0].resultTeamA;
         this.match.goalsB = matchData[0].resultTeamB;
-        this.match.teamA = match.teamA; 
+        this.match.teamA = match.teamA;
         this.match.teamB = match.teamB;
         this.match.matchId = match.matchId;
         this.match.scoreObtained = match.scoreObtained;
@@ -151,17 +151,23 @@ export class FixtureComponent {
     }
   };
 
-    validateInput(teamAGoals: string, teamBGoals: string): boolean {
-      const goalsPattern = /^[0-9]*$/;
-      let value = goalsPattern.test(teamAGoals) && goalsPattern.test(teamBGoals);
-      if (teamAGoals === null || teamBGoals === null){
-        value = false;
-      }else if (teamAGoals === " " ||  teamBGoals === ""){
-        value = false;
-      }else if (teamAGoals === " " ||  teamBGoals === " "){
-        value = false;
-      }
-      this.isValid = value;
-      return value;
+  validateInput(teamAGoals: string, teamBGoals: string): boolean {
+    const goalsPattern = /^[0-9]*$/;
+    let value = goalsPattern.test(teamAGoals) && goalsPattern.test(teamBGoals);
+    if (teamAGoals === null || teamBGoals === null){
+      value = false;
+    }else if (teamAGoals === " " ||  teamBGoals === ""){
+      value = false;
+    }else if (teamAGoals === " " ||  teamBGoals === " "){
+      value = false;
     }
+    this.isValid = value;
+    return value;
+  }
+
+  viewRanking(id: number){
+    console.log("ID: ", id);
+    this.router.navigate(['/ranking/' + id]);
+  }
+
 }
