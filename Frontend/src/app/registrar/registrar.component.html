@@ -1,3 +1,4 @@
+<!--
 <div class="container">
     <h1>
         REGISTRAR USUARIO
@@ -9,7 +10,7 @@
                 pattern="[0-9]*">
         </div>
 
-        <div class="error" *ngIf="angForm.controls['ci'].invalid && (angForm.controls['ci'].dirty || 
+        <div class="error" *ngIf="angForm.controls['ci'].invalid && (angForm.controls['ci'].dirty ||
             angForm.controls['ci'].touched)">
             <div [hidden]="!angForm.controls['ci'].errors.required">
                 CI no puede estar vacía.
@@ -67,7 +68,7 @@
                 <option *ngFor="let career of Career" [value]="career.id">{{career.carrer_name}}</option>
             </select>
         </div>
-        <div class="error" *ngIf="angForm.controls['carrera'].invalid && (angForm.controls['carrera'].dirty 
+        <div class="error" *ngIf="angForm.controls['carrera'].invalid && (angForm.controls['carrera'].dirty
             || angForm.controls['carrera'].touched)">
             <div [hidden]="!angForm.controls['carrera'].errors.required">
                 Debe seleccionar al menos una carrera.
@@ -95,10 +96,88 @@
                 Registrarse
             </button>
         </div>
-
-
-
-
     </form>
-
 </div>
+-->
+<body>
+<form [formGroup]="angForm" class="form">
+  <p class="title">Register </p>
+  <p class="message">Signup now and get full access to our app. </p>
+  <div class="flex">
+    <label>
+      <input class="input" type="text" placeholder="" formControlName="name" required>
+      <span>Firstname</span>
+    </label>
+    <div class="error" *ngIf="angForm.get('name').invalid && (angForm.get('name').dirty || angForm.get('name').touched)">
+      <div *ngIf="angForm.get('name').errors.required">
+        Nombre no puede estar vacío.
+      </div>
+    </div>
+
+    <label>
+      <input class="input" type="text" placeholder="" formControlName="lastname" required>
+      <span>Lastname</span>
+    </label>
+    <div class="error" *ngIf="angForm.get('lastname').invalid && (angForm.get('lastname').dirty || angForm.get('lastname').touched)">
+      <div *ngIf="angForm.get('lastname').errors.required">
+        Apellido no puede estar vacío.
+      </div>
+    </div>
+  </div>
+
+  <label>
+    <input class="input" type="email" placeholder="" formControlName="email" required>
+    <span>Email</span>
+  </label>
+  <div class="error" *ngIf="angForm.get('email').invalid && (angForm.get('email').dirty || angForm.get('email').touched)">
+    <div *ngIf="angForm.get('email').errors.required">
+      El mail no puede estar vacío.
+    </div>
+    <div *ngIf="angForm.get('email').errors.pattern">
+      El mail debe tener formato email&#64;dominio.com
+    </div>
+  </div>
+
+  <label>
+    <input class="input" type="password" placeholder="" formControlName="password" required>
+    <span>Password</span>
+  </label>
+  <div class="error" *ngIf="angForm.get('password').invalid && (angForm.get('password').dirty || angForm.get('password').touched)">
+    <div *ngIf="angForm.get('password').errors.required">
+      Contraseña no puede estar vacía.
+    </div>
+  </div>
+
+  <label>
+    <input class="input" formControlName="ci" type="text" minlength="7" maxlength="8" placeholder="" required pattern="[0-9]*">
+    <span>Ci</span>
+  </label>
+  <div class="error" *ngIf="angForm.get('ci').invalid && (angForm.get('ci').dirty || angForm.get('ci').touched)">
+    <div *ngIf="angForm.get('ci').errors.required">
+      CI no puede estar vacía.
+    </div>
+    <div *ngIf="angForm.get('ci').errors.minlength">
+      Largo mínimo de 7 caracteres.
+    </div>
+    <div *ngIf="angForm.get('ci').errors.pattern">
+      Solo se permiten números.
+    </div>
+  </div>
+
+  <label>
+    <input class="input" type="text" placeholder="" formControlName="carrera" required>
+    <span>Carrera</span>
+  </label>
+  <div class="error" *ngIf="angForm.get('carrera').invalid && (angForm.get('carrera').dirty || angForm.get('carrera').touched)">
+    <div *ngIf="angForm.get('carrera').errors.required">
+      Debe seleccionar al menos una carrera.
+    </div>
+  </div>
+
+  <button class="submit" [disabled]="angForm.pristine || angForm.invalid" (click)="registrar()">Submit</button>
+  <p class="signin">Already have an account? <a href="#">Signin</a> </p>
+</form>
+
+
+</body>
+
