@@ -73,3 +73,21 @@ button:hover {
   color: #fff;
   transform: translateY(-7px);
 }
+
+.image {
+  background-image: url('../../assets/partido.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #ffffff; 
+  font-family: 'Arial', sans-serif; 
+  text-shadow: 4px 4px 8px #d30000; 
+}

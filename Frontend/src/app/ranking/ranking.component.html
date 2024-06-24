@@ -1,4 +1,6 @@
 
+<h1 class="title">Ranking</h1>
+
 <div class="user-List">
   <div *ngFor="let user of ranking; let i = index" [id]="'ranking-' + user.ci" class="ranking-item">
     {{ i + 1 }}. {{ user.ci }} - {{ user.points }} punto/s

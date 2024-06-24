@@ -36,7 +36,7 @@ export class FixtureComponent {
   happened : boolean = false;
   //Esto se debe hacer ya que la predicción de algún usuario puede ser 0 - 0
   teamAGoals: string | null = null;
-  teamBGoals: string | null = null;
+  teamBGoals: string| null = null;
   // Se utilizan para validar que el usuario no ponga un resultado que sea un número y que lo haga en el plazo valido
   isNear: boolean = false;
   isValid: boolean = true;
@@ -171,3 +171,6 @@ export class FixtureComponent {
   }
 
 }
+
+
+
