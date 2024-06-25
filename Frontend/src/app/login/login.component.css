@@ -2,10 +2,24 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la vista */
-  margin: 0; /* Elimina los márgenes predeterminados */
-  padding: 0; /* Elimina el relleno predeterminado */
-  background-color: #a80000; /* O el color de fondo que prefieras */
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url('../../assets/football-arena-background (1).jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
+}
+
+.image {
+  background-image: url('../../assets/estadio.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
+  width: 100%;
 }
 
 .form {

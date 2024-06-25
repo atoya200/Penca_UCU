@@ -1,5 +1,5 @@
   .image {
-    background-image: url('../../assets/partido.jpg');
+    background-image: url('../../assets/soccer-ball-green-grass-with-selective-focus-generative-ai.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -13,7 +13,7 @@
     justify-content: space-around;
     padding: 20px;
   }
-  
+
   .card {
     margin: 20px;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -21,27 +21,27 @@
     background-color: rgba(255, 255, 255, 0.5);
 
   }
-  
+
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
-  
+
   .card-header {
     background-color: #f8f9fa;
     padding: 10px;
     font-weight: bold;
     background-color: rgba(255, 255, 255, 0.5);
   }
-  
+
   .list-group-item {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.5);
   }
-  
+
   .list-group-item:hover {
     background-color: #f8f9fa;
   }
-  
+
   .modal-content {
     position: relative;
     display: flex;
@@ -57,7 +57,7 @@
     animation-name: modalFade;
     animation-duration: 1s;
   }
-  
+
   .modal-header {
     display: flex;
     align-items: flex-start;
@@ -69,30 +69,30 @@
     background-color: #5dade2;
     color: white;
   }
-  
+
   .modal-body {
     position: relative;
     flex: 1 1 auto;
     padding: 1rem;
     background-color: #ecf0f1;
   }
-  
+
   @keyframes modalFade {
     from {opacity: 0;}
     to {opacity: 1;}
   }
-  
+
   .modal-title {
     margin-bottom: 0;
     line-height: 1.5;
   }
-  
+
   .btn-close {
     padding: 1rem;
     margin: -1rem -1rem -1rem auto;
     color: inherit;
   }
-  
+
   .form-control {
     display: block;
     width: 100%;
@@ -113,9 +113,9 @@
     text-align: center;
     font-size: 2.5em;
     margin-bottom: 20px;
-    color: #ffffff; 
-    font-family: 'Arial', sans-serif; 
-    text-shadow: 4px 4px 8px #d30000; 
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 4px 4px 8px #d30000;
   }
 
   .floating-button {
@@ -132,9 +132,9 @@
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
   }
-  
+
   .floating-button:hover {
-    background-color: #0254cf; 
+    background-color: #0254cf;
     box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
     color: #fff;
     transform: translateY(-7px);
@@ -143,19 +143,19 @@
   .gteamAGoals-input {
     width: 50px;
   }
-  
+
   .warnning {
     color: red;
   }
-  
+
   .success {
     color: green;
   }
-  
+
   .gteamAGoals-input {
     width: 50px;
   }
-  
+
   .row {
     margin-bottom: 10px;
   }
@@ -174,7 +174,7 @@
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
   }
-  
+
   .floating-button-2:hover {
     background-color: #0056b3;
     box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
