@@ -7,6 +7,138 @@ const router = express.Router()
 router.post('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) => {
     // only admins can create a new championship
 
+    const { name, startDate, endDate } = req.body
+
+    if (name == undefined || startDate == undefined || endDate == undefined) {
+        return res.status(400).json({ message: "Faltan datos o formato de los datos invaidos" })
+    }
+
+    try {
+        // Consultamos la base para saber si ya hay un campeonato con un nombre similar
+        let sql = "SELECT name FROM championship WHERE name = ? "
+        let params = [name.trim().toUpperCase()]
+        let result = await methods.query(sql, params)
+
+        if (result == null) {
+            return res.status(500).json({ message: "Ocurrió un error al intentar crear el campeonato, intentelo más tarde" })
+        } else if (result.length != 0) {
+            console.log(result)
+            return res.status(400).json({ message: "Ya existe un campeonato con el mismo nombre" })
+        } else {
+
+            // Hacemos el insert del nuevo campeonato
+            let sql = "INSERT INTO championship (name, start_date,  end_date) VALUES (?, ?, ?)";
+            let params = [name, startDate, endDate]
+            let success = await methods.insert(sql, params)
+            if (success) {
+                return res.status(200).json({ message: "Campeonato creado con éxito" })
+            } else {
+                return res.status(500).json({ message: "Ocurrió un error al intentar crear el campeonato" })
+            }
+
+        }
+    } catch (error) {
+        return res.status(500).json({ message: "Ocurrió un error con el sistema" })
+    }
+
+})
+
+router.post("/assignStages", [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) => {
+
+    const { stages, championship } = req.body
+
+    if (!Array.isArray(stages) || stages.length == 0 || championship == undefined || !Number.isInteger(championship)) {
+        return res.status(400).json({ message: "Formato de los datos erroneo o datos faltantes" })
+    }
+
+    try {
+
+        // Revisamos si el id de campeonato corresponde a alguno valido
+        let sql = "SELECT name FROM championship WHERE id = ? AND end_date > current_date();"
+        let params = championship
+        let result = await methods.query(sql, params)
+        if (result == null) {
+            return res.status(500).json({ message: "Ocurrió un error al intentar asginar los equipos al campeonato, intentelo más tarde" })
+        } else if (result.length == 0) {
+            console.log(result)
+            return res.status(400).json({ message: "El campeonato proporcionado no es valido actualmente" })
+        }
+
+        // Ahora comprobamos que los equipos proporcionados existan de verdad
+        let signo = stages.length == 1 ? "?" : "?,".repeat(stages.length - 1) + "?"
+        sql = `SELECT id FROM stage WHERE id in (${signo})`;
+
+        let result2 = await methods.query(sql, stages)
+        console.log(result2)
+
+        if (result2.length != stages.length) {
+            return res.status(400).json({ message: "No todo los id de equipo proporcionados son validos" })
+        }
+
+        // Validamos las etapas, ahora las asignamos al campeonato
+        let param = stages.length == 1 ? `(${championship}, ${stages[0]})` : `(${championship},` + stages.join(`), (${championship},`) + ")"
+        sql = `INSERT INTO stage_for_championship (idChampionship, idStage) VALUES ${param}`;
+        let success = await methods.insert(sql, [])
+        if (success) {
+            return res.status(200).json({ message: "Etapas asignados correctamente" })
+        } else {
+            return res.status(500).json({ message: "Ocurrió un error al intentar asignar etapas al campeonato" })
+        }
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({ message: "Ocurrió un error con el sistema" })
+    }
+
+
+
+})
+
+router.post("/registerTeams", [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) => {
+
+    const { teams, championship } = req.body
+
+    if (!Array.isArray(teams) || teams.length == 0 || championship == undefined || !Number.isInteger(championship)) {
+        return res.status(400).json({ message: "Formato de los datos erroneo o datos faltantes" })
+    }
+    try {
+        // Revisamos si el id de campeonato corresponde a alguno valido
+        let sql = "SELECT name FROM championship WHERE id = ? AND end_date > current_date();"
+        let params = championship
+        let result = await methods.query(sql, params)
+        if (result == null) {
+            return res.status(500).json({ message: "Ocurrió un error al intentar asginar los equipos al campeonato, intentelo más tarde" })
+        } else if (result.length == 0) {
+            console.log(result)
+            return res.status(400).json({ message: "El campeonato proporcionado no es valido actualmente" })
+        }
+
+        // Ahora comprobamos que los equipos proporcionados existan de verdad
+        let signo = teams.length == 1 ? "?" : "?,".repeat(teams.length - 1) + "?"
+        sql = `SELECT id FROM team WHERE id in (${signo})`;
+
+        let result2 = await methods.query(sql, teams)
+        console.log(result2)
+
+        if (result2.length != teams.length) {
+            return res.status(400).json({ message: "No todo los id de equipo proporcionados son validos" })
+        }
+
+        // Como son id validos, pasamos a hacer los insert correspodientes
+
+        let param = teams.length == 1 ? `(${championship}, ${teams[0]})` : `(${championship},` + teams.join(`), (${championship},`) + ")"
+        sql = `INSERT INTO team_participation (idChampionship, idTeam) VALUES ${param}`;
+        console.log(param)
+        let success = await methods.insert(sql, []);
+        if (success) {
+            return res.status(200).json({ message: "Equipos asignados correctamente" })
+        } else {
+            return res.status(500).json({ message: "Ocurrió un error al intentar asignar los equipos al campeonato" })
+        }
+    } catch {
+        return res.status(500).json({ message: "Ocurrió un error con el sistema" })
+    }
+
 })
 
 router.get('/', [middleware.verifyUser], async (req, res) => {

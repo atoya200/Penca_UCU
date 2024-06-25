@@ -80,39 +80,37 @@ FLUSH PRIVILEGES;
         FOREIGN KEY (idChampionship) REFERENCES championship(id)
     );
 
-    -- Es la agregación de juega equipo con la agregación de etapa con campeonato
-    CREATE TABLE championshipMatch (
-        id INTEGER AUTO_INCREMENT PRIMARY KEY,
-        idTeamA INTEGER,
-        idTeamB INTEGER,
-        matchDate DATETIME,
-        idStage INTEGER,
-        idChampionship INTEGER,
-        resultTeamA INTEGER,
-        resultTeamB INTEGER,
-        INDEX idx_match (idChampionship, idStage, idTeamA, idTeamB, matchDate),
-        FOREIGN KEY (idChampionship) REFERENCES championship(id),
-        FOREIGN KEY (idStage) REFERENCES stage(id),
-        FOREIGN KEY (idTeamA) REFERENCES team(id),
-        FOREIGN KEY (idTeamB) REFERENCES team(id)
-    );
+-- Es la agregación de juega equipo con la agregación de etapa con campeonato
+CREATE TABLE championshipMatch(
+    idTeamA INTEGER,
+    idTeamB INTEGER,
+    matchDate DATETIME,
+    idStage INTEGER,
+    idChampionship INTEGER,
+    resultTeamA INTEGER,
+    resultTeamB INTEGER,
+    INDEX idx_match (idChampionship, idStage, idTeamA, idTeamB, matchDate),
+    PRIMARY KEY (idTeamA, idTeamB,  idChampionship, idStage, matchDate),
+    FOREIGN KEY (idChampionship) REFERENCES championship(id),
+    FOREIGN KEY (idStage) REFERENCES stage(id),
+    FOREIGN KEY (idTeamA) REFERENCES team(id),
+    FOREIGN KEY (idTeamB) REFERENCES team(id)
+);
 
-    CREATE TABLE predictions (
-        teamA INTEGER,
-        teamB INTEGER,
-        matchDate DATETIME,
-        idchampionship INTEGER,
-        predictionResultTeamA INTEGER,
-        predictionResultTeamB INTEGER,
-        scoreObtained INTEGER,
-        idstage INTEGER,
-        matchId INTEGER,
-        ci VARCHAR(8),
-        primary key (ci, matchId),
-        FOREIGN KEY (ci) REFERENCES student(ci),
-        FOREIGN KEY (idchampionship, idstage, teamA, teamB, matchDate) REFERENCES championshipMatch(idChampionship, idStage, idTeamA, idTeamB, matchDate),
-        FOREIGN KEY (matchId) REFERENCES championshipMatch(id)
-    );
+CREATE TABLE predictions (
+    teamA INTEGER,
+    teamB INTEGER,
+    matchDate DATETIME,
+    idchampionship INTEGER,
+    predictionResultTeamA INTEGER,
+    predictionResultTeamB INTEGER,
+    scoreObtained INTEGER,
+    idstage INTEGER,
+    ci VARCHAR(8),
+    PRIMARY KEY (ci, teamA, teamB,  idchampionship, idstage, matchDate),
+    FOREIGN KEY (ci) REFERENCES student(ci),
+    FOREIGN KEY (idchampionship, idstage, teamA, teamB, matchDate) REFERENCES championshipMatch(idChampionship, idStage, idTeamA, idTeamB, matchDate)
+);
 
     -- Predice el campeón
     CREATE TABLE predict_first(
