@@ -30,7 +30,7 @@ const PORT = 3000;
 export let pool: Pool;
 
 const connectionUri = {
-    host: 'mysql',
+    host: 'localhost',
     user: 'obligatoriobd2',
     database: 'obligatoriobd2',
     password: 'obligatoriobd2',

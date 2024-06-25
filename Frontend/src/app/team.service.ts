@@ -16,4 +16,8 @@ export class TeamService {
     }
     return this.http.post("http://localhost:3000/team", { "team": team });
   }
+
+  getAllActiveTeams(): Observable<any>{
+    return this.http.get("http://localhost:3000/team");
+  }
 }

@@ -58,6 +58,7 @@ FLUSH PRIVILEGES;
 
     CREATE TABLE stage(
         id INTEGER AUTO_INCREMENT,
+        isGroupStage BOOLEAN NOT NULL DEFAULT(false),
         name VARCHAR(50),
         PRIMARY KEY (id)
     );
@@ -73,6 +74,7 @@ FLUSH PRIVILEGES;
     CREATE TABLE team_participation(
         idTeam INTEGER,
         idChampionship INTEGER,
+        isEliminated BOOLEAN NOT NULL DEFAULT (false),
         PRIMARY KEY(idTeam, idChampionship),
         FOREIGN KEY (idTeam) REFERENCES team(id),
         FOREIGN KEY (idChampionship) REFERENCES championship(id)
@@ -143,7 +145,7 @@ FLUSH PRIVILEGES;
     );
 
     CREATE TABLE points(ci VARCHAR(8),
-                        idChampionship INTEGER,
+                        idChampionship INTEGER, 
                         points INTEGER default 0,
                         PRIMARY KEY (ci,idChampionship),
                         FOREIGN KEY (ci) references student(ci),
@@ -159,7 +161,22 @@ FLUSH PRIVILEGES;
 */
 
 
+CREATE TRIGGER before_insert_match
+BEFORE INSERT ON championshipMatch
+FOR EACH ROW
+BEGIN
+    DECLARE countTeams INT;
+    
+    -- Verificamos si los equpipos están en ese campeonato
+    SELECT COUNT(*) INTO countTeams FROM team_participation 
+    WHERE idTeam in (NEW.idTeamA, NEW.idTeamB) and idChampionship  = NEW.idChampionship;
+    
 
+    -- Si algunos de los dos equipos o los odos no están en ese campeonato no puede insertar. 
+    IF countTeams != 2 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Equipo/s no participa/n campeonato';
+    END IF;
+END;
 
 
     -- Insertar datos para pruebas:

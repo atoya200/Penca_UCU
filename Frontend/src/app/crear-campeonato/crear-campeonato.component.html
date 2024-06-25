@@ -1,0 +1,48 @@
+<div>
+<div id="crear-campeonato-inputs">
+        <div class="input-form">
+            <label for="nombre">Nombre</label>
+            <input type="text" name="nombre" id="nombre-campeonato" required placeholder="Copa Ámerica 2024"
+                [(ngModel)]="nombre">
+        </div>
+        <div class="input-form">
+            <label for="fecha-inicio">Fecha Inicio</label>
+            <input type="date" name="fecha-inicio" id="fecha-inicio-campeonato" [(ngModel)]="fechaInicio"  min={{fechaInicio}}>
+        </div>
+        <div class="input-form">
+            <label for="fecha-fin">Nombre</label>
+            <input type="date" name="fecha-fin" id="fecha-fin-campeonato" [(ngModel)]="fechaFin" min={{fechaFin}}>
+        </div>
+        <!-- Equipos -->
+        <div class="input-form">
+
+            <div class="d-inline-flex gap-1">
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#equpipos" role="button"
+                    aria-expanded="false">
+                    Desplegar equipos
+                </a>
+            </div>
+            <div class="collapse" id="equpipos">
+                <div class="card card-body desplegable" *ngFor="let team of teams">
+                    <input type="checkbox" name="team" id=team_{{team.id}}> <span><img src=team.image alt=""></span>
+                    <span>{{team.name}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- Etapas -->
+        <div class="input-form">
+
+            <div class="d-inline-flex gap-1">
+                <a class="btn btn-primary" data-bs-toggle="collapse" href="#etapas" role="button" aria-expanded="false">
+                    Desplegar etapas
+                </a>
+            </div>
+            <div class="collapse" id="etapas">
+                <div class="card card-body" *ngFor="let stage of stages">
+                    <input type="checkbox" name="team" id=stage_{{stage.id}}> <span>{{stage.name}}</span>
+                </div>
+            </div>
+        </div>
+        <button type="submit" (click)=crearCampeonato()>Confirmar </button>
+    </div>
+</div>

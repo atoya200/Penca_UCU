@@ -38,5 +38,15 @@ router.post('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (r
 })
 
 
+router.get('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) => {
+    try {
+        var teams = await methods.query("SELECT  * FROM team", []);
+        return res.status(200).json({ "teams": teams });
+    } catch (error) {
+        return res.status(500).json({msg: "Error. Intente más tarde."})
+    }
+})
+
+
 
 export default router
