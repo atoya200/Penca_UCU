@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: obligatoriobd2
+      MYSQL_DATABASE: obligatoriobd2
+      MYSQL_USER: obligatoriodb2
+      MYSQL_PASSWORD: obligatoriobd2
+    volumes:
+      - "../Base de datos/obligatorio.sql:/docker-entrypoint-initdb.d/1.sql"
+      - "datamysql:/var/lib/mysql"
+      - "../Base de datos/my.cnf:/etc/my.cnf"
+    networks:
+      - my-network
+  
+  node-app:
+    build: "../Back_end"
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=root
+      - DB_PASSWORD=obligatoriodb2
+      - DB_NAME=obligatoriodb2
+    networks:
+      - my-network
+
+  angular-app:
+    build: "../Frontend"
+    ports:
+      - "4200:80"
+    depends_on:
+      - node-app
+    networks:
+      - my-network
+
+volumes:
+    datamysql:
+
+networks:
+  my-network:
+    driver: bridge

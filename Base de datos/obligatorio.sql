@@ -2,6 +2,10 @@
     CREATE database obligatoriobd2;
     use obligatoriobd2;
 
+CREATE USER 'obligatoriobd2'@'%' IDENTIFIED BY 'obligatoriobd2';
+GRANT ALL PRIVILEGES ON obligatoriobd2.* TO 'obligatoriobd2'@'%';
+FLUSH PRIVILEGES;
+
     CREATE TABLE user(
         ci VARCHAR(8),
         email VARCHAR(100),
