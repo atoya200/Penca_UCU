@@ -30,8 +30,8 @@ const PORT = 3000;
 export let pool: Pool;
 
 const connectionUri = {
-    host: 'localhost',
-    user: 'root',
+    host: '172.28.0.3',
+    user: 'obligatoriobd2',
     database: 'obligatoriobd2',
     password: 'obligatoriobd2',
     multipleStatements: true,
@@ -87,18 +87,20 @@ app.get('/test', [middleware.verifyUser, middleware.verifyUserIsAdmin], (req: an
 
 // Verify database connection and start listening
 async function run() {
-    try {
-        // Connect the client to the server
+    while (true) {
+        try {
+            // Connect the client to the server
 
-        pool = createPool(connectionUri)
-        await pool.query('Select 1') // test connection to database
-        console.log("Connected to database.")
-        app.listen(PORT, () => {
-            console.log("Server running on localhost:" + PORT)
-        })
+            pool = createPool(connectionUri)
+            await pool.query('Select 1') // test connection to database
+            console.log("Connected to database.")
+            app.listen(PORT, () => {
+                console.log("Server running on localhost:" + PORT)
+            })
 
-    } catch (error) {
-        console.log(error);
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 

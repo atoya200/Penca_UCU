@@ -9,9 +9,10 @@ export class StageService {
 
   constructor(private http: HttpClient) { }
 
-  registerStage(name: string): Observable<any> {
+  registerStage(name: string, faseEliminatoria: string): Observable<any> {
     let stage = {
-      'name': name
+      'name': name,
+      'faseEliminatoria': faseEliminatoria
     }
     return this.http.post("http://localhost:3000/stage", { "stage": stage });
   }

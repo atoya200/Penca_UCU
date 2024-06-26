@@ -81,7 +81,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar equipo</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar Equipo</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -106,6 +106,12 @@
                                 class="form-control" id="imagen" name="imagen" accept="image/">
                             <button *ngIf="angForm.controls['imagen'].value" (click)="eliminarImagen()"
                                 class="input-group-text">X</button>
+                        </div>
+                    </div>
+                    <div class="error" *ngIf="angForm.controls['imagen'].invalid && (angForm.controls['imagen'].dirty || 
+                    angForm.controls['imagen'].touched)">
+                        <div [hidden]="!angForm.controls['imagen'].errors.required">
+                            Debe ingresar una imagen.
                         </div>
                     </div>
                     <!--
@@ -175,6 +181,13 @@
                         </div>
                     </div>
 
+                    <div class="form-check form-group">
+                        <input class="form-check-input" type="checkbox" value="" id="faseEliminatoria"
+                            formControlName="faseEliminatoria">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Fase Eliminatoria
+                        </label>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>

@@ -50,12 +50,13 @@ export class MenuPrincipalComponent implements AfterViewInit {
     // Form crear equipo
     this.angForm = this.fb.group({
       equipo: ['', [Validators.required, Validators.maxLength(20)]],
-      imagen: ['']
+      imagen: ['', [Validators.required]]
     });
 
     // Form crear fase
     this.angFormCrearFase = this.fb.group({
-      nombreFase: ['', [Validators.required, Validators.maxLength(20)]]
+      nombreFase: ['', [Validators.required, Validators.maxLength(20)]],
+      faseEliminatoria: []
     });
 
     // Form id penca
@@ -96,6 +97,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
     this.angForm.get('equipo').reset()
     this.angForm.get('imagen').reset()
     this.angFormCrearFase.get('nombreFase').reset()
+    this.angFormCrearFase.get('faseEliminatoria').reset()
     this.angFormPencaId.get('idPenca').reset()
     this.angFormElegirEquipos.get('equipoCampeon').reset()
     this.angFormElegirEquipos.get('equipoSubcampeon').reset()
@@ -106,7 +108,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   }
 
   eliminarImagen(): void {
-    this.angForm.get('imagen').reset()
+    this.angForm.get('imagen').setValue("");
   }
 
   previsualizarImagen(): void {
@@ -156,7 +158,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   crearFase() {
     // ingresar fase
 
-    this.stageService.registerStage(this.angFormCrearFase.get('nombreFase').value).subscribe(
+    this.stageService.registerStage(this.angFormCrearFase.get('nombreFase').value, this.angFormCrearFase.get('faseEliminatoria').value).subscribe(
       data => {
 
         alert("Fase creada con éxito.");
