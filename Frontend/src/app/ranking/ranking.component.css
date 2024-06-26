@@ -31,7 +31,7 @@ body {
 
 /* Scrollbar */
 .contenedor::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
   background-color: transparent;
 }
 
@@ -41,7 +41,7 @@ body {
 }
 
 .contenedor::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .user-List {
@@ -116,8 +116,8 @@ button:hover {
 .title {
   text-align: center;
   font-size: 2.5em;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   color: #ffffff;
   font-family: 'Arial', sans-serif;
   text-shadow: 4px 4px 8px #000000;
@@ -128,7 +128,7 @@ button:hover {
   height: 50px;
   padding: 0 30px;
   border: 2px solid #000;
-  background: transparent;
+  background: #e8e8e8;
   user-select: none;
   white-space: nowrap;
   transition: all .05s linear;

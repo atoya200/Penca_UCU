@@ -261,15 +261,50 @@ SELECT resultTeamA,resultTeamB FROM championshipMatch WHERE id = ?;
 INSERT INTO user(ci, email, password) VALUES
 ('12345678', 'admin@example.com', 'adminpass'),
 ('76543210', 'student1@example.com', 'studentpass1'),
-('87654321', 'student2@example.com', 'studentpass2');
+('87654321', 'student2@example.com', 'studentpass2'),
+('00000001', 'student01@example.com', 'studentpass2'),
+('00000002', 'student02@example.com', 'studentpass2'),
+('00000003', 'student03@example.com', 'studentpass2'),
+('00000004', 'student04@example.com', 'studentpass2'),
+('00000005', 'student05@example.com', 'studentpass2'),
+('00000006', 'student06@example.com', 'studentpass2'),
+('00000007', 'student07@example.com', 'studentpass2'),
+('00000008', 'student08@example.com', 'studentpass2'),
+('00000009', 'student09@example.com', 'studentpass2'),
+('00000010', 'student10@example.com', 'studentpass2'),
+('00000011', 'student11@example.com', 'studentpass2'),
+('00000012', 'student12@example.com', 'studentpass2'),
+('00000013', 'student13@example.com', 'studentpass2'),
+('00000014', 'student14@example.com', 'studentpass2'),
+('00000015', 'student15@example.com', 'studentpass2'),
+('00000016', 'student16@example.com', 'studentpass2');
+
+
 
 -- Inserta datos de ejemplo en la tabla admin.
 INSERT INTO admin(ci) VALUES ('12345678');
 
 -- Inserta datos de ejemplo en la tabla student.
 INSERT INTO student(ci, firstname, lastname) VALUES
+('12345678', 'Alice', 'Johnson'),
 ('76543210', 'John', 'Doe'),
-('87654321', 'Jane', 'Smith');
+('87654321', 'Jane', 'Smith'),
+('00000001', 'Robert', 'Brown'),
+('00000002', 'Emily', 'Davis'),
+('00000003', 'Michael', 'Wilson'),
+('00000004', 'Sarah', 'Moore'),
+('00000005', 'David', 'Taylor'),
+('00000006', 'Jessica', 'Anderson'),
+('00000007', 'Daniel', 'Thomas'),
+('00000008', 'Laura', 'Jackson'),
+('00000009', 'James', 'White'),
+('00000010', 'Megan', 'Harris'),
+('00000011', 'Matthew', 'Martin'),
+('00000012', 'Emma', 'Thompson'),
+('00000013', 'Andrew', 'Garcia'),
+('00000014', 'Olivia', 'Martinez'),
+('00000015', 'Joshua', 'Robinson'),
+('00000016', 'Sophia', 'Clark');
 
 -- Inserta datos de ejemplo en la tabla team.
 INSERT INTO team(name, teamImage) VALUES
@@ -373,21 +408,48 @@ INSERT INTO predict_second(idTeam, ci, idChampionship) VALUES
 (3, '87654321', 1),
 (2, '76543210', 2),
 (3, '87654321', 2);
+-- Campeonato 1
+INSERT INTO points (ci, idChampionship, points) VALUES
+('12345678', 1, 10),
+('76543210', 1, 6),
+('87654321', 1, 8),
+('00000001', 1, 12),
+('00000002', 1, 14),
+('00000003', 1, 5),
+('00000004', 1, 7),
+('00000005', 1, 9),
+('00000006', 1, 11),
+('00000007', 1, 13),
+('00000008', 1, 15),
+('00000009', 1, 16),
+('00000010', 1, 17),
+('00000011', 1, 18),
+('00000012', 1, 19),
+('00000013', 1, 20),
+('00000014', 1, 21),
+('00000015', 1, 22),
+('00000016', 1, 23);
 
--- Inserting calculated points for user 76543210 in Championship 1
-INSERT INTO points (ci, idChampionship, points)
-VALUES ('76543210', 1, 6);
-
--- Inserting calculated points for user 87654321 in Championship 1
-INSERT INTO points (ci, idChampionship, points)
-VALUES ('87654321', 1, 8);
-
--- Inserting calculated points for user 76543210 in Championship 2
-INSERT INTO points (ci, idChampionship, points)
-VALUES ('76543210', 2, 4);
-
--- Inserting calculated points for user 87654321 in Championship 2
-INSERT INTO points (ci, idChampionship, points)
-VALUES ('87654321', 2, 5);
+-- Campeonato 2
+INSERT INTO points (ci, idChampionship, points) VALUES
+('12345678', 2, 5),
+('76543210', 2, 8),
+('87654321', 2, 7),
+('00000001', 2, 3),
+('00000002', 2, 9),
+('00000003', 2, 6),
+('00000004', 2, 4),
+('00000005', 2, 10),
+('00000006', 2, 11),
+('00000007', 2, 2),
+('00000008', 2, 1),
+('00000009', 2, 14),
+('00000010', 2, 13),
+('00000011', 2, 12),
+('00000012', 2, 15),
+('00000013', 2, 16),
+('00000014', 2, 17),
+('00000015', 2, 18),
+('00000016', 2, 19);
 
 select ci, points from points where points.idChampionship =  order by points desc ;
