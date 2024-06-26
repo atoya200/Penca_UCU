@@ -1,48 +1,69 @@
-<div>
-<div id="crear-campeonato-inputs">
-        <div class="input-form">
-            <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" id="nombre-campeonato" required placeholder="Copa Ámerica 2024"
-                [(ngModel)]="nombre">
-        </div>
-        <div class="input-form">
-            <label for="fecha-inicio">Fecha Inicio</label>
-            <input type="date" name="fecha-inicio" id="fecha-inicio-campeonato" [(ngModel)]="fechaInicio"  min={{fechaInicio}}>
-        </div>
-        <div class="input-form">
-            <label for="fecha-fin">Nombre</label>
-            <input type="date" name="fecha-fin" id="fecha-fin-campeonato" [(ngModel)]="fechaFin" min={{fechaFin}}>
-        </div>
-        <!-- Equipos -->
-        <div class="input-form">
+<app-menu-principal></app-menu-principal>
+<div class=" crear-campeonato">
+    <div class="form_campeonato">
 
-            <div class="d-inline-flex gap-1">
-                <a class="btn btn-primary" data-bs-toggle="collapse" href="#equpipos" role="button"
-                    aria-expanded="false">
+        <!-- src/app/form-example/form-example.component.html -->
+        <form [formGroup]="form" id="crear-campeonato-inputs" (ngSubmit)="onSubmit()">
+
+            <div class="input-form">
+                <label for="name">Nombre</label>
+                <input type="text" formControlName="name" id="name"
+                    placeholder="Copa Ámerica 2024" [(ngModel)]="nombre">
+            </div>
+            <div class="input-form">
+                <label for="startDate">Fecha Inicio</label>
+                <input type="date" id="startDate" formControlName="startDate" [(ngModel)]="fechaInicio"
+                    min={{fechaInicioMin}}>
+            </div>
+            <div class="input-form">
+                <label for="endDate">Fecha Fin</label>
+                <input type="date"  formControlName="endDate" id="endDate"
+                    [(ngModel)]="fechaFin" min={{fechaFinMin}}>
+            </div>
+            <div class="form-group input-form">
+                <label for="description">Descripción</label>
+                <textarea class="form-control" id="description" rows="3" formControlName="description"></textarea>
+              </div>
+
+            <!-- Equipos -->
+            <div class="input-form">
+                <!-- <div class="d-inline-flex gap-1 fila-button"> -->
+                <button id="toggle-teams" class="btn btn-primary gap-1 fila-button" type="button" (click)="toogleEquipos()">
                     Desplegar equipos
-                </a>
-            </div>
-            <div class="collapse" id="equpipos">
-                <div class="card card-body desplegable" *ngFor="let team of teams">
-                    <input type="checkbox" name="team" id=team_{{team.id}}> <span><img src=team.image alt=""></span>
-                    <span>{{team.name}}</span>
+                </button>
+                <!--  </div> -->
+                <div class="collapse" id="equipos">
+                    <div *ngFor="let team of teams" class="desplegable">
+                        <input type="checkbox"  id="team_{{team.id}}" formControlName="team_{{team.id}}">
+                        <span><img [src]="team.teamImage" alt="team image"></span>
+                        <span>{{team.name}}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- Etapas -->
-        <div class="input-form">
 
-            <div class="d-inline-flex gap-1">
-                <a class="btn btn-primary" data-bs-toggle="collapse" href="#etapas" role="button" aria-expanded="false">
+            <!-- Etapas -->
+            <div class="input-form">
+                <!-- <div class="d-inline-flex gap-1 fila-button"> -->
+                <button id="toggle-stages" class="btn btn-primary  gap-1 fila-button" type="button" (click)="toogleEtapas()">
                     Desplegar etapas
-                </a>
-            </div>
-            <div class="collapse" id="etapas">
-                <div class="card card-body" *ngFor="let stage of stages">
-                    <input type="checkbox" name="team" id=stage_{{stage.id}}> <span>{{stage.name}}</span>
+                </button>
+                <!-- </div> -->
+                <div class="collapse" id="etapas">
+                    <div *ngFor="let stage of stages" class="desplegable">
+                        <input type="checkbox" name="stage" id=stage_{{stage.id}} formControlName="stage_{{stage.id}}"> <span>{{stage.name}}</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <button type="submit" (click)=crearCampeonato()>Confirmar </button>
+
+
+           
+            <div id="botones">
+                <button type="button" class="btn btn-secondary" (click)="volver()">
+                    Volver
+                </button>
+                <button type="submit" class="btn btn-primary">Confirmar </button>
+            </div>
+        </form>
+
     </div>
 </div>

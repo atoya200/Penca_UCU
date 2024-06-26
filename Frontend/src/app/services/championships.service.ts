@@ -36,5 +36,9 @@ export class ChampionshipsService {
     return this.http.get(`http://localhost:3000/championship/${idchampionship}/team`)
   }
 
+  createChampionship(championship: any): Observable<any>{
+    return this.http.post(`http://localhost:3000/championship/`, championship)
+  }
+
 }
 
