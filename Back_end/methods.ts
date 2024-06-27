@@ -38,6 +38,22 @@ export async function insert(command: string, values: string[]): Promise<boolean
     return res;
 }
 
+export async function insertAutoId(command: string, values: string[]): Promise<number> {
+    var res: any = -1;
+    try {
+        //const [result, fields] = await pool.execute(command, values);
+        const [result]: [ResultSetHeader, any] = await pool.execute(command, values);
+
+        console.log(result);
+
+        return result.insertId;
+    } catch (error) {
+        console.log(error);
+    }
+
+    return res;
+}
+
 
 export async function registerUser(user: any): Promise<boolean> {
     var res = false;

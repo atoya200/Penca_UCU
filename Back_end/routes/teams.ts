@@ -43,28 +43,28 @@ router.get('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (re
         var teams = await methods.query("SELECT  * FROM team", []);
         return res.status(200).json({ "teams": teams });
     } catch (error) {
-        return res.status(500).json({msg: "Error. Intente más tarde."})
+        return res.status(500).json({ msg: "Error. Intente más tarde."})
     }
 })
 
 
-router.get("/forChampionship/:id", middleware.verifyUser, async (req, res) =>{
+router.get("/forChampionship/:id", middleware.verifyUser, async (req, res) => {
 
     // Obtenemos el id del campeonato pasado
     let idChampionship = req.params.id
 
     // Comprobamos que sea un número
-    if(!Number.isInteger(Number.parseInt(idChampionship))){
-        return res.status(400).json({message: "Error en el formato de los datos o dato faltante"})
+    if (!Number.isInteger(Number.parseInt(idChampionship))) {
+        return res.status(400).json({ message: "Error en el formato de los datos o dato faltante" })
     }
 
     // Hacemos la query
     let sql = "SELECT t.* FROM team_participation tp, team t  WHERE tp.idChampionship = ? AND tp.idTeam = t.id;"
     let result = await methods.query(sql, [idChampionship])
-    if(result == null || result.length == 0) {
-        return res.status(200).json({message: "No hay equipos asignados a ese campeonato en el sistema"})
+    if (result == null || result.length == 0) {
+        return res.status(200).json({ message: "No hay equipos asignados a ese campeonato en el sistema" })
     } else {
-        return res.status(200).json({message: result})
+        return res.status(200).json({ message: result })
     }
 
 })

@@ -10,61 +10,52 @@ import { StageService } from '../stage.service';
 import { Stage } from '../stage';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ChampionshipsService } from '../services/championships.service';
+import { Championship } from 'Championship';
+
 
 @Component({
-  selector: 'app-crear-campeonato',
+  selector: 'app-partido',
   standalone: true,
-  imports: [NgFor, CommonModule, NgIf, FormsModule, ReactiveFormsModule],
-  templateUrl: './crear-campeonato.component.html',
-  styleUrls: ['./crear-campeonato.component.css']
+  imports: [],
+  templateUrl: './partido.component.html',
+  styleUrl: './partido.component.css'
 })
-export class CrearCampeonatoComponent implements OnInit {
+export class PartidoComponent {
+  
+  //const { teamA, teamB, matchDate, stage, championship } = req.body
 
-  nombre: string = ""
-  fechaInicio: string = ""
-  fechaFin: string = ""
-  fechaInicioMin: string = ""
-  fechaFinMin: string = ""
-  description: string = ""
-  teams: Team[] = []
-  stages: Stage[] = []
+  name: string = ""
+  matchDate: string = ""
+  matchDateMin: string = ""
+  championships: Championship[] = []
+  teamA: Team = null
+  teamB: Team = null
+  showStagesAndTeams = false;
   form: FormGroup;
 
   constructor(private teamService: TeamService, private router: Router, private champSerivce: ChampionshipsService, private stageService: StageService, private route: ActivatedRoute, private fb: FormBuilder) {
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      startDate: ['', Validators.required],
-      endDate: ['', Validators.required],
-      description: ['', Validators.required],
+      championships: ['', Validators.required],
+      teamA: ['', Validators.required],
+      teamB: ['', Validators.required],
+      matchDate: ['', Validators.required],
+      stage: ['', Validators.required],
     });
   }
 
   ngOnInit(): void {
-    this.teamService.getAllActiveTeams().subscribe((respuesta) => {
-      this.teams = respuesta.teams;
-      for (let i = 0; i < this.teams.length; i++) {
-        let j = i + 1;
-        this.form.addControl('team_' + j, this.fb.control(false));
-      }
+    this.champSerivce.getAllChapmWithTeamsAndStages().subscribe((respuesta) => {
 
+      this.championships = respuesta.champs;
+      for (let i = 0; i < this.championships.length; i++) {
+        let j = i + 1;
+        this.form.addControl('champ' + j, this.fb.control(false));
+      }
       console.log(this.form)
     });
 
-    this.stageService.getAllStages().subscribe((data) => {
-      this.stages = data.stages;
-      for (let i = 0; i < this.stages.length; i++) {
-        let j = i + 1;
-        this.form.addControl('stage_' + j, this.fb.control(false));
-      }
-      console.log(this.form)
-
-    },
-
-    );
-
     // Ponemos la fecha 
-    this.fechaInicioMin = this.getFormatDate(false);
-    this.fechaFinMin = this.getFormatDate(true);
+    this.matchDateMin = this.getFormatDate(true);
   }
 
   private getFormatDate(fechaFin) {
@@ -83,23 +74,16 @@ export class CrearCampeonatoComponent implements OnInit {
     return `${yyyy}-${mm}-${dd}`;
   }
 
-  toggleEquipos() {
-    var equipos = document.getElementById('equipos');
-    if (equipos.classList.contains('show')) {
-      equipos.classList.remove('show');
+
+  onChampionshipSelected(){
+    const selectedOption = this.form.get('opciones').value;
+    if (selectedOption != '-1') {
+      this.showStagesAndTeams = true;
     } else {
-      equipos.classList.add('show');
+      this.showStagesAndTeams = false;
     }
   }
 
-  toggleEtapas() {
-    var equipos = document.getElementById('etapas');
-    if (equipos.classList.contains('show')) {
-      equipos.classList.remove('show');
-    } else {
-      equipos.classList.add('show');
-    }
-  }
 
   onSubmit() {
     // Verifica si el formulario es válido antes de enviar
@@ -150,7 +134,7 @@ export class CrearCampeonatoComponent implements OnInit {
         data => {
           console.log(data)
           alert("Campeonato creado correctamente")
-          this.limpiarForm();
+          //this.limpiarForm();
 
         },
         error => {
@@ -163,7 +147,7 @@ export class CrearCampeonatoComponent implements OnInit {
     }
   }
 
-  private limpiarForm() {
+  /* private limpiarForm() {
     this.form.reset({
       name: '',
       startDate: '',
@@ -187,10 +171,8 @@ export class CrearCampeonatoComponent implements OnInit {
     document.getElementById("toggle-teams").click();
     document.getElementById("toggle-stages").click();
   }
-
+ */
   volver(): void {
     this.router.navigate(['/menu']);
   }
 }
-
-

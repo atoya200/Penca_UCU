@@ -7,16 +7,16 @@ const router = express.Router()
 router.post('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) => {
     // only admins can create a new championship
 
-    const { name, startDate, endDate } = req.body
+    const { name, startDate, endDate, description, stages, teams } = req.body
 
-    if (name == undefined || startDate == undefined || endDate == undefined) {
+    if (name == undefined || startDate == undefined || endDate == undefined || description == undefined) {
         return res.status(400).json({ message: "Faltan datos o formato de los datos invaidos" })
     }
 
     try {
         // Consultamos la base para saber si ya hay un campeonato con un nombre similar
         let sql = "SELECT name FROM championship WHERE name = ? "
-        let params = [name.trim().toUpperCase()]
+        let params = [name.trim()]
         let result = await methods.query(sql, params)
 
         if (result == null) {
@@ -26,19 +26,74 @@ router.post('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (r
             return res.status(400).json({ message: "Ya existe un campeonato con el mismo nombre" })
         } else {
 
-            // Hacemos el insert del nuevo campeonato
-            let sql = "INSERT INTO championship (name, start_date,  end_date) VALUES (?, ?, ?)";
-            let params = [name, startDate, endDate]
-            let success = await methods.insert(sql, params)
-            if (success) {
-                return res.status(200).json({ message: "Campeonato creado con éxito" })
-            } else {
-                return res.status(500).json({ message: "Ocurrió un error al intentar crear el campeonato" })
+            if (stages != undefined && stages.length != 0) {
+                // Ahora comprobamos que los equipos proporcionados existan de verdad
+                let signo = stages.length == 1 ? "?" : "?,".repeat(stages.length - 1) + "?"
+                let sql = `SELECT id FROM stage WHERE id in (${signo})`;
+
+                let result = await methods.query(sql, stages)
+
+                if (result.length != stages.length) {
+                    return res.status(400).json({ message: "No todo los id de  etapa proporcionados son validos" })
+                }
             }
 
+
+            if (teams != undefined && teams.length != 0) {
+                // Ahora comprobamos que los equipos proporcionados existan de verdad
+                let signo = teams.length == 1 ? "?" : "?,".repeat(teams.length - 1) + "?"
+                let sql = `SELECT id FROM team WHERE id in (${signo})`;
+
+                let result2 = await methods.query(sql, teams)
+                console.log(result2)
+
+                if (result2.length != teams.length) {
+                    return res.status(400).json({ message: "No todo los id de equipo proporcionados son validos" })
+                }
+
+            }
+
+            // Hacemos el insert del nuevo campeonato
+            sql = "INSERT INTO championship (name, start_date,  end_date, description) VALUES (?, ?, ?, ?)";
+            let params = [name, startDate, endDate, description]
+            let champId = await methods.insertAutoId(sql, params)
+
+            if (champId == -1) {
+                throw new Error("Ocurrio un error en el insert del campeonato");
+            }
+
+            if (stages != undefined && stages.length != 0) {
+
+                // Validamos las etapas, ahora las asignamos al campeonato
+                let param = stages.length == 1 ? `(${champId}, ${stages[0]})` : `(${champId},` + stages.join(`), (${champId},`) + ")"
+                sql = `INSERT INTO stage_for_championship (idChampionship, idStage) VALUES ${param}`;
+                let success = await methods.insert(sql, [])
+
+                if (!success) {
+                    return res.status(500).json({ message: "Ocurrió un error al intentar asignar etapas al campeonato" })
+                }
+            }
+
+
+            if (teams != undefined && teams.length != 0) {
+
+                // Como son id validos, pasamos a hacer los insert correspodientes
+                let param = teams.length == 1 ? `(${champId}, ${teams[0]})` : `(${champId},` + teams.join(`), (${champId},`) + ")"
+                sql = `INSERT INTO team_participation (idChampionship, idTeam) VALUES ${param}`;
+                console.log(param)
+                let success = await methods.insert(sql, []);
+                if (success) {
+                    return res.status(200).json({ message: "Campeonato creado correctamente" })
+                } else {
+                    return res.status(500).json({ message: "Ocurrió un error al intentar asignar los equipos al campeonato mientras este se creaba" })
+                }
+            }
+
+            return res.status(200).json({ messgae: "Campeonato creado corretamente" })
+
         }
-    } catch (error) {
-        return res.status(500).json({ message: "Ocurrió un error con el sistema" })
+    } catch (err) {
+        return res.status(500).json({ message: "Ocurrió un error con el sistema", error: err })
     }
 
 })
@@ -229,6 +284,62 @@ router.get('/:idchamp/team', [middleware.verifyUser], async (req, res) => {
         res.send(JSON.stringify({ msg: "Error. Intente más tarde." }))
     }
 
+})
+
+router.get("/with_stages_and_teams", async (req, res) => {
+    try {
+
+        let championships = []
+        let postions: Map<number, number>
+
+
+        var champsListaWithStages = await methods.query(`
+        SELECT c.id as champId, c.name as champName, c.start_date, c.end_date,
+        s.id as stageId, s.name as stageName FROM  championship c 
+        JOIN stage_for_championship sfc ON sfc.idChampionship  = c.id 
+        JOIN stage s ON s.id = sfc.idStage where 
+        c.end_date  > CURRENT_DATE()
+        order by c.id desc, s.id desc;
+        `, []);
+
+
+        for (let i = 0; i < champsListaWithStages.length; i++) {
+            let champ = champsListaWithStages[i]
+
+            if (championships.length > 0) {
+                let beforeChamp = championships[i - 1]
+                if (beforeChamp.id == champ.champId) {
+                    beforeChamp.stages.push({ id: champ.stageId, name: champ.stageName, matches: [] })
+                    continue
+                }
+            }
+            let newChamp = { id: champ.champId, name: champ.champName, description: "", start_date: champ.start_date, end_date: champ.end_date, stages: [], teams: [] }
+            championships.push(newChamp);
+            postions.set(champ.champId, i);
+        }
+
+        var champsListaWithTeams = await methods.query(`
+        SELECT c.id as champId, c.name as champName, c.start_date, c.end_date,
+        t.id as teamId, t.name as teamName, t.teamImage
+        FROM  championship c 
+        JOIN team_participation tp ON c.id  = tp.idChampionship JOIN team t  ON tp.idTeam  = t.id
+        where c.end_date  > CURRENT_DATE() and tp.isEliminated = 0
+        order by c.id desc
+        `, []);
+
+        // Ahora vamos con los equipos
+        for (let i = 0; i < champsListaWithTeams; i++) {
+            let champ = champsListaWithTeams[i]
+            let originalcChamp = championships[postions.get(champ.id)]
+            originalcChamp.teams.push({ id: champ.teamId, name: champ.teamName, teamImage: champ.teamImage })
+        }
+
+        return res.status(200).json({ "champs": championships});
+
+    } catch (error) {
+        res.status(500);
+        res.send(JSON.stringify({ msg: "Error. Intente más tarde." }))
+    }
 })
 
 

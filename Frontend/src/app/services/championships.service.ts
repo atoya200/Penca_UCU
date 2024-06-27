@@ -36,9 +36,17 @@ export class ChampionshipsService {
     return this.http.get(`http://localhost:3000/championship/${idchampionship}/team`)
   }
 
+  // Crear campeonato
   createChampionship(championship: any): Observable<any>{
     return this.http.post(`http://localhost:3000/championship/`, championship)
   }
+
+  // Recuperar datos del campeonato, etapas, y equipos
+  getAllChapmWithTeamsAndStages(): Observable<any>{
+    return this.http.get(`http://localhost:3000/championship/with_stages_and_teams`)
+  }
+
+
 
 }
 

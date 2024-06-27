@@ -1,0 +1,77 @@
+<div class="modal fade" id="modalCrearPartido" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <!-- Formulario reestructurado con clases y estilos similares al segundo formulario -->
+    <form [formGroup]="form" id="crear-campeonato-inputs" (ngSubmit)="onSubmit()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Campeonato</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- IMPORTANTE -->
+
+                    <div class="form-group input-form">
+                        <label for="championships">Selecciona un campeonato:</label>
+                        <select class="form-control" id="championships" formControlName="championships"
+                            (change)="onChampionshipSelected()">
+                            <option *ngFor value="-1"></option>
+                            <option *ngFor="let champ of championships" id="champ_{{champ.id}}" value="{{champ.id}}">
+                                {{champ.name}} </option>
+                        </select>
+                    </div>
+                    <div class="form-group input-form">
+                        <label for="startDate">Fecha:</label>
+                        <input type="date" class="form-control" formControlName="startDate" id="startDate"
+                            [(ngModel)]="fechaInicio" [min]="fechaInicioMin">
+                    </div>
+                    <div class="form-group input-form">
+                        <label for="championships">Selecciona un campeonato:</label>
+                        <select class="form-control" id="championships" formControlName="championships"
+                            (change)="onChampionshipSelected()">
+                            <option *ngFor value="-1"></option>
+                            <option *ngFor="let champ of championships" id="champ_{{champ.id}}" value="{{champ.id}}">
+                                {{champ.name}} </option>
+                        </select>
+                    </div>
+
+                    <!-- Equipos -->
+                    <div class="form-group input-form">
+                        <button id="toggle-teams" class="btn btn-primary gap-1 fila-button" type="button"
+                            (click)="toggleEquipos()">
+                            Desplegar equipos
+                        </button>
+                        <div class="collapse" id="equipos">
+                            <div *ngFor="let team of teams" class="desplegable">
+                                <input type="checkbox" id="team_{{team.id}}" formControlName="team_{{team.id}}">
+                                <span><img [src]="team.teamImage" alt="team image"></span>
+                                <span>{{team.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Etapas -->
+                    <div class="form-group input-form">
+                        <button id="toggle-stages" class="btn btn-primary gap-1 fila-button" type="button"
+                            (click)="toggleEtapas()">
+                            Desplegar etapas
+                        </button>
+                        <div class="collapse" id="etapas">
+                            <div *ngFor="let stage of stages" class="desplegable">
+                                <input type="checkbox" id="stage_{{stage.id}}" formControlName="stage_{{stage.id}}">
+                                <span>{{stage.name}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- IMPORTANTE -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
