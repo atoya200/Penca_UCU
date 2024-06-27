@@ -42,6 +42,7 @@ export class RegistrarComponent {
     this.service.getCareers().subscribe(
       data => {
         this.Career = (data as any).career;
+        debugger;
         console.log(this.Career)
       },
       error => {
