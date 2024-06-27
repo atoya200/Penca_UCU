@@ -21,7 +21,6 @@ import { PartidoService } from '../partido.service';
 })
 export class PartidoComponent implements OnInit {
 
-  //const { teamA, teamB, matchDate, stage, championship } = req.body
 
   name: string = ""
   matchDate: string = ""

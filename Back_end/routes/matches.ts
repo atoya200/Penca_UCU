@@ -32,7 +32,7 @@ router.post('/create', [middleware.verifyUser, middleware.verifyUserIsAdmin], as
 
         if (!Number.isInteger(Number.parseInt(teamA)) || !Number.isInteger(Number.parseInt(teamB)) || !Number.isInteger(Number.parseInt(stage))
             || !Number.isInteger(Number.parseInt(championship)) || matchDate == undefined) {
-            return res.status(400).json({ message: "El formato de los datos no es el correcto" })
+            return res.status(400).json({ message: "El formato de los datos no es el correcto, revise lo ingresado" })
         }
 
         // Controlamos la fecha del partido, que sea mayor a hoy y menor al cierre del campeonato
@@ -42,7 +42,7 @@ router.post('/create', [middleware.verifyUser, middleware.verifyUserIsAdmin], as
         let fechasValidas = startDate >= hoy;
         
         if (!fechasValidas) {
-            return res.status(400).json({ message: "El formato de los datos no es el correcto" })
+            return res.status(400).json({ message: "El formato de la fecha no es correctao" })
         }
 
         // Ahora comprobamos que la fecha de partido sea menor a la de fin de campeonato

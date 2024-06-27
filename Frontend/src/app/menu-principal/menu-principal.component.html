@@ -17,61 +17,62 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
-                            data-bs-target="#modalCrearCampeonato">Crear campeonato</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                data-bs-target="#modalCrearCampeonato">Crear campeonato</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Estadísticas
                     </a>
                     <ul class="dropdown-menu">
                         <li><a (click)="buscarCampeonatos()" class="dropdown-item" href="/menu" data-bs-toggle="modal"
-                            data-bs-target="#modalEstadisticas">Ver estadísticas</a></li>
-                        </ul>
-                    </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Equipos
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
-                        data-bs-target="#modalEquipos">Ingresar equipo</a></li>
+                                data-bs-target="#modalEstadisticas">Ver estadísticas</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Fases
-                </a>
-                <ul class="dropdown-menu">
-                    <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
-                        data-bs-target="#modalCrearFases">Crear fase</a></li>
-                        
+                        aria-expanded="false">
+                        Equipos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalEquipos">Ingresar equipo</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Fases
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalCrearFases">Crear fase</a></li>
+
                         <li><a (click)="buscarFases()" class="dropdown-item" data-bs-toggle="modal"
-                            data-bs-target="#modalVerFases">Ver fases</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
+                                data-bs-target="#modalVerFases">Ver fases</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Partidos
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
-                            data-bs-target="#modalCrearPartido">Ingresar</a></li>
-                            
-                            </ul>
-                        </li>
+                        <a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#modalCrearPartido">Ingresar</a>
+
+
                     </ul>
+                </li>
+            </ul>
         </div>
     </div>
     <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
         data-bs-placement="bottom" data-bs-content="Notifiacion 1" data-bs-title="Notificaciones">
         Campanita
     </button>
-    
+
     <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Perfil
@@ -90,14 +91,14 @@
 <!-- Modal Equipos -->
 
 <div class="modal fade" id="modalEquipos" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-aria-labelledby="staticBackdropLabel" aria-hidden="true">
-<form class="form" [formGroup]="angForm" novalidate>
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar equipo</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form class="form" [formGroup]="angForm" novalidate>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar equipo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="descripcion">Nombre: </label>
