@@ -1,123 +1,107 @@
-/*
 body {
-    background: url('https://www.freepik.es/fotos-vectores-gratis/fondo-copa-futbol/2') no-repeat center center fixed; 
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    text-align: center;
-    margin: 0;
-    padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url('../../assets/football-arena-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  font-family: "Roboto", Arial, sans-serif;
+  letter-spacing: -0.5px;
+  font-size: 7em;
+  margin-top: 80px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-shadow: 0 0 10px #002bff, 0 0 20px #00c6ff, 0 0 40px #00c6ff, 0 0 80px #00c6ff;
 }
 
 .container {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    margin: 100px auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.5);
-    padding: 20px;
-    border-radius: 10px;
+  width: 80%;
+  max-width: 400px; /* Ajusta el ancho máximo según sea necesario */
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #171717;
+  border-radius: 25px;
+  transition: .4s ease-in-out;
+  padding: 20px;
 }
 
-label {
-    display: block;
-    font-weight: bold;
+.form:hover {
+  transform: scale(1.05);
+  border: 1px solid black;
 }
 
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+#heading {
+  text-align: center;
+  margin: 20px;
+  color: rgb(255, 255, 255);
+  font-size: 1.5em;
 }
 
-input[type="submit"],
-.join-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  border-radius: 25px;
+  padding: 0.6em;
+  border: none;
+  outline: none;
+  color: #171717;
+  background-color: #171717;
+  box-shadow: inset 2px 5px 10px rgb(5, 5, 5);
 }
 
-.join-button {
-    background-color: #4CAF50;
-}
-*/
-/*
-body {
-    background-image: url('https://www.freepik.es/fotos-vectores-gratis/fondo-copa-futbol/2') ;
-
-    background-size: cover;
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    text-align: center;
-
-    margin: 0;
-    padding: 0;
-}
-*/
-
-body{
-    background-image: url('https://www.freepik.es/fotos-premium/trofeo-copa-mundo-esta-campo-estadio_45789526.htm') ;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+.input-icon {
+  height: 1.3em;
+  width: 1.3em;
+  fill: white;
 }
 
-.container {
-
-    background-image: url('https://www.freepik.es/fotos-vectores-gratis/fondo-copa-futbol/2') ;
-
-
-    background-color: rgba(255, 255, 255, 0.5); /* Make the background transparent */
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    width: 300px;
-    margin: 100px auto;
-    padding: 20px;
+.input-field {
+  background: none;
+  border: none;
+  outline: none;
+  width: 100%;
+  color: #d3d3d3;
 }
 
-.form-group {
-    margin-bottom: 20px;
+.btn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-label {
-    display: block;
-    font-weight: bold;
+.button1,
+.button2 {
+  padding: 0.5em 1em;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  transition: .4s ease-in-out;
+  background-color: #252525;
+  color: white;
 }
 
-input[type="text"],
-input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-input[type="submit"],
-.join-button {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.join-button {
-    background-color: #4CAF50;
-}
-
-.message-error {
-    color: red;
-    font-size: 12px;
-    margin-top: 5px;
+.button1:hover,
+.button2:hover {
+  background-color: black;
+  color: white;
 }

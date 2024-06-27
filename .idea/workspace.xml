@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="86a99066-0c8c-43c2-8324-ede4b7911518" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Back_end/routes/predictions.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Back_end/routes/predictions.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/.angular/cache/17.3.5/Penca_UCU/.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.angular/cache/17.3.5/Penca_UCU/.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/src/app/fixture/fixture.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/fixture/fixture.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/src/app/services/fixture.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/services/fixture.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/ranking/ranking.component.css" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/ranking/ranking.component.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/src/app/ranking/ranking.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/src/app/ranking/ranking.component.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,6 +59,9 @@
       <workItem from="1716326670308" duration="60000" />
       <workItem from="1716642957069" duration="856000" />
       <workItem from="1716670046272" duration="4277000" />
+      <workItem from="1718135098329" duration="7123000" />
+      <workItem from="1718301898004" duration="17000" />
+      <workItem from="1719107200033" duration="927000" />
     </task>
     <servers />
   </component>

@@ -4,7 +4,7 @@ import { ChampionshipsService } from '../services/championships.service';
 import { NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
-import { RouterModule } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm, AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
@@ -43,7 +43,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   Equipos: any = []
   Campeonatos: any = []
   Estadistica: any = []
-  constructor(private statisticsService: StatisticsService, private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipsService, private sanitizer: DomSanitizer) {
+  constructor(private router: Router, private statisticsService: StatisticsService, private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipsService, private sanitizer: DomSanitizer) {
 
     this.createForm();
 
@@ -85,11 +85,11 @@ export class MenuPrincipalComponent implements AfterViewInit {
     // Done. buscar campeonatos que esta inscripto el usuario, o si es administrador que muestre los campeonatos activos listados
     // Empezar un spinner y despues terminarlo?
 
-    // TODO: 
+    // TODO:
     // - agregar carrousel con imagenes de futbol en el menu principal
     // - listar campeonatos en el inicio, al entrar al campeonato que aparezcan las funcionalidades que dependen de el
-    // - navbar con las funcionalidades de anotarse a una penca (Done), crear campeonato (Done), ver notificaciones (Done), 
-    // Equipos (ingresar equipos, modificar equipos, consultar equipos), 
+    // - navbar con las funcionalidades de anotarse a una penca (Done), crear campeonato (Done), ver notificaciones (Done),
+    // Equipos (ingresar equipos, modificar equipos, consultar equipos),
 
     this.isAdmin = this.loginService.getUserType().type == 'Admin';
 
@@ -309,6 +309,10 @@ export class MenuPrincipalComponent implements AfterViewInit {
   */
 
 
+  }
+
+  goBack(): void {
+    this.router.navigate(['/login']);
   }
 }
 

@@ -21,7 +21,7 @@ router.get('/', [middleware.verifyUser], async (req, res) => {
         res.status(500);
         res.send(JSON.stringify({ msg: "Error al obtener los campeonatos inscriptos." }))
     }
-
+    
 })
 
 router.get('/all', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) => {

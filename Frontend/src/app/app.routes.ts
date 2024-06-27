@@ -6,6 +6,7 @@ import { IngresarResultadosComponent } from './ingresar-resultados/ingresar-resu
 import { FixtureComponent } from './fixture/fixture.component';
 import { Championship } from 'Championship';
 import { ChampionshipsComponent } from './championships/championships.component';
+import { RankingComponent } from './ranking/ranking.component';
 export const routes: Routes = [{ path: '', redirectTo: 'login', pathMatch: 'full' },
 { path: 'login', component: LoginComponent },
 { path: 'registrar', component: RegistrarComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [{ path: '', redirectTo: 'login', pathMatch: 'full
 { path: 'prediccion', component: IngresarResultadosComponent },
 { path: 'fixture/:id', component: FixtureComponent },
 { path: 'championships', component: ChampionshipsComponent },
+{ path: 'ranking/:id', component: RankingComponent},
 { path: '**', redirectTo: '/login' }
 ];

@@ -1,0 +1,174 @@
+.ranking-item {
+  border-radius: 4px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: background-color 0.5s, border 0.5s;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #000000;
+  background-image: url('../../assets/spanish-team-holding-world-cup-trophy.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+}
+
+.contenedor {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 400px;
+  overflow-y: auto;
+}
+
+/* Scrollbar */
+.contenedor::-webkit-scrollbar {
+  width: 10px;
+  background-color: transparent;
+}
+
+.contenedor::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+}
+
+.contenedor::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.user-List {
+  display: flex;
+  flex-direction: column;
+  margin-top: auto;
+  margin-bottom: auto;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 20px auto;
+  transition-duration: 0.4s;
+  display: block;
+}
+
+button:hover {
+  background-color: #008CBA;
+  color: white;
+}
+
+.highlighted {
+  border: 2px solid #FFD700;
+  opacity: 0.5;
+
+}
+
+.floating-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: #312f2f;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 100;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease 0s;
+}
+
+.floating-button:hover {
+  background-color: #0254cf;
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #fff;
+  transform: translateY(-7px);
+}
+
+.title {
+  text-align: center;
+  font-size: 2.5em;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-family: 'Arial', sans-serif;
+  text-shadow: 4px 4px 8px #000000;
+}
+
+.button2 {
+  position: relative;
+  height: 50px;
+  padding: 0 30px;
+  border: 2px solid #000;
+  background: #e8e8e8;
+  user-select: none;
+  white-space: nowrap;
+  transition: all .05s linear;
+  font-family: inherit;
+}
+
+.button2:before, button:after {
+  content: "";
+  position: absolute;
+  background: transparent;
+  transition: all .2s linear;
+}
+
+.button2:before {
+  width: calc(100% + 6px);
+  height: calc(100% - 16px);
+  top: 8px;
+  left: -3px;
+}
+
+.button2:after {
+  width: calc(100% - 16px);
+  height: calc(100% + 6px);
+  top: -3px;
+  left: 8px;
+}
+
+.button2:hover {
+  cursor: crosshair;
+}
+
+.button2:active {
+  transform: scale(0.95);
+}
+
+.button2:hover:before {
+  height: calc(100% - 32px);
+  top: 16px;
+}
+
+.button2:hover:after {
+  width: calc(100% - 32px);
+  left: 16px;
+}
+
+.button2 span {
+  font-size: 15px;
+  z-index: 3;
+  position: relative;
+  font-weight: 600;
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f002486b-4369-4356-8459-14bbb0abc739" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../Back_end/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../Back_end/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Base de datos/obligatorio.sql" beforeDir="false" afterPath="$PROJECT_DIR$/../Base de datos/obligatorio.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.angular/cache/17.3.5/Penca_UCU/.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/.angular/cache/17.3.5/Penca_UCU/.tsbuildinfo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.angular/cache/17.3.5/vite/deps/_metadata.json" beforeDir="false" afterPath="$PROJECT_DIR$/.angular/cache/17.3.5/vite/deps/_metadata.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/23754731_4822.eps" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/52c0a9cfbe3f3de7a94f675f7c10835b.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/9fb9ae0966e015f9a1239dde8dd48de9.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/dirty-soccer-ball-wet-grass-field-generated-by-ai.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/estadio.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/football-arena-background (1).jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/partido.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/premium_photo.jpg" beforeDir="false" />
+    </list>
+    <list id="57315482-a882-4a0f-8327-b1a91edd9484" name="Changes by flore" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2iHmul3BNvYYVMED9kDZH6xRcAy" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Bruno",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.Angular CLI Server.executor": "Run",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
+      <method v="2" />
+    </configuration>
+    <configuration name="Angular CLI Server" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-22-openjdk-22-3183f394aec4-bad0321e" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f002486b-4369-4356-8459-14bbb0abc739" name="Changes" comment="" />
+      <created>1719156103178</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719156103178</updated>
+      <workItem from="1719156105861" duration="6304000" />
+      <workItem from="1719280993228" duration="42000" />
+      <workItem from="1719415148360" duration="8839000" />
+      <workItem from="1719441982557" duration="8328000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
