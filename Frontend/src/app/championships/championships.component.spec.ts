@@ -21,4 +21,3 @@ describe('ChampionshipsComponent', () => {
     expect(component).toBeTruthy();
   });
 });
-
