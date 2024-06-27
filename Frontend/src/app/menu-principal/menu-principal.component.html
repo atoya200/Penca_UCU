@@ -55,9 +55,10 @@
             </ul>
         </div>
     </div>
-    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover"
-        data-bs-placement="bottom" data-bs-content="Notifiacion 1" data-bs-title="Notificaciones">
-        Campanita
+
+    <button *ngIf="!isAdmin" (click)="buscarNotificaciones()" type="button" class="btn btn-secondary"
+        data-bs-toggle="modal" data-bs-target="#modalNotificaciones">
+        Notificaciones
     </button>
 
     <button class="button">
@@ -367,9 +368,6 @@
                         </div>
                     </div>
 
-
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
@@ -381,4 +379,26 @@
         </div>
 
     </form>
+</div>
+
+<!--Modal Notificaciones-->
+<div class="modal fade" tabindex="-1" id="modalNotificaciones" data-bs-backdrop="static" data-bs-keyboard="false"
+    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Notificaciones</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    <li *ngIf="Notificaciones.length == 0" class="list-group-item">No hay notifiaciones.</li>
+                    <li *ngFor="let n of Notificaciones" class="list-group-item">{{n.name}}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+            </div>
+        </div>
+    </div>
 </div>
