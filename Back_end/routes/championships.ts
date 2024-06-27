@@ -290,7 +290,7 @@ router.get("/with_stages_and_teams", async (req, res) => {
     try {
 
         let championships = []
-        let postions: Map<number, number>
+        let postions: Map<number, number> = new Map()
 
 
         var champsListaWithStages = await methods.query(`
@@ -307,13 +307,14 @@ router.get("/with_stages_and_teams", async (req, res) => {
             let champ = champsListaWithStages[i]
 
             if (championships.length > 0) {
-                let beforeChamp = championships[i - 1]
+                let beforeChamp = championships[championships.length - 1]
+
                 if (beforeChamp.id == champ.champId) {
                     beforeChamp.stages.push({ id: champ.stageId, name: champ.stageName, matches: [] })
                     continue
                 }
             }
-            let newChamp = { id: champ.champId, name: champ.champName, description: "", start_date: champ.start_date, end_date: champ.end_date, stages: [], teams: [] }
+            let newChamp = { id: champ.champId, name: champ.champName, description: "", start_date: champ.start_date, end_date: champ.end_date, stages: [{ id: champ.stageId, name: champ.stageName, matches: [] }], teams: [] }
             championships.push(newChamp);
             postions.set(champ.champId, i);
         }
@@ -327,18 +328,30 @@ router.get("/with_stages_and_teams", async (req, res) => {
         order by c.id desc
         `, []);
 
+
         // Ahora vamos con los equipos
-        for (let i = 0; i < champsListaWithTeams; i++) {
+        for (let i = 0; i < champsListaWithTeams.length; i++) {
             let champ = champsListaWithTeams[i]
-            let originalcChamp = championships[postions.get(champ.id)]
-            originalcChamp.teams.push({ id: champ.teamId, name: champ.teamName, teamImage: champ.teamImage })
+
+            championships.forEach((champOld) =>{
+                if(champOld.id == champ.champId){
+                    champOld.teams.push({ id: champ.teamId, name: champ.teamName, teamImage: champ.teamImage })
+                }
+            })
+            /* console.log("chamb", champ)
+            console.log("i ", i)
+            console.log(postions.get(champ.champId))
+            console.log(championships.length)
+            let menos = i == 0
+            let originalcChamp = championships[postions.get(champ.champId) - 1]
+            originalcChamp.teams.push({ id: champ.teamId, name: champ.teamName, teamImage: champ.teamImage }) */
         }
 
         return res.status(200).json({ "champs": championships});
 
     } catch (error) {
-        res.status(500);
-        res.send(JSON.stringify({ msg: "Error. Intente más tarde." }))
+        console.log(error)
+        return  res.status(500).json({ msg: "Error. Intente más tarde." })
     }
 })
 

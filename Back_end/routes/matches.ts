@@ -25,19 +25,23 @@ router.post('/create', [middleware.verifyUser, middleware.verifyUserIsAdmin], as
 
     // Recojemos los datos que necesitamos
     const { teamA, teamB, matchDate, stage, championship } = req.body
+    console.log(req.body)
 
 
     try {
+
         if (!Number.isInteger(Number.parseInt(teamA)) || !Number.isInteger(Number.parseInt(teamB)) || !Number.isInteger(Number.parseInt(stage))
             || !Number.isInteger(Number.parseInt(championship)) || matchDate == undefined) {
             return res.status(400).json({ message: "El formato de los datos no es el correcto" })
         }
 
         // Controlamos la fecha del partido, que sea mayor a hoy y menor al cierre del campeonato
-        let dateInput = new Date(matchDate)
-        let now = new Date()
-
-        if (dateInput > now) {
+        const hoy = new Date();
+        hoy.setDate(hoy.getDate() - 2);
+        const startDate = new Date(matchDate);
+        let fechasValidas = startDate >= hoy;
+        
+        if (!fechasValidas) {
             return res.status(400).json({ message: "El formato de los datos no es el correcto" })
         }
 

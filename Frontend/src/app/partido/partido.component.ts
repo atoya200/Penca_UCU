@@ -5,37 +5,38 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { Team } from '../team';
-import { TeamService } from '../team.service';
-import { StageService } from '../stage.service';
 import { Stage } from '../stage';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { ChampionshipsService } from '../services/championships.service';
 import { Championship } from 'Championship';
+import { PartidoService } from '../partido.service';
 
 
 @Component({
   selector: 'app-partido',
   standalone: true,
-  imports: [],
+  imports: [NgFor, CommonModule, NgIf, FormsModule, ReactiveFormsModule],
   templateUrl: './partido.component.html',
   styleUrl: './partido.component.css'
 })
-export class PartidoComponent {
-  
+export class PartidoComponent implements OnInit {
+
   //const { teamA, teamB, matchDate, stage, championship } = req.body
 
   name: string = ""
   matchDate: string = ""
   matchDateMin: string = ""
-  championships: Championship[] = []
+  Championships: Championship[] = []
+  teams: Team[];
+  stages: Stage[];
   teamA: Team = null
   teamB: Team = null
   showStagesAndTeams = false;
-  form: FormGroup;
+  formPartido: FormGroup;
 
-  constructor(private teamService: TeamService, private router: Router, private champSerivce: ChampionshipsService, private stageService: StageService, private route: ActivatedRoute, private fb: FormBuilder) {
-    this.form = this.fb.group({
-      championships: ['', Validators.required],
+  constructor(private router: Router, private champSerivce: ChampionshipsService, private matchService: PartidoService, private route: ActivatedRoute, private fb: FormBuilder) {
+    this.formPartido = this.fb.group({
+      championship: ['', Validators.required],
       teamA: ['', Validators.required],
       teamB: ['', Validators.required],
       matchDate: ['', Validators.required],
@@ -46,12 +47,13 @@ export class PartidoComponent {
   ngOnInit(): void {
     this.champSerivce.getAllChapmWithTeamsAndStages().subscribe((respuesta) => {
 
-      this.championships = respuesta.champs;
-      for (let i = 0; i < this.championships.length; i++) {
+      this.Championships = respuesta.champs;
+      console.log(this.Championships)
+      for (let i = 0; i < this.Championships.length; i++) {
         let j = i + 1;
-        this.form.addControl('champ' + j, this.fb.control(false));
+        this.formPartido.addControl('champ_' + j, this.fb.control(false));
       }
-      console.log(this.form)
+      console.log(this.formPartido)
     });
 
     // Ponemos la fecha 
@@ -61,6 +63,7 @@ export class PartidoComponent {
   private getFormatDate(fechaFin) {
     var date = null;
     const hoy = new Date();
+    hoy.setDate(hoy.getDate() - 1)
     if (fechaFin) {
       let DIA_EN_MILISEGUNDOS = 24 * 60 * 60 * 1000;
       date = new Date(hoy.getTime() + DIA_EN_MILISEGUNDOS);
@@ -75,10 +78,15 @@ export class PartidoComponent {
   }
 
 
-  onChampionshipSelected(){
-    const selectedOption = this.form.get('opciones').value;
+  onChampionshipSelected() {
+    const selectedOption = this.formPartido.get('championship').value;
     if (selectedOption != '-1') {
       this.showStagesAndTeams = true;
+
+      console.log(selectedOption)
+      const champ = this.Championships.find(ch => ch.id == selectedOption);
+      this.teams = champ.teams
+      this.stages = champ.stages
     } else {
       this.showStagesAndTeams = false;
     }
@@ -88,91 +96,66 @@ export class PartidoComponent {
   onSubmit() {
     // Verifica si el formulario es válido antes de enviar
     const hoy = new Date();
-    const mañana = new Date();
-    hoy.setDate(mañana.getDate() - 1);
-    mañana.setDate(mañana.getDate() + 1);
+    hoy.setDate(hoy.getDate() - 2);
 
-    const startDate = new Date(this.form.value.startDate);
-    const endDate = new Date(this.form.value.endDate);
+    const startDate = new Date(this.formPartido.value.matchDate);
 
-    let fechasValidas = startDate >= hoy && endDate >= mañana && startDate < endDate;
+    let fechasValidas = startDate >= hoy;
 
-    if (this.form.valid && fechasValidas) {
+    const champsionshipSelected = this.formPartido.get('championship').value;
+    const teamASelected = this.formPartido.get('teamA').value;
+    const teamBSelected = this.formPartido.get('teamB').value;
+    const stageSelected = this.formPartido.get('stage').value;
+
+    console.log(champsionshipSelected)
+    console.log(teamBSelected)
+    console.log(teamBSelected)
+    console.log(stageSelected)
+
+    if (champsionshipSelected == "-1") {
+      alert("Debe seleccionar un equipo");
+    } else if (teamASelected == -1 || teamBSelected == -1) {
+      alert("Debe elegir ambos equipos para registrar un partido")
+    } else if (teamASelected == teamBSelected) {
+      alert("Debe seleccionar dos equipos distintos")
+    } else if (!fechasValidas) {
+      alert("La fecha debe ser igual o mayor a hoy")
+    } else if (this.formPartido.valid) {
+
       // Recorre los datos del form para construir un objeto JSON
-      const formData = this.form.value;
-
-
-      let idTeams = []
-      let idStages = []
-      Object.keys(formData).forEach((key) => {
-        if (key.startsWith('team_') && formData[key]) {
-          idTeams.push(key.slice(5))
-        }
-      })
-
-      Object.keys(formData).forEach((key) => {
-        if (key.startsWith('stage_') && formData[key]) {
-          idStages.push(key.slice(6))
-        }
-      })
-
-      console.log('Equipos seleccionados:', idTeams);
-      console.log('Etapas seleccionados:', idStages);
-
-      // name, startDate, endDate, description, stages, teams 
-      const champ = {
-        name: this.form.value.name,
-        startDate: this.form.value.startDate,
-        endDate: this.form.value.endDate,
-        description: this.form.value.description,
-        teams: idTeams,
-        stages: idStages
+      const match = {
+        teamA: teamASelected,
+        teamB: teamBSelected,
+        matchDate: this.formPartido.value.matchDate,
+        stage: stageSelected,
+        championship: champsionshipSelected
       };
-      console.log('Datos enviados:', champ);
 
-      this.champSerivce.createChampionship(champ).subscribe(
+      this.matchService.create(match).subscribe(
         data => {
           console.log(data)
-          alert("Campeonato creado correctamente")
-          //this.limpiarForm();
+          alert("Partido registrado correctamente")
+          this.limpiarForm();
 
         },
         error => {
-          alert(error.error.msg)
+          alert("Ocurrió un error en la creacion de los partidos")
           console.log(error);
         });
     } else {
-      // Manejar el caso cuando el form no es válido (campos requeridos faltantes)
-      console.error('El form no es válido. Por favor complete los campos requeridos.');
+      alert('La elección hecha no es correcta, seleccione todos los campos');
     }
   }
 
-  /* private limpiarForm() {
-    this.form.reset({
-      name: '',
-      startDate: '',
-      endDate: "",
-      description: ''
-    });
-    for (let i = 0; i < this.teams.length; i++) {
-      let j = i + 1;
-      const control = this.form.get("team_" + j);
-      console.log("team_control", control)
-      console.log(control)
-      control.reset();
-    }
-    for (let i = 0; i < this.stages.length; i++) {
-      let j = i + 1;
-      const control = this.form.get("stage_" + j);
-      console.log("stage_controlS", control)
-      control.reset();
-    }
-
-    document.getElementById("toggle-teams").click();
-    document.getElementById("toggle-stages").click();
-  }
- */
   volver(): void {
     this.router.navigate(['/menu']);
+  }
+
+  private limpiarForm() {
+    this.formPartido.reset({
+      teamA: '',
+      teamB: '',
+      matchDate: ''
+    });
   }
 }

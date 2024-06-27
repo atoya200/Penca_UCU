@@ -158,8 +158,7 @@ export class CrearCampeonatoComponent implements OnInit {
           console.log(error);
         });
     } else {
-      // Manejar el caso cuando el form no es válido (campos requeridos faltantes)
-      console.error('El form no es válido. Por favor complete los campos requeridos.');
+      alert('El form no es válido. Por favor complete los campos requeridos.');
     }
   }
 

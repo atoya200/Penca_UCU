@@ -1,7 +1,7 @@
 <div class="modal fade" id="modalCrearPartido" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <!-- Formulario reestructurado con clases y estilos similares al segundo formulario -->
-    <form [formGroup]="form" id="crear-campeonato-inputs" (ngSubmit)="onSubmit()">
+    <form [formGroup]="formPartido" id="crear-campeonato-inputs" (ngSubmit)="onSubmit()">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,63 +9,55 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- IMPORTANTE -->
 
                     <div class="form-group input-form">
                         <label for="championships">Selecciona un campeonato:</label>
-                        <select class="form-control" id="championships" formControlName="championships"
+                        <select class="form-control" id="championships" formControlName="championship"
                             (change)="onChampionshipSelected()">
-                            <option *ngFor value="-1"></option>
-                            <option *ngFor="let champ of championships" id="champ_{{champ.id}}" value="{{champ.id}}">
+                            <option value="-1"></option>
+                            <option *ngFor="let champ of Championships" id="champ_{{champ.id}}" value="{{champ.id}}">
                                 {{champ.name}} </option>
                         </select>
                     </div>
                     <div class="form-group input-form">
-                        <label for="startDate">Fecha:</label>
-                        <input type="date" class="form-control" formControlName="startDate" id="startDate"
-                            [(ngModel)]="fechaInicio" [min]="fechaInicioMin">
+                        <label for="matchDate">Fecha:</label>
+                        <input type="date" class="form-control" formControlName="matchDate" id="matchDate"
+                            [(ngModel)]="matchDate" [min]="matchDateMin">
                     </div>
-                    <div class="form-group input-form">
-                        <label for="championships">Selecciona un campeonato:</label>
-                        <select class="form-control" id="championships" formControlName="championships"
-                            (change)="onChampionshipSelected()">
-                            <option *ngFor value="-1"></option>
-                            <option *ngFor="let champ of championships" id="champ_{{champ.id}}" value="{{champ.id}}">
-                                {{champ.name}} </option>
+                    <div *ngIf="showStagesAndTeams" class="form-group input-form">
+                        <label for="stages">Selecciona una etapa:</label>
+                        <select class="form-control" id="stages" formControlName="stage">
+                            <option value="-1"></option>
+                            <option *ngFor="let stage of stages" id="stage_{{stage.id}}" value="{{stage.id}}">
+                                {{stage.name}} </option>
                         </select>
                     </div>
 
-                    <!-- Equipos -->
-                    <div class="form-group input-form">
-                        <button id="toggle-teams" class="btn btn-primary gap-1 fila-button" type="button"
-                            (click)="toggleEquipos()">
-                            Desplegar equipos
-                        </button>
-                        <div class="collapse" id="equipos">
-                            <div *ngFor="let team of teams" class="desplegable">
-                                <input type="checkbox" id="team_{{team.id}}" formControlName="team_{{team.id}}">
+                    <div *ngIf="showStagesAndTeams" class="form-group input-form">
+                        <label for="teamA">Seleccione el primer equipo</label>
+                        <select class="form-control" id="teamA" formControlName="teamA">
+                            <option value="-1"></option>
+                            <option *ngFor="let team of teams" id="teamA_{{team.id}}" value="{{team.id}}">
                                 <span><img [src]="team.teamImage" alt="team image"></span>
                                 <span>{{team.name}}</span>
-                            </div>
-                        </div>
+                            </option>
+                        </select>
                     </div>
 
-                    <!-- Etapas -->
-                    <div class="form-group input-form">
-                        <button id="toggle-stages" class="btn btn-primary gap-1 fila-button" type="button"
-                            (click)="toggleEtapas()">
-                            Desplegar etapas
-                        </button>
-                        <div class="collapse" id="etapas">
-                            <div *ngFor="let stage of stages" class="desplegable">
-                                <input type="checkbox" id="stage_{{stage.id}}" formControlName="stage_{{stage.id}}">
-                                <span>{{stage.name}}</span>
-                            </div>
-                        </div>
+                    <div *ngIf="showStagesAndTeams" class="form-group input-form">
+                        <label for="teamB">Seleccione el segundo equipo</label>
+                        <select class="form-control" id="teamB" formControlName="teamB">
+                            <option *ngFor value="-1"></option>
+                            <option *ngFor="let team of teams" id="teamA_{{team.id}}" value="{{team.id}}">
+                                <span><img [src]="team.teamImage" alt="team image"></span>
+                                <span>{{team.name}}</span>
+                            </option>
+                        </select>
                     </div>
+
+
 
                 </div>
-                <!-- IMPORTANTE -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
                     <button type="submit" class="btn btn-primary">Confirmar</button>
