@@ -1,104 +1,93 @@
-<div class="container">
-    <h1>
-        REGISTRAR USUARIO
-    </h1>
-    <form [formGroup]="angForm" novalidate>
-        <div class="form-group">
-            <label>CI:</label>
-            <input class="form-control" formControlName="ci" type="text" minlength="7" maxlength="8" ngModel
-                pattern="[0-9]*">
+<body>
+  <h1 class="title2">PENCA UCU</h1>
+  <form [formGroup]="angForm" class="form">
+    <p class="title">Register </p>
+    <p class="message">Signup now and get full access to our app. </p>
+    <div class="flex">
+      <label>
+        <input class="input" type="text" placeholder="" formControlName="name" required>
+        <span>Firstname</span>
+      </label>
+      <div class="error"
+        *ngIf="angForm.get('name').invalid && (angForm.get('name').dirty || angForm.get('name').touched)">
+        <div *ngIf="angForm.get('name').errors.required">
+          Nombre no puede estar vacío.
         </div>
+      </div>
 
-        <div class="error" *ngIf="angForm.controls['ci'].invalid && (angForm.controls['ci'].dirty || 
-            angForm.controls['ci'].touched)">
-            <div [hidden]="!angForm.controls['ci'].errors.required">
-                CI no puede estar vacía.
-            </div>
-            <div [hidden]="!angForm.controls['ci'].errors.minlength">
-                Largo mínimo de 7 caracteres.
-            </div>
-            <div [hidden]="!angForm.controls['ci'].errors.pattern">
-                Solo se permiten números.
-            </div>
+      <label>
+        <input class="input" type="text" placeholder="" formControlName="lastname" required>
+        <span>Lastname</span>
+      </label>
+      <div class="error"
+        *ngIf="angForm.get('lastname').invalid && (angForm.get('lastname').dirty || angForm.get('lastname').touched)">
+        <div *ngIf="angForm.get('lastname').errors.required">
+          Apellido no puede estar vacío.
         </div>
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label>Nombre:</label>
-            <input class="form-control" formControlName="name" type="text">
-        </div>
+    <label>
+      <input class="input" type="email" placeholder="" formControlName="email" required>
+      <span>Email</span>
+    </label>
+    <div class="error"
+      *ngIf="angForm.get('email').invalid && (angForm.get('email').dirty || angForm.get('email').touched)">
+      <div *ngIf="angForm.get('email').errors.required">
+        El mail no puede estar vacío.
+      </div>
+      <div *ngIf="angForm.get('email').errors.pattern">
+        El mail debe tener formato email&#64;dominio.com
+      </div>
+    </div>
 
-        <div class="error"
-            *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)">
-            <div [hidden]="!angForm.controls['name'].errors.required">
-                Nombre no puede estar vacío.
-            </div>
-        </div>
+    <label>
+      <input class="input" type="password" placeholder="" formControlName="password" required>
+      <span>Password</span>
+    </label>
+    <div class="error"
+      *ngIf="angForm.get('password').invalid && (angForm.get('password').dirty || angForm.get('password').touched)">
+      <div *ngIf="angForm.get('password').errors.required">
+        Contraseña no puede estar vacía.
+      </div>
+    </div>
 
-        <div class="form-group">
-            <label>Apellido:</label>
-            <input class="form-control" formControlName="lastname" type="text">
-        </div>
+    <label>
+      <input class="input" formControlName="ci" type="text" minlength="7" maxlength="8" placeholder="" required
+        pattern="[0-9]*">
+      <span>Ci</span>
+    </label>
+    <div class="error" *ngIf="angForm.get('ci').invalid && (angForm.get('ci').dirty || angForm.get('ci').touched)">
+      <div *ngIf="angForm.get('ci').errors.required">
+        CI no puede estar vacía.
+      </div>
+      <div *ngIf="angForm.get('ci').errors.minlength">
+        Largo mínimo de 7 caracteres.
+      </div>
+      <div *ngIf="angForm.get('ci').errors.pattern">
+        Solo se permiten números.
+      </div>
+    </div>
 
-        <div class="error"
-            *ngIf="angForm.controls['lastname'].invalid && (angForm.controls['lastname'].dirty || angForm.controls['lastname'].touched)">
-            <div [hidden]="!angForm.controls['lastname'].errors.required">
-                Apellido no puede estar vacío.
-            </div>
-        </div>
+    <label>
+      <span>Carrera</span>
+      <div class="form-group">
+        <select class="form-select form-control" formControlName="carrera" name="carrera" multiple>
+          <option *ngFor="let c of Career" [value]="c.id">{{c.career_name}}</option>
+        </select>
+      </div>
 
-        <div class="form-group">
-            <label>Correo electrónico: </label>
-            <input class="form-control" formControlName="email" type="text">
-        </div>
+    </label>
+    <div class="error"
+      *ngIf="angForm.get('carrera').invalid && (angForm.get('carrera').dirty || angForm.get('carrera').touched)">
+      <div *ngIf="angForm.get('carrera').errors.required">
+        Debe seleccionar al menos una carrera.
+      </div>
+    </div>
 
-        <div class="error"
-            *ngIf="angForm.controls['email'].invalid && (angForm.controls['email'].dirty || angForm.controls['email'].touched)">
-            <div [hidden]="!angForm.controls['email'].errors.required">
-                El mail no puede estar vacío.
-            </div>
-            <div [hidden]="!angForm.controls['email'].errors.pattern">
-                El mail debe tener formato email&#64;dominio.com
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Carrera: </label>
-            <select class="form-select form-control" formControlName="carrera" name="carrera" size="2" multiple>
-                <option *ngFor="let career of Career" [value]="career.id">{{career.carrer_name}}</option>
-            </select>
-        </div>
-        <div class="error" *ngIf="angForm.controls['carrera'].invalid && (angForm.controls['carrera'].dirty 
-            || angForm.controls['carrera'].touched)">
-            <div [hidden]="!angForm.controls['carrera'].errors.required">
-                Debe seleccionar al menos una carrera.
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Contraseña: </label>
-            <input class="form-control" formControlName="password" type="text">
-        </div>
-
-        <div class="error"
-            *ngIf="angForm.controls['password'].invalid && (angForm.controls['password'].dirty || angForm.controls['password'].touched)">
-            <div [hidden]="!angForm.controls['password'].errors.required">
-                Contraseña no puede estar vacía.
-            </div>
-        </div>
-
-        <div id="botones">
-            <button type="submit" class="btn btn-secondary" (click)="volver()">
-                Volver
-            </button>
-            <button type="submit" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary"
-                (click)="registrar()">
-                Registrarse
-            </button>
-        </div>
+    <button class="submit" [disabled]="angForm.pristine || angForm.invalid" (click)="registrar()">Submit</button>
+    <p class="signin">Already have an account? <a href="/login">Signin</a> </p>
+  </form>
 
 
-
-
-    </form>
-
-</div>
+</body>
