@@ -378,7 +378,7 @@
             <div class="modal-body">
                 <ul class="list-group list-group-flush">
                     <li *ngIf="Notificaciones.length == 0" class="list-group-item">No hay notifiaciones.</li>
-                    <li *ngFor="let n of Notificaciones" class="list-group-item">{{n.name}}</li>
+                    <li *ngFor="let n of Notificaciones" class="list-group-item">{{n.notification_message}}</li>
                 </ul>
             </div>
             <div class="modal-footer">

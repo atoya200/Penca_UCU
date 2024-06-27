@@ -288,8 +288,9 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
     this.championshipService.notifications().subscribe(
       data => {
+        debugger;
         this.Notificaciones = data.notificaciones;
-        console.log(this.Equipos);
+        console.log(this.Notificaciones);
       },
       error => {
         this.Notificaciones = [];
