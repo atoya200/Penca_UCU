@@ -1,19 +1,17 @@
 <app-menu-principal></app-menu-principal>
 
 <div class="image">
-  <div class="championships-container">
-    <h2>Listado de Campeonatos</h2>
-    <ul class="championship-list">
-      <li *ngFor="let championship of championships" (click)="viewDetails(championship.id)">
-        <div class="championship-card">
-          <h3>{{ championship.name }}</h3>
-          <p>{{ championship.description }}</p>
-        </div>
-      </li>
-    </ul>
-</div>
-
-<button class="floating-button" click="openModal()">Entrar a nueva penca</button>
+    <div class="championships-container">
+      <h2 class="title">Listado de Campeonatos</h2>
+      <ul class="championship-list">
+        <li *ngFor="let championship of championships" (click)="viewDetails(championship.id)">
+          <div class="championship-card">
+            <h3>{{ championship.name }}</h3>
+            <p>{{ championship.description }}</p>
+          </div>
+        </li>
+      </ul>
+  </div>
 </div>
 
 
@@ -26,7 +24,7 @@
       </div>
       <div class="modal-body">
         <div class="d-flex justify-content-between">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>  
+          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
         </div>
     </div>
   </div>

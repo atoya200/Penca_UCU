@@ -4,7 +4,7 @@ import { ChampionshipsService } from '../services/championships.service';
 import { NgIf, NgFor } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import * as bootstrap from 'bootstrap';
-import { RouterModule } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, Validators, NgForm, AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
@@ -28,6 +28,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
 
   @Input() isAdmin?: boolean;
+
   equipo: String = "";
   imagenCargada: any;
   angForm: FormGroup;
@@ -38,11 +39,13 @@ export class MenuPrincipalComponent implements AfterViewInit {
   angFormEstadisticas: FormGroup;
   imagen: any = "";
   Fases: any = [];
+  Notificaciones: any = [];
+
   pencaValida: boolean = false;
   Equipos: any = []
   Campeonatos: any = []
   Estadistica: any = []
-  constructor(private statisticsService: StatisticsService, private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipsService, private sanitizer: DomSanitizer) {
+  constructor(private router: Router, private statisticsService: StatisticsService, private stageService: StageService, private teamService: TeamService, private fb: FormBuilder, private loginService: LoginService, private championshipService: ChampionshipsService, private sanitizer: DomSanitizer) {
 
     this.createForm();
 
@@ -52,12 +55,13 @@ export class MenuPrincipalComponent implements AfterViewInit {
     // Form crear equipo
     this.angForm = this.fb.group({
       equipo: ['', [Validators.required, Validators.maxLength(20)]],
-      imagen: ['']
+      imagen: ['', [Validators.required]]
     });
 
     // Form crear fase
     this.angFormCrearFase = this.fb.group({
-      nombreFase: ['', [Validators.required, Validators.maxLength(20)]]
+      nombreFase: ['', [Validators.required, Validators.maxLength(20)]],
+      faseEliminatoria: []
     });
 
     // Form id penca
@@ -83,11 +87,11 @@ export class MenuPrincipalComponent implements AfterViewInit {
     // Done. buscar campeonatos que esta inscripto el usuario, o si es administrador que muestre los campeonatos activos listados
     // Empezar un spinner y despues terminarlo?
 
-    // TODO: 
+    // TODO:
     // - agregar carrousel con imagenes de futbol en el menu principal
     // - listar campeonatos en el inicio, al entrar al campeonato que aparezcan las funcionalidades que dependen de el
-    // - navbar con las funcionalidades de anotarse a una penca (Done), crear campeonato (Done), ver notificaciones (Done), 
-    // Equipos (ingresar equipos, modificar equipos, consultar equipos), 
+    // - navbar con las funcionalidades de anotarse a una penca (Done), crear campeonato (Done), ver notificaciones (Done),
+    // Equipos (ingresar equipos, modificar equipos, consultar equipos),
 
     this.isAdmin = this.loginService.getUserType().type == 'Admin';
 
@@ -98,6 +102,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
     this.angForm.get('equipo').reset()
     this.angForm.get('imagen').reset()
     this.angFormCrearFase.get('nombreFase').reset()
+    this.angFormCrearFase.get('faseEliminatoria').reset()
     this.angFormPencaId.get('idPenca').reset()
     this.angFormElegirEquipos.get('equipoCampeon').reset()
     this.angFormElegirEquipos.get('equipoSubcampeon').reset()
@@ -105,10 +110,11 @@ export class MenuPrincipalComponent implements AfterViewInit {
     this.angFormEstadisticas.get('campeonato').reset()
     this.angFormEstadisticas.get('consulta').reset()
     this.Estadistica = []
+    this.Notificaciones = []
   }
 
   eliminarImagen(): void {
-    this.angForm.get('imagen').reset()
+    this.angForm.get('imagen').setValue("");
   }
 
   previsualizarImagen(): void {
@@ -158,7 +164,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   crearFase() {
     // ingresar fase
 
-    this.stageService.registerStage(this.angFormCrearFase.get('nombreFase').value).subscribe(
+    this.stageService.registerStage(this.angFormCrearFase.get('nombreFase').value, this.angFormCrearFase.get('faseEliminatoria').value).subscribe(
       data => {
 
         alert("Fase creada con éxito.");
@@ -278,6 +284,21 @@ export class MenuPrincipalComponent implements AfterViewInit {
       })
   }
 
+
+  buscarNotificaciones(): void {
+    this.limpiarDatos()
+
+    this.championshipService.notifications().subscribe(
+      data => {
+        this.Notificaciones = data.notificaciones;
+        console.log(this.Equipos);
+      },
+      error => {
+        this.Notificaciones = [];
+        console.log(error);
+      });
+  }
+
   ngAfterViewInit() {
     // Este codigo del popover bloquea que funcione lo resto de bootstrap.
     // por el popover de las notificaciones
@@ -289,6 +310,10 @@ export class MenuPrincipalComponent implements AfterViewInit {
   */
 
 
+  }
+
+  goBack(): void {
+    this.router.navigate(['/login']);
   }
 }
 

@@ -20,7 +20,7 @@ import { MenuPrincipalComponent } from '../menu-principal/menu-principal.compone
 export class ChampionshipsComponent {
 
   constructor( private service: ChampionshipsService, private router: Router, private fixtureService: FixtureService ) {}
-  
+
   championships: Championship[] = [];
 
   showModal: boolean = false;
