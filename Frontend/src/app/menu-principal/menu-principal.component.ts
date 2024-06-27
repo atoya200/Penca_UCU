@@ -123,7 +123,6 @@ export class MenuPrincipalComponent implements AfterViewInit {
       reader.addEventListener(
         "load",
         () => {
-          //debugger;
           // convert image file to base64 string
           //console.log(reader.result)
 
@@ -247,7 +246,6 @@ export class MenuPrincipalComponent implements AfterViewInit {
   }
 
   buscarCampeonatos(): void {
-
     this.limpiarDatos()
     // buscar campeonatos
     this.championshipService.getAllChampionships().subscribe(data => {
@@ -289,7 +287,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
     this.championshipService.notifications().subscribe(
       data => {
         this.Notificaciones = data.notificaciones;
-        console.log(this.Equipos);
+        console.log(this.Notificaciones);
       },
       error => {
         this.Notificaciones = [];

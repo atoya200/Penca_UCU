@@ -17,13 +17,11 @@ body {
     font-size: 12px;
   }
 
-  input.ng-invalid.ng-touched,
-  select.ng-invalid.ng-touched {
+  input.ng-invalid.ng-touched {
     border: red 1px solid;
   }
 
-  input.ng-valid.ng-touched,
-  select.ng-valid.ng-touched {
+  input.ng-valid.ng-touched {
     border: green 1px solid;
   }
 
@@ -142,7 +140,10 @@ body {
   cursor: text;
   transition: 0.3s ease;
 }
-
+select {
+  background-color: #333;
+  color: #fff; 
+}
 .form label .input:placeholder-shown + span {
   top: 12.5px;
   font-size: 0.9em;
