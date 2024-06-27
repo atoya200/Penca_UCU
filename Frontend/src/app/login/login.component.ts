@@ -29,21 +29,17 @@ export class LoginComponent {
     this.router.navigate(['/registrar']);
   }
 
-  login() {
-
+  login() { 
     this.loginService.login(this.ci, this.password).subscribe(
       data => {
         console.log(data)
         this.loginService.setUserType(data.user)
         this.loginService.setToken(data.token)
         this.router.navigateByUrl('/championships');
-
       },
       error => {
-
         alert(error.error.msg)
         console.log(error);
       });
-
   }
 }

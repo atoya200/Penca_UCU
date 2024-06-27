@@ -47,7 +47,7 @@ router.post('/login', async (req, res) => {
     try {
         var token;
         const usr = req.body.user;
-        var user = await methods.query('select u.ci, case when s.ci is not null then \'Student\' when a.ci is not null then \'Admin\' else \'Neither\' end as role from user u left join student s on u.ci = s.ci left join admin a on u.ci = a.ci where u.ci = ? and u.password=?', [usr.ci, usr.password])
+        var user = await methods.query('select u.ci, case when a.ci is not null then \'Admin\' when s.ci is not null then \'Student\' else \'Neither\' end as role from user u left join student s on u.ci = s.ci left join admin a on u.ci = a.ci where u.ci = ? and u.password=?', [usr.ci, usr.password])
 
         if (user.length > 0) {
             // user exists

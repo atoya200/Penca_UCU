@@ -311,6 +311,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
   }
 
   goBack(): void {
+    this.loginService.logOut();
     this.router.navigate(['/login']);
   }
 }

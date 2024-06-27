@@ -9,6 +9,7 @@ import { NgFor } from '@angular/common';
 import {NgIf} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MenuPrincipalComponent } from '../menu-principal/menu-principal.component';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-championships',
@@ -19,23 +20,30 @@ import { MenuPrincipalComponent } from '../menu-principal/menu-principal.compone
 })
 export class ChampionshipsComponent {
 
-  constructor( private service: ChampionshipsService, private router: Router, private fixtureService: FixtureService ) {}
+  constructor(private loginService: LoginService, private service: ChampionshipsService, private router: Router, private fixtureService: FixtureService ) {}
 
   championships: Championship[] = [];
 
   showModal: boolean = false;
 
   ngOnInit(): void {
-
-    console.log("Getting championships");
-
-    this.service.getChampionships().subscribe((championships) => {
-      console.log("Championships received: " + JSON.stringify(championships) );
-      championships.forEach(championship => {
-        this.championships.push(championship);
+    if(this.loginService.getUserType().type == "Admin"){
+      this.service.getAllChampionships().subscribe((championships) => {
+        console.log("Championships received: " + JSON.stringify(championships) );
+        championships.forEach(championship => {
+          this.championships.push(championship);
+        });
+        console.log("Championships: " + JSON.stringify(this.championships));
       });
-      console.log("Championships: " + JSON.stringify(this.championships));
-    });
+    }else{
+      this.service.getChampionships().subscribe((championships) => {
+        console.log("Championships received: " + JSON.stringify(championships) );
+        championships.forEach(championship => {
+          this.championships.push(championship);
+        });
+        console.log("Championships: " + JSON.stringify(this.championships));
+      });
+    }
   }
 
   viewDetails(id: number){
