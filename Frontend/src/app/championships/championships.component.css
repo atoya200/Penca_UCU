@@ -1,24 +1,34 @@
   .image {
-    background-image: url('../../assets/estadio.jpg');
+    background-image: url('../../assets/view-empty-soccer-stadium-with-fantasy-dreamy-sky.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
     width: 100%;
   }
-  
+
+  .title{
+    text-align: center;
+    font-size: 2.5em;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 4px 4px 8px #000000;
+  }
+
   .championships-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
-  
+
   .championship-list {
     list-style-type: none;
     padding: 0;
   }
-  
+
   .championship-card {
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -27,7 +37,8 @@
     cursor: pointer;
     transition: 0.3s;
     background-color: rgba(255, 255, 255, 0.5);
-  } 
+    color: #000000;
+  }
 
   .championship-card:hover {
     box-shadow: 0 10px 20px 0 rgba(0,0,0,0.8);
@@ -47,7 +58,7 @@
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
   }
-  
+
   .floating-button:hover {
     background-color: #0056b3;
     box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);

@@ -14,12 +14,12 @@ router.post('/', [middleware.verifyUser, middleware.verifyUserIsAdmin], async (r
             res.status(400);
             res.send(JSON.stringify({ msg: "Error. Faltan parametros." }))
         } else {
-            if (methods.isNullOrEmpty(stage.name)) {
+            if (methods.isNullOrEmpty(stage.name) || methods.isNullOrEmpty(stage.faseEliminatoria)) {
                 res.status(400);
                 res.send(JSON.stringify({ msg: "Error. Faltan parametros." }))
             } else {
-
-
+                var eliminatoria = stage.faseEliminatoria ? 1 : 0
+                //falta modificar el insert
                 const result = await methods.insert('INSERT INTO `stage`(`name`) VALUES (?)', [stage.name.toUpperCase()]);
                 if (!result) {
                     throw new Error("Falló el insert en la base de datos.")

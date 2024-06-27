@@ -1,1 +1,22 @@
-<p>ranking works!</p>
+
+<body>
+<h1 class="title">RANKING</h1>
+
+<div class="contenedor">
+
+  <div class="user-List">
+    <div *ngFor="let user of ranking; let i = index" [id]="'ranking-' + user.ci" class="ranking-item">
+      {{ i + 1 }}. {{ user.ci }} - {{ user.points }} punto/s
+    </div>
+  </div>
+</div>
+
+<div>
+  <button (click)="findMe()" class="button2"><span> Encontrarme
+  </span></button>
+</div>
+
+<button class="floating-button" (click)="goBack()">Volver</button>
+</body>
+
+

@@ -1,65 +1,109 @@
 {
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
   "hash": "6d89bbb8",
   "configHash": "8d6f31b6",
   "lockfileHash": "f22403b5",
   "browserHash": "f8c6b40f",
+=======
+  "hash": "2f0255e4",
+  "configHash": "c2757c2f",
+  "lockfileHash": "f22403b5",
+  "browserHash": "7ae15b67",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
       "file": "@angular_common.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "3193980a",
+=======
+      "fileHash": "5194fb18",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     },
     "@angular/common/http": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "5daa8062",
+=======
+      "fileHash": "7e7d9a78",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "5dea9afd",
+=======
+      "fileHash": "1335fd68",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     },
     "@angular/forms": {
       "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
       "file": "@angular_forms.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "91087b54",
+=======
+      "fileHash": "6c855724",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "51fc6034",
+=======
+      "fileHash": "5698741a",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "5eea0123",
+=======
+      "fileHash": "e0dcf415",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     },
     "ngx-cookie-service": {
       "src": "../../../../../node_modules/ngx-cookie-service/fesm2022/ngx-cookie-service.mjs",
       "file": "ngx-cookie-service.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "ddbe80a3",
+=======
+      "fileHash": "c97ca2a3",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     },
     "rxjs": {
       "src": "../../../../../node_modules/rxjs/dist/esm5/index.js",
       "file": "rxjs.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "4244694a",
+=======
+      "fileHash": "a5db7226",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     },
     "rxjs/operators": {
       "src": "../../../../../node_modules/rxjs/dist/esm5/operators/index.js",
       "file": "rxjs_operators.js",
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
       "fileHash": "0c51cbb2",
+=======
+      "fileHash": "e980babd",
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
       "needsInterop": false
     }
   },
   "chunks": {
+<<<<<<< HEAD:Frontend/.angular/cache/17.3.7/vite/deps/_metadata.json
     "chunk-DR6FCHVA": {
       "file": "chunk-DR6FCHVA.js"
     },
@@ -71,6 +115,19 @@
     },
     "chunk-FH6MQMEX": {
       "file": "chunk-FH6MQMEX.js"
+=======
+    "chunk-ELPMUCJ3": {
+      "file": "chunk-ELPMUCJ3.js"
+    },
+    "chunk-6TNX7TCJ": {
+      "file": "chunk-6TNX7TCJ.js"
+    },
+    "chunk-NCFBGS7G": {
+      "file": "chunk-NCFBGS7G.js"
+    },
+    "chunk-TDR5BHHU": {
+      "file": "chunk-TDR5BHHU.js"
+>>>>>>> 4276e7c762418da77607aa53ce0ebfc1330ed62c:Frontend/.angular/cache/17.3.5/vite/deps/_metadata.json
     },
     "chunk-V2DXGMIT": {
       "file": "chunk-V2DXGMIT.js"
