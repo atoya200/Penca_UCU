@@ -12,9 +12,9 @@ router.get('/', [middleware.verifyUser], async (req, res) => {
 
     var decoded = middleware.decode(req.headers['authorization'])
     try {
-        var championships = await methods.query('select c.id, c.name from predict_first p inner join championship c on c.id=p.idChampionship where p.ci=?;', [decoded.user.ci]);
+        var championships = await methods.query('SELECT    fmps.idChampionship,  fmps.idStage,   fmps.firstMatchDate,    CONCAT(\'Necesitas ingresar tus prediciones para el partido de la fecha: \', fmps.firstMatchDate) AS notification_message FROM (SELECT            cm.idChampionship, cm.idStage, MIN(cm.matchDate) AS firstMatchDate        FROM            championshipMatch cm               GROUP BY            cm.idChampionship,            cm.idStage        ) fmps LEFT JOIN     predictions p ON p.idchampionship = fmps.idChampionship AND p.idstage = fmps.idStage AND p.ci = ?          WHERE    p.ci IS NULL; ', [decoded.user.ci]);
         res.status(200)
-        res.send(JSON.stringify({ "championships": championships }));
+        res.send(JSON.stringify({ "notificaciones": championships }));
 
     } catch (error) {
         res.status(500);
