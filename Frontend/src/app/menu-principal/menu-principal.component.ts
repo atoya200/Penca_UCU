@@ -26,6 +26,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
 
 
   @Input() isAdmin?: boolean;
+
   equipo: String = "";
   imagenCargada: any;
   angForm: FormGroup;
@@ -36,6 +37,8 @@ export class MenuPrincipalComponent implements AfterViewInit {
   angFormEstadisticas: FormGroup;
   imagen: any = "";
   Fases: any = [];
+  Notificaciones: any = [];
+
   pencaValida: boolean = false;
   Equipos: any = []
   Campeonatos: any = []
@@ -105,6 +108,7 @@ export class MenuPrincipalComponent implements AfterViewInit {
     this.angFormEstadisticas.get('campeonato').reset()
     this.angFormEstadisticas.get('consulta').reset()
     this.Estadistica = []
+    this.Notificaciones = []
   }
 
   eliminarImagen(): void {
@@ -276,6 +280,22 @@ export class MenuPrincipalComponent implements AfterViewInit {
         alert(error.error.msg)
         console.log(error);
       })
+  }
+
+
+  buscarNotificaciones(): void {
+    this.limpiarDatos()
+
+    this.championshipService.notifications().subscribe(
+      data => {
+        this.Notificaciones = data.notificaciones;
+        console.log(this.Equipos);
+      },
+      error => {
+        this.Notificaciones = [];
+        alert(error.error.msg)
+        console.log(error);
+      });
   }
 
   ngAfterViewInit() {
