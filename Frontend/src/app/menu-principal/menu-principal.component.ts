@@ -293,7 +293,6 @@ export class MenuPrincipalComponent implements AfterViewInit {
       },
       error => {
         this.Notificaciones = [];
-        alert(error.error.msg)
         console.log(error);
       });
   }
