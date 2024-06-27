@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar barra navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
         <a class="navbar-brand" href="/championships">PencaUCU</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -60,7 +60,22 @@
         Campanita
     </button>
 
-    <div class="dropdown">
+    <button class="button">
+      <svg viewBox="0 0 448 512" class="bell"><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"></path></svg>
+    </button>
+
+  <button class="Btn" (click)="goBack()">
+
+    <div class="sign"><svg viewBox="0 0 512 512"><path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path></svg></div>
+
+    <div class="text">Logout</div>
+  </button>
+
+
+
+
+
+  <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
             Perfil
         </button>
@@ -90,7 +105,7 @@
                         <input type="text" class="form-control" formControlName="equipo" id="equipo1" name="equipo"
                             maxlength="20">
                     </div>
-                    <div class="error" *ngIf="angForm.controls['equipo'].invalid && (angForm.controls['equipo'].dirty || 
+                    <div class="error" *ngIf="angForm.controls['equipo'].invalid && (angForm.controls['equipo'].dirty ||
                     angForm.controls['equipo'].touched)">
                         <div [hidden]="!angForm.controls['equipo'].errors.required">
                             El nombre no puede estar vacío.
@@ -108,7 +123,7 @@
                                 class="input-group-text">X</button>
                         </div>
                     </div>
-                    <div class="error" *ngIf="angForm.controls['imagen'].invalid && (angForm.controls['imagen'].dirty || 
+                    <div class="error" *ngIf="angForm.controls['imagen'].invalid && (angForm.controls['imagen'].dirty ||
                     angForm.controls['imagen'].touched)">
                         <div [hidden]="!angForm.controls['imagen'].errors.required">
                             Debe ingresar una imagen.
@@ -171,7 +186,7 @@
                         <input type="text" class="form-control" formControlName="nombreFase" id="nombreFase"
                             name="nombreFase" maxlength="20">
                     </div>
-                    <div class="error" *ngIf="angFormCrearFase.controls['nombreFase'].invalid && (angFormCrearFase.controls['nombreFase'].dirty || 
+                    <div class="error" *ngIf="angFormCrearFase.controls['nombreFase'].invalid && (angFormCrearFase.controls['nombreFase'].dirty ||
                     angFormCrearFase.controls['nombreFase'].touched)">
                         <div [hidden]="!angFormCrearFase.controls['nombreFase'].errors.required">
                             El nombre no puede estar vacío.
@@ -240,7 +255,7 @@
                         <input type="text" class="form-control" formControlName="idPenca" id="idPenca"
                             name="nombreFase">
                     </div>
-                    <div class="error" *ngIf="angFormPencaId.controls['idPenca'].invalid && (angFormPencaId.controls['idPenca'].dirty || 
+                    <div class="error" *ngIf="angFormPencaId.controls['idPenca'].invalid && (angFormPencaId.controls['idPenca'].dirty ||
                     angFormPencaId.controls['idPenca'].touched)">
                         <div [hidden]="!angFormPencaId.controls['idPenca'].errors.required">
                             El ID penca no puede estar vacío.
@@ -259,7 +274,7 @@
                         </select>
                     </div>
 
-                    <div class="error" *ngIf="angFormElegirEquipos.controls['equipoCampeon'].invalid && (angFormElegirEquipos.controls['equipoCampeon'].dirty || 
+                    <div class="error" *ngIf="angFormElegirEquipos.controls['equipoCampeon'].invalid && (angFormElegirEquipos.controls['equipoCampeon'].dirty ||
                     angFormElegirEquipos.controls['equipoCampeon'].touched)">
                         <div [hidden]="!angFormElegirEquipos.controls['equipoCampeon'].errors.required">
                             Debe seleccionar un equipo campeon.
@@ -274,7 +289,7 @@
                         </select>
                     </div>
 
-                    <div class="error" *ngIf="angFormElegirEquipos.controls['equipoSubcampeon'].invalid && (angFormElegirEquipos.controls['equipoSubcampeon'].dirty || 
+                    <div class="error" *ngIf="angFormElegirEquipos.controls['equipoSubcampeon'].invalid && (angFormElegirEquipos.controls['equipoSubcampeon'].dirty ||
                     angFormElegirEquipos.controls['equipoSubcampeon'].touched)">
                         <div [hidden]="!angFormElegirEquipos.controls['equipoSubcampeon'].errors.required">
                             Debe seleccionar un equipo subcampeon.
@@ -317,7 +332,7 @@
                         </select>
                     </div>
 
-                    <div class="error" *ngIf="angFormEstadisticas.controls['campeonato'].invalid && (angFormEstadisticas.controls['campeonato'].dirty || 
+                    <div class="error" *ngIf="angFormEstadisticas.controls['campeonato'].invalid && (angFormEstadisticas.controls['campeonato'].dirty ||
                     angFormEstadisticas.controls['campeonato'].touched)">
                         <div [hidden]="!angFormEstadisticas.controls['campeonato'].errors.required">
                             Debe seleccionar un campeonato.
@@ -345,7 +360,7 @@
                     </table>
 
 
-                    <div class="error" *ngIf="angFormEstadisticas.controls['consulta'].invalid && (angFormEstadisticas.controls['consulta'].dirty || 
+                    <div class="error" *ngIf="angFormEstadisticas.controls['consulta'].invalid && (angFormEstadisticas.controls['consulta'].dirty ||
                     angFormEstadisticas.controls['consulta'].touched)">
                         <div [hidden]="!angFormEstadisticas.controls['consulta'].errors.required">
                             Debe seleccionar una consulta.

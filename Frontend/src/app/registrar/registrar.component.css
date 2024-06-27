@@ -5,7 +5,11 @@ body {
   height: 100vh;
   margin: 0;
   padding: 0;
-  background-color: #a80000;
+  background-image: url('../../assets/football-arena-background.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
 }
 
 .error {
@@ -53,6 +57,20 @@ body {
   align-items: center;
   padding-left: 30px;
   color: #00bfff;
+}
+
+.title2{
+  font-family: "Roboto", Arial, sans-serif;
+  letter-spacing: -0.5px;
+  font-size: 7em;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  color: #ffffff;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-shadow: 0 0 10px #002bff, 0 0 20px #00c6ff, 0 0 40px #00c6ff, 0 0 80px #00c6ff;
 }
 
 .title::before {

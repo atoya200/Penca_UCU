@@ -3,7 +3,7 @@
 
 <div class="image">
   <h1 class="title">{{championship.name}}</h1>
-  <h1 class="title"> Tus predicciones </h1>
+  <h1 class="title2"> -Tus predicciones- </h1>
   <div class="card-container">
     <div class="card" style="width: 18rem;" *ngFor="let stage of championship.stages">
       <div class="card-header">
@@ -11,12 +11,12 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item" *ngFor="let match of stage.matches" (click)="openModal(match, stage.name)">
-          {{ match.teamA }} vs {{ match.teamB }}: {{ match.goalsA }} - {{ match.goalsB }}
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAIAAADdvUsCAAACXUlEQVR4nO3csREDQQgEQVBd/imjMMb47ghwptZjZ26Azq8+AL5OhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxN55MQMpSwgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEENsZT2agZAkhJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGLvvJiBlCWEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKE2DsvZiBlCSEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYjvjyQyULCHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQuydFzOQsoQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECLE/eVMQh3oErIEAAAAASUVORK5CYII=" > {{ match.teamA }} vs {{ match.teamB }} <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAADICAIAAADdvUsCAAACXUlEQVR4nO3csREDQQgEQVBd/imjMMb47ghwptZjZ26Azq8+AL5OhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxN55MQMpSwgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQkyEENsZT2agZAkhJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGLvvJiBlCWEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYiKE2DsvZiBlCSEmQoiJEGIihJgIISZCiIkQYiKEmAghJkKIiRBiIoSYCCEmQoiJEGIihJgIISZCiIkQYjvjyQyULCHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECDERQuydFzOQsoQQEyHERAgxEUJMhBATIcRECDERQkyEEBMhxEQIMRFCTIQQEyHERAgxEUJMhBATIcRECLE/eVMQh3oErIEAAAAASUVORK5CYII=" > <br> {{ match.goalsA }} - {{ match.goalsB }}
         </li>
       </ul>
     </div>
   </div>
-  
+
   <button class="floating-button" (click)="goBack()">Volver</button>
   <button class="floating-button-2" (click)="viewRanking(championship.id)">Ranking</button>
 
@@ -58,7 +58,7 @@
           <p class="success">Has ganado {{ selectedMatch.scoreObtained }} puntos</p>
         </div>
         <ng-template #matchDate>
-          <p>Fecha del partido: {{ selectedMatch?.date | date }}</p>
+          <p>Fecha y hora del partido: {{ selectedMatch?.date | date:'short' }}</p>
         </ng-template>
       </div>
       <div class="modal-footer">
@@ -73,7 +73,7 @@
           </div>
         </div>
         <div class="d-flex justify-content-between">
-          <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+          <button type="button" class="btn btn-secondary btn2" (click)="closeModal()">Cancelar</button>
           <div *ngIf="!isNear && validateInput(teamAGoals, teamBGoals)">
             <button type="button" class="btn btn-primary" (click)="savePrediction()">Guardar nueva predicción</button>
           </div>
@@ -81,19 +81,4 @@
     </div>
   </div>
 </div>
-
-
-<!--
-  Aca hay que asegurarse que cuando persione guardar que se fije que lo que 
-  ingreso el usuario sea un numero y que no sea vacio y tmp letras, si llega 
-  a pasr esto que le aparezca un error en color rojo y que no se pueda guardar
-  y hacer que se guarde en localsotrage o en alguna cookie, para que al recargar 
-  no se te vaya todo, o tambien se puede hacer que se recupere el id del url
-  - Tambén hacer de que si el partido ya sucedio no se pueda modificar la 
-  predicción, que no le que pegue a la api y que le aparezca un mensaje de que ya 
-  sucedio el partido en letritas rojas
-  - Pulir más la logica de si sucedio o no, ver el tema de la hora antes del partido
-  si esta sucediendo o una hora antes ya no se pueda enviar 
-  -Despues se puede hacer que si no se puede envir la prediccion le desaparezca el voton de enviar 
-  y decir pq, que va a ser pq el partido sucedio o esta por suceder
--->
+</div>

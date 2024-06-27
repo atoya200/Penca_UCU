@@ -40,12 +40,15 @@ export class FixtureComponent {
   // Se utilizan para validar que el usuario no ponga un resultado que sea un número y que lo haga en el plazo valido
   isNear: boolean = false;
   isValid: boolean = true;
+  // Imagén de fondo
+  image: string;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.service.getPredictions(id).subscribe((championship) => {
         this.championship = championship
+        console.log("Campeonato seleccionado: " + JSON.stringify(this.championship.stages[0].matches[0]));
       });
       this.match = new Match(0, "", "", 0, 0, new Date(), 0);
     });

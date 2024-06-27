@@ -1,10 +1,16 @@
   .image {
     background-image: url('../../assets/soccer-ball-green-grass-with-selective-focus-generative-ai.jpg');
+    position: fixed;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
     width: 100%;
+  }
+
+  img {
+    width: 8%;
+    height: auto;
   }
 
  .card-container {
@@ -30,12 +36,16 @@
     background-color: #f8f9fa;
     padding: 10px;
     font-weight: bold;
+    color: #000000;
     background-color: rgba(255, 255, 255, 0.5);
+    text-align: center;
   }
 
   .list-group-item {
     cursor: pointer;
     background-color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    color: #000000;
   }
 
   .list-group-item:hover {
@@ -66,7 +76,7 @@
     border-bottom: 1px solid #dee2e6;
     border-top-left-radius: .3rem;
     border-top-right-radius: .3rem;
-    background-color: #5dade2;
+    background-color: #6c7278;
     color: white;
   }
 
@@ -74,8 +84,9 @@
     position: relative;
     flex: 1 1 auto;
     padding: 1rem;
-    background-color: #ecf0f1;
+    background-color: #ffffff;
   }
+
 
   @keyframes modalFade {
     from {opacity: 0;}
@@ -115,7 +126,17 @@
     margin-bottom: 20px;
     color: #ffffff;
     font-family: 'Arial', sans-serif;
-    text-shadow: 4px 4px 8px #d30000;
+    text-shadow: 4px 4px 8px #000000;
+    text-transform: uppercase;
+  }
+
+  .title2 {
+    text-align: center;
+    font-size: 2.0em;
+    margin-bottom: 20px;
+    color: #ffffff;
+    font-family: 'Arial', sans-serif;
+    text-shadow: 4px 4px 8px #000000;
   }
 
   .floating-button {
@@ -131,6 +152,7 @@
     z-index: 100;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
+    border-radius: 10px;
   }
 
   .floating-button:hover {
@@ -173,6 +195,7 @@
     z-index: 100;
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease 0s;
+    border-radius: 10px;
   }
 
   .floating-button-2:hover {
@@ -180,4 +203,8 @@
     box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
     color: #fff;
     transform: translateY(-7px);
+  }
+
+  .btn2{
+    margin-right: 10px;
   }
