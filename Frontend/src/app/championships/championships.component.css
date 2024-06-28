@@ -5,6 +5,16 @@
     background-position: center;
     height: 100vh;
     width: 100%;
+  
+    background-image: url('../../assets/view-empty-soccer-stadium-with-fantasy-dreamy-sky.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    max-height: calc(100vh - 56px);
+    width: 100%;
+    background-size: cover; /* Ajustar tamaño de la imagen de fondo */
+    background-attachment: fixed; /* Fijar la imagen de fondo */
+    overflow-y: auto; /* Permitir scroll vertical */
   }
 
   .title{
@@ -22,6 +32,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: visible;
+
   }
 
   .championship-list {

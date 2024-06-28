@@ -1,0 +1,12 @@
+.inline {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
+.inline div input[type=text]{
+    width: 30px;;
+    height: 20px;;
+    margin-right: 4px;
+}

@@ -1,4 +1,5 @@
 import { Stage } from "Stage";
+import { Team } from "src/app/team";
 
 export class Championship {
 
@@ -8,6 +9,7 @@ export class Championship {
     startDate: Date;
     endDate: Date;
     stages: Stage[];
+    teams: Team[];
 
     constructor(id: number, name: string, description: string, startDate: Date, endDate: Date, stages: Stage[]){
         this.id = id;

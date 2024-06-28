@@ -58,6 +58,7 @@ FLUSH PRIVILEGES;
 
     CREATE TABLE stage(
         id INTEGER AUTO_INCREMENT,
+        isGroupStage BOOLEAN NOT NULL DEFAULT(false),
         name VARCHAR(50),
         PRIMARY KEY (id)
     );
@@ -73,44 +74,43 @@ FLUSH PRIVILEGES;
     CREATE TABLE team_participation(
         idTeam INTEGER,
         idChampionship INTEGER,
+        isEliminated BOOLEAN NOT NULL DEFAULT (false),
         PRIMARY KEY(idTeam, idChampionship),
         FOREIGN KEY (idTeam) REFERENCES team(id),
         FOREIGN KEY (idChampionship) REFERENCES championship(id)
     );
 
-    -- Es la agregación de juega equipo con la agregación de etapa con campeonato
-    CREATE TABLE championshipMatch (
-        id INTEGER AUTO_INCREMENT PRIMARY KEY,
-        idTeamA INTEGER,
-        idTeamB INTEGER,
-        matchDate DATETIME,
-        idStage INTEGER,
-        idChampionship INTEGER,
-        resultTeamA INTEGER,
-        resultTeamB INTEGER,
-        INDEX idx_match (idChampionship, idStage, idTeamA, idTeamB, matchDate),
-        FOREIGN KEY (idChampionship) REFERENCES championship(id),
-        FOREIGN KEY (idStage) REFERENCES stage(id),
-        FOREIGN KEY (idTeamA) REFERENCES team(id),
-        FOREIGN KEY (idTeamB) REFERENCES team(id)
-    );
+-- Es la agregación de juega equipo con la agregación de etapa con campeonato
+CREATE TABLE championshipMatch(
+    idTeamA INTEGER,
+    idTeamB INTEGER,
+    matchDate DATETIME,
+    idStage INTEGER,
+    idChampionship INTEGER,
+    resultTeamA INTEGER,
+    resultTeamB INTEGER,
+    INDEX idx_match (idChampionship, idStage, idTeamA, idTeamB, matchDate),
+    PRIMARY KEY (idTeamA, idTeamB,  idChampionship, idStage, matchDate),
+    FOREIGN KEY (idChampionship) REFERENCES championship(id),
+    FOREIGN KEY (idStage) REFERENCES stage(id),
+    FOREIGN KEY (idTeamA) REFERENCES team(id),
+    FOREIGN KEY (idTeamB) REFERENCES team(id)
+);
 
-    CREATE TABLE predictions (
-        teamA INTEGER,
-        teamB INTEGER,
-        matchDate DATETIME,
-        idchampionship INTEGER,
-        predictionResultTeamA INTEGER,
-        predictionResultTeamB INTEGER,
-        scoreObtained INTEGER,
-        idstage INTEGER,
-        matchId INTEGER,
-        ci VARCHAR(8),
-        primary key (ci, matchId),
-        FOREIGN KEY (ci) REFERENCES student(ci),
-        FOREIGN KEY (idchampionship, idstage, teamA, teamB, matchDate) REFERENCES championshipMatch(idChampionship, idStage, idTeamA, idTeamB, matchDate),
-        FOREIGN KEY (matchId) REFERENCES championshipMatch(id)
-    );
+CREATE TABLE predictions (
+    teamA INTEGER,
+    teamB INTEGER,
+    matchDate DATETIME,
+    idchampionship INTEGER,
+    predictionResultTeamA INTEGER,
+    predictionResultTeamB INTEGER,
+    scoreObtained INTEGER,
+    idstage INTEGER,
+    ci VARCHAR(8),
+    PRIMARY KEY (ci, teamA, teamB,  idchampionship, idstage, matchDate),
+    FOREIGN KEY (ci) REFERENCES student(ci),
+    FOREIGN KEY (idchampionship, idstage, teamA, teamB, matchDate) REFERENCES championshipMatch(idChampionship, idStage, idTeamA, idTeamB, matchDate)
+);
 
     -- Predice el campeón
     CREATE TABLE predict_first(
@@ -143,7 +143,7 @@ FLUSH PRIVILEGES;
     );
 
     CREATE TABLE points(ci VARCHAR(8),
-                        idChampionship INTEGER,
+                        idChampionship INTEGER, 
                         points INTEGER default 0,
                         PRIMARY KEY (ci,idChampionship),
                         FOREIGN KEY (ci) references student(ci),
@@ -159,7 +159,22 @@ FLUSH PRIVILEGES;
 */
 
 
+CREATE TRIGGER before_insert_match
+BEFORE INSERT ON championshipMatch
+FOR EACH ROW
+BEGIN
+    DECLARE countTeams INT;
+    
+    -- Verificamos si los equpipos están en ese campeonato
+    SELECT COUNT(*) INTO countTeams FROM team_participation 
+    WHERE idTeam in (NEW.idTeamA, NEW.idTeamB) and idChampionship  = NEW.idChampionship;
+    
 
+    -- Si algunos de los dos equipos o los odos no están en ese campeonato no puede insertar. 
+    IF countTeams != 2 THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Equipo/s no participa/n campeonato';
+    END IF;
+END;
 
 
     -- Insertar datos para pruebas:

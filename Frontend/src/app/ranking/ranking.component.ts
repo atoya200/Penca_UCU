@@ -4,22 +4,25 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from "ngx-cookie-service";
 import { NgModule } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-ranking',
   standalone: true,
-  imports: [NgFor],
+  imports: [NgFor, NgIf],
   templateUrl: './ranking.component.html',
   styleUrl: './ranking.component.css'
 })
 export class RankingComponent {
 
   ranking: any[] = [];
+  isAdmin: boolean
 
   @ViewChild('userToFind') userToFind: ElementRef;
 
-  constructor(private cookies: CookieService, private service: RankingService, private router: Router, private route: ActivatedRoute) {
+  constructor(private cookies: CookieService, private service: RankingService, private router: Router, private route: ActivatedRoute, private loginService: LoginService) {
+    this.isAdmin = this.loginService.getUserType().type == 'Admin'
   }
 
   ngOnInit(): void {
@@ -47,7 +50,11 @@ export class RankingComponent {
   }
 
   goBack(){
-    this.router.navigate(['/fixture/' + this.route.snapshot.params['id']]);
+    if(this.isAdmin){
+      this.router.navigate(['/championships/']);
+    } else {
+      this.router.navigate(['/fixture/' + this.route.snapshot.params['id']]);
+    }
   }
 
 }

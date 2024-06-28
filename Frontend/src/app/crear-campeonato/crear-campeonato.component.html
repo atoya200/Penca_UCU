@@ -1,0 +1,66 @@
+
+<div class="modal fade" id="modalCrearCampeonato" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- Formulario reestructurado con clases y estilos similares al segundo formulario -->
+<form [formGroup]="form" id="crear-campeonato-inputs" (ngSubmit)="onSubmit()">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Campeonato</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group input-form">
+                    <label for="name">Nombre:</label>
+                    <input type="text" class="form-control" formControlName="name" id="name" placeholder="Copa América 2024">
+                </div>
+                <div class="form-group input-form">
+                    <label for="startDate">Fecha Inicio:</label>
+                    <input type="date" class="form-control" formControlName="startDate" id="startDate"  [min]="fechaInicioMin">
+                </div>
+                <div class="form-group input-form">
+                    <label for="endDate">Fecha Fin:</label>
+                    <input type="date" class="form-control" formControlName="endDate" id="endDate"  [min]="fechaFinMin">
+                </div>
+                <div class="form-group input-form">
+                    <label for="description">Descripción:</label>
+                    <textarea class="form-control" formControlName="description" id="description" rows="3"></textarea>
+                </div>
+
+                <!-- Equipos -->
+                <div class="form-group input-form">
+                    <button id="toggle-teams" class="btn btn-primary gap-1 fila-button" type="button" (click)="toggleEquipos()">
+                        Desplegar equipos
+                    </button>
+                    <div class="collapse" id="equipos">
+                        <div *ngFor="let team of teams" class="desplegable">
+                            <input type="checkbox" id="team_{{team.id}}" formControlName="team_{{team.id}}">
+                            <span><img [src]="team.teamImage" alt="team image"></span>
+                            <span>{{team.name}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Etapas -->
+                <div class="form-group input-form">
+                    <button id="toggle-stages" class="btn btn-primary gap-1 fila-button" type="button" (click)="toggleEtapas()">
+                        Desplegar etapas
+                    </button>
+                    <div class="collapse" id="etapas">
+                        <div *ngFor="let stage of stages" class="desplegable">
+                            <input type="checkbox" id="stage_{{stage.id}}" formControlName="stage_{{stage.id}}">
+                            <span>{{stage.name}}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                <button type="submit" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+</div>

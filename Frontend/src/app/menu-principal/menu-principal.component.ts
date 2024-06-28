@@ -10,13 +10,15 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { TeamService } from '../team.service';
 import { StageService } from '../stage.service';
 import { StatisticsService } from '../statistics.service';
+import { CrearCampeonatoComponent } from '../crear-campeonato/crear-campeonato.component';
 
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
+import { PartidoComponent } from '../partido/partido.component';
 @Component({
   selector: 'app-menu-principal',
   standalone: true,
-  imports: [NgIf, NgFor, CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [NgIf, NgFor, CommonModule, RouterModule, FormsModule, ReactiveFormsModule, CrearCampeonatoComponent, PartidoComponent],
   templateUrl: './menu-principal.component.html',
   styleUrl: './menu-principal.component.css'
 })

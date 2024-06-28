@@ -16,7 +16,8 @@
                         Campeonatos
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/menu">Crear campeonato</a></li>
+                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#modalCrearCampeonato">Crear campeonato</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -52,6 +53,21 @@
                                 data-bs-target="#modalVerFases">Ver fases</a></li>
                     </ul>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/menu" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        Partidos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#modalCrearPartido">Registrar</a></li>
+                        
+                            <li><a (click)="limpiarDatos()" class="dropdown-item" data-bs-toggle="modal"
+                            data-bs-target="#modalRegistrarResultado">Ingresar resultado</a></li>
+
+
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
@@ -81,6 +97,8 @@
 
 
 
+<app-crear-campeonato></app-crear-campeonato>
+<app-partido></app-partido>
 
 <!-- Modal Equipos -->
 

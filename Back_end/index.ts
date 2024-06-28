@@ -31,7 +31,7 @@ export let pool: Pool;
 
 const connectionUri = {
     host: 'localhost',
-    user: 'root',
+    user: 'obligatoriobd2',
     database: 'obligatoriobd2',
     password: 'obligatoriobd2',
     multipleStatements: true,
@@ -51,7 +51,7 @@ const app = express();
 var corsOptions = {
     origin: 'http://localhost:4200',
     optionsSuccessStatus: 200,
-    methods: "GET, PUT, POST, DELETE, HEAD"
+    methods: "GET, PUT, POST, DELETE, HEAD, PATCH"
 }
 // Allow images 
 app.use(bodyParser.json({ limit: '10mb' }));
@@ -99,7 +99,6 @@ async function run() {
 
     } catch (error) {
         console.log(error);
-
     }
 }
 

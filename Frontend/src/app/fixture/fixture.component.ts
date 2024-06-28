@@ -57,8 +57,8 @@ export class FixtureComponent {
   async openModal(match: any, stage: string) {
     this.selectedMatch = match;
 
-    this.teamAGoals = match.goalsA.toString();
-    this.teamBGoals = match.goalsB.toString();
+    this.teamAGoals = match.goalsA == null ? "" : match.goalsA.toString();
+    this.teamBGoals = match.goalsB == null ? "" : match.goalsB.toString();
 
     const matchDate = new Date(match.date);
     const now = new Date();

@@ -1,0 +1,126 @@
+/* Custom CSS */
+body, html {
+    overflow: hidden !important;
+    height: 100% !important;
+}
+
+.input-form {
+    margin-bottom: 20px;
+}
+
+.input-form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input-form input[type="text"],
+.input-form input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.input-form input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+
+
+#botones button{
+    margin-right: 20px;;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.desplegable {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: initial;
+    width: 100% !important;
+}
+
+
+.desplegable img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+}
+
+.crear-campeonato {
+    background-image: url('../../assets/view-empty-soccer-stadium-with-fantasy-dreamy-sky.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: calc(100vh - 56px);
+    width: 100%;
+    background-size: cover; /* Ajustar tamaño de la imagen de fondo */
+    background-attachment: fixed; /* Fijar la imagen de fondo */
+    overflow-y: auto; /* Permitir scroll vertical */
+    
+}
+
+
+.form_campeonato {
+    display: grid;
+    background-color: rgba(255, 255, 255, 0.5);
+    grid-template-columns: 0.5fr 2fr 0.5fr;
+    width: 40%;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding-bottom: 20px;
+    margin-left: 30%;
+    margin-right: 30%;
+    column-gap: 20px;;
+    overflow-y: visible;
+
+}
+
+#crear-campeonato-inputs {
+    overflow-y: visible;
+    margin-top: 40px;
+    grid-column: 2 / 3;
+}
+
+.input-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.input-form label {
+    width: 100%;
+}
+
+.collapse {
+    max-height: 0;
+    width: 100%;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+}
+
+.collapse.show {
+    max-height: 500px; /* Ajusta este valor según la altura de tu contenido */
+}
+
+.fila-button{
+    width: 100%;
+}
+
+.fila-button button{
+    width: 100%;
+}
+
