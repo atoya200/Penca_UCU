@@ -4,8 +4,8 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="!isAdmin">
                 <li class="nav-item">
-                    <a (click)="buscarCampeonatos()" class="nav-link active" href="#modalParticiparPenca"
-                        aria-current="page" data-bs-toggle="modal" data-bs-target="#modalParticiparPenca">Participar en
+                    <a class="nav-link active" href="#" aria-current="page" data-bs-toggle="modal"
+                        data-bs-target="#modalParticiparPenca">Participar en
                         penca</a>
                 </li>
             </ul>
@@ -403,8 +403,8 @@
             </div>
             <div class="modal-body">
                 <ul class="list-group list-group-flush">
-                    <li *ngIf="Notificaciones.length == 0" class="list-group-item">No hay notifiaciones.</li>
-                    <li *ngFor="let n of Notificaciones" class="list-group-item">{{n.name}}</li>
+                    <li *ngIf="Notificaciones.length == 0" class="list-group-item">No hay notificaciones.</li>
+                    <li *ngFor="let n of Notificaciones" class="list-group-item">{{n.notification_message}}</li>
                 </ul>
             </div>
             <div class="modal-footer">
