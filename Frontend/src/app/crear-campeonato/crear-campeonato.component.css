@@ -29,15 +29,6 @@ body, html {
 }
 
 
-/* button[type="submit"] {
-    margin-top: 20px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-} */
 
 #botones button{
     margin-right: 20px;;
@@ -68,7 +59,7 @@ button[type="submit"]:hover {
 }
 
 .crear-campeonato {
-    background-image: url('../../assets/partido.jpg');
+    background-image: url('../../assets/view-empty-soccer-stadium-with-fantasy-dreamy-sky.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

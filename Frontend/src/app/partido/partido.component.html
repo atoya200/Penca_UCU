@@ -1,11 +1,10 @@
 <div class="modal fade" id="modalCrearPartido" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
     aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <!-- Formulario reestructurado con clases y estilos similares al segundo formulario -->
     <form [formGroup]="formPartido" id="crear-campeonato-inputs" (ngSubmit)="onSubmit()">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Crear Campeonato</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingrear partido</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -21,8 +20,8 @@
                     </div>
                     <div class="form-group input-form">
                         <label for="matchDate">Fecha:</label>
-                        <input type="date" class="form-control" formControlName="matchDate" id="matchDate"
-                            [(ngModel)]="matchDate" [min]="matchDateMin">
+                        <input type="datetime-local" class="form-control" formControlName="matchDate" id="matchDate"
+                            [min]="matchDateMin">
                     </div>
                     <div *ngIf="showStagesAndTeams" class="form-group input-form">
                         <label for="stages">Selecciona una etapa:</label>
@@ -57,6 +56,72 @@
 
 
 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+
+
+<div class="modal fade" id="modalRegistrarResultado" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <form [formGroup]="formPartidoResultado" id="crear-campeonato-inputs" (ngSubmit)="onSubmitResultado()">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Ingresar reultadp partido</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group input-form">
+                        <label for="championships">Selecciona un campeonato:</label>
+                        <select class="form-control" id="championships" formControlName="championshipResult"
+                            (change)="onChampionshipResultSelected()">
+                            <option value="-1" selected></option>
+                            <option *ngFor="let champ of Championships" id="champ_{{champ.id}}" value="{{champ.id}}">
+                                {{champ.name}} </option>
+                        </select>
+                    </div>
+
+                    <br>
+                    <div *ngIf="showMatchs" class="form-group input-form">
+                        <label for="formatedMatchs">Selecciona un partido:</label>
+                        <select class="form-control" id="matchs" formControlName="matchs"
+                            (change)="onMatchResultSelected()">
+                            <option value="-1" selected></option>
+                            <option *ngFor="let match of matchs" id="match_{{match.id}}" value="{{match.id}}">
+                                {{match.labelA}} VS {{match.labelB}} ({{match.matchDate}})
+
+                            </option>
+                        </select>
+                    </div>
+
+                    <div *ngIf="showMatchItems" class="form-group input-form">
+                        <br>
+                        <p>Ingrese la cantidad de goles anotaos por equipo</p>
+                        <p>Se disputara a la hora {{hour}}</p>
+                        <div class="inline">
+
+                            <div>
+
+                                <input type="text" id="inputTeamA" formControlName="inputTeamA" value="{{inputA}}">
+                                <label for="inputTeamA">{{teamA}}</label>
+                            </div>
+                            <span>VS</span>
+                            <div>
+                                <input type="text" id="inputTeamB" formControlName="inputTeamB" value="{{inputB}}">
+                                <label for="inputTeamB">{{teamB}}</label>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Volver</button>

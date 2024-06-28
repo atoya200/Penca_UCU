@@ -14,4 +14,9 @@ export class PartidoService {
     return this.http.post("http://localhost:3000/match/create", match);
   }
 
+  registerResult(match: any):  Observable<any>{
+    console.log(match)
+    return this.http.patch("http://localhost:3000/match/registerMatchResults", match)
+  }
+
 }

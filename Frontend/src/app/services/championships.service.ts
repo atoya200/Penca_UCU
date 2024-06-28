@@ -52,5 +52,9 @@ export class ChampionshipsService {
     return this.http.get(`http://localhost:3000/notification`)
   }
 
+  getAllMatchs(idchamp: any): Observable<any> {
+    return this.http.get(`http://localhost:3000/match/getAllMatchs/`  + Number.parseInt(idchamp))
+  }
+
 }
 

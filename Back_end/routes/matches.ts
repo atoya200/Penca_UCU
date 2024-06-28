@@ -40,7 +40,7 @@ router.post('/create', [middleware.verifyUser, middleware.verifyUserIsAdmin], as
         hoy.setDate(hoy.getDate() - 2);
         const startDate = new Date(matchDate);
         let fechasValidas = startDate >= hoy;
-        
+
         if (!fechasValidas) {
             return res.status(400).json({ message: "El formato de la fecha no es correctao" })
         }
@@ -75,12 +75,17 @@ router.post('/create', [middleware.verifyUser, middleware.verifyUserIsAdmin], as
 
         // Llegados acá, los datos son correctos y no existe un partido anterior con los mismos datos
         sql = "INSERT INTO championshipMatch (idTeamA, idTeamB, matchDate,  idStage,  idChampionship) VALUES (?, ?, ?, ?, ?)"
-        let success = await methods.insert(sql, [teamA, teamB, matchDate, stage, championship])
-        if (success) {
-            return res.status(200).json({ message: "Partido creado correctamente" })
-        } else {
+        let matchId = await methods.insertAutoId(sql, [teamA, teamB, matchDate, stage, championship])
+        if (matchId <= 0) {
             return res.status(500).json({ message: "Ocurrió un error al intentar crear el partido" })
+        } else {
+
+            // Pasamos a autogenerar predicciones para los usuarios
+            let exito = createPredictionsForAllUsers(teamA, teamB, matchDate, stage, championship, matchId)
+            if (!exito)
+                throw new Error("No se puedieron crear las predicciones para los usuarios")
         }
+        return res.status(200).json({ message: "Partido creado correctamente" })
 
     } catch (err) {
         return res.status(500).json({ message: "Ha ocurrido un error en el servidor, intnte más tarde" })
@@ -88,40 +93,16 @@ router.post('/create', [middleware.verifyUser, middleware.verifyUserIsAdmin], as
 })
 
 router.patch("/registerMatchResults", [middleware.verifyUser, middleware.verifyUserIsAdmin], async (req, res) => {
-    const { teamA, teamB, matchDate, stage, championship, resultTeamA, resultTeamB } = req.body
+    const {championshipId, matchId, resultTeamA, resultTeamB } = req.body
 
     try {
-        if (!Number.isInteger(Number.parseInt(teamA)) || !Number.isInteger(Number.parseInt(teamB)) || !Number.isInteger(Number.parseInt(stage))
-            || !Number.isInteger(Number.parseInt(championship)) || matchDate == undefined || !Number.isInteger(Number.parseInt(resultTeamA))
-            || !Number.isInteger(Number.parseInt(resultTeamB)) || resultTeamA < 0 || resultTeamB < 0
-        ) {
+       if(!Number.isInteger(Number.parseInt(championshipId)) || !Number.isInteger(Number.parseInt(resultTeamA)) || !Number.isInteger(Number.parseInt(resultTeamB)) || !Number.isInteger(Number.parseInt(matchId)) ) {
             return res.status(400).json({ message: "El formato de los datos no es el correcto" })
         }
 
-        // Comprobamos que el campeonato sigua abierto
-        let sql = "SELECT * FROM championship WHERE id = ? AND now() < end_date"
-        let result0 = await methods.query(sql, [championship])
-        if(result0 == null || result0.length != 1){
-            return res.status(400).json({ message: "El campeonato ya esta cerrado o no es valido el que indico" })
-        }
-
-        // Comprobado que los valores tienen el formato valido, pasamos a revisar que exista un partido con esos datos
-        sql = "SELECT * FROM  championshipMatch WHERE idTeamA = ? AND idTeamB = ? AND matchDate = ? AND  idStage = ? AND idChampionship = ?"
-        let result = await methods.query(sql, [teamA, teamB, matchDate, stage, championship])
-        if (result == null || result.length == 0) {
-            return res.status(400).json({ message: "El partido no existe en el sistema" })
-        }
-
-        // Comprobamos que los resultados no hayan sido ingresados anteriormente
-        sql = "SELECT * FROM  championshipMatch WHERE idTeamA = ? AND idTeamB = ? AND matchDate = ? AND  idStage = ? AND idChampionship = ? AND resultTeamA IS NOT NULL AND resultTeamB IS NOT NULL"
-        let result2 = await methods.query(sql, [teamA, teamB, matchDate, stage, championship])
-        if (result2 == null || result2.length == 1) {
-            return res.status(400).json({ message: "Ya se ingresaron los resultados de este partido" })
-        }
-
         // El partido existe, pasamos a modificar los resultados
-        sql = "UPDATE championshipMatch SET resultTeamA = ?, resultTeamB = ? WHERE idTeamA = ? AND idTeamB = ? AND matchDate = ? AND  idStage = ? AND idChampionship = ?"
-        let result3 = await methods.query(sql, [resultTeamA, resultTeamB, teamA, teamB, matchDate, stage, championship]);
+        let sql = "UPDATE championshipMatch SET resultTeamA = ?, resultTeamB = ? WHERE id = ?"
+        let result3 = await methods.query(sql, [resultTeamA, resultTeamB, matchId]);
         if (result3 == null || result3.affectedRows == 0) {
             return res.status(500).json({ message: "Ocurrió un error al tratar de actualizar los datos del partido" })
         }
@@ -129,8 +110,8 @@ router.patch("/registerMatchResults", [middleware.verifyUser, middleware.verifyU
         // Pasamos a actualizar los puntajes de los usuarios que predijeron el partido
 
         // Primero recuperamos las predicciones hechas por los participantes para ese partido
-        sql = "SELECT p.*, p2.points  FROM  predictions p, points p2  WHERE teamA = ? AND teamB = ? AND matchDate = ?  AND  idStage = ? AND p.idchampionship = ? and p2.ci = p.ci and p2.idChampionship  = p.idchampionship"
-        let result4 = await methods.query(sql, [teamA, teamB, matchDate, stage, championship])
+        sql = "SELECT p.*, p2.points  FROM  predictions p, points p2  WHERE matchId = ? and p2.ci = p.ci and p2.idChampionship  = p.idchampionship"
+        let result4 = await methods.query(sql, [matchId])
         if (result4 == null) {
             return res.status(500).json({ message: "Ocurrió un error en el sistema" })
         } else if (result4.length == 0) {
@@ -181,27 +162,27 @@ router.patch("/registerMatchResults", [middleware.verifyUser, middleware.verifyU
         let actualizadoSinErrores = true;
         if (ci0Puntos.length != 0) {
             let param = ci0Puntos.length == 1 ? `(${ci0Puntos[0]})` : "(" + ci0Puntos.join(",") + ")"
-            sql = `UPDATE predictions SET scoreObtained = 0  WHERE teamA = ? AND teamB = ? AND matchDate = ? AND  idStage = ? AND idchampionship = ? AND ci IN ${param}`;
-            let result5 = await methods.query(sql, [teamA, teamB, matchDate, stage, championship])
+            sql = `UPDATE predictions SET scoreObtained = 0  WHERE matchId =  ? AND ci IN ${param}`;
+            let result5 = await methods.query(sql, [matchId])
             actualizadoSinErrores &&= result5 != null
         }
         if (ci2Puntos.length != 0) {
             let param = ci2Puntos.length == 1 ? `(${ci2Puntos[0]})` : "(" + ci2Puntos.join(",") + ")"
-            sql = `UPDATE predictions SET scoreObtained = 2  WHERE teamA = ? AND teamB = ? AND matchDate = ? AND  idStage = ? AND idchampionship = ? AND ci IN ${param}`;
-            let result5 = await methods.query(sql, [teamA, teamB, matchDate, stage, championship])
+            sql = `UPDATE predictions SET scoreObtained = 2  WHERE matchId =  ? AND ci IN ${param}`;
+            let result5 = await methods.query(sql, [matchId])
             actualizadoSinErrores &&= result5 != null
         }
         if (ci4Puntos.length != 0) {
             let param = ci4Puntos.length == 1 ? `(${ci4Puntos[0]})` : "(" + ci4Puntos.join(",") + ")"
-            sql = `UPDATE predictions SET scoreObtained = 4  WHERE teamA = ? AND teamB = ? AND matchDate = ? AND  idStage = ? AND idchampionship = ? AND ci IN ${param}`;
-            let result5 = await methods.query(sql, [teamA, teamB, matchDate, stage, championship])
+            sql = `UPDATE predictions SET scoreObtained = 4  WHERE matchId =  ? AND ci IN ${param}`;
+            let result5 = await methods.query(sql, [matchId])
             actualizadoSinErrores &&= result5 != null
         }
 
         // Y ahora actualizamos el resultado de la puntuación general del alumno
         newScores.forEach(async (objet) => {
             sql = "UPDATE points SET points = ? WHERE ci = ? AND idChampionship = ?"
-            let result6 = await methods.query(sql, [objet.newScore, objet.ci, championship])
+            let result6 = await methods.query(sql, [objet.newScore, objet.ci, championshipId])
             actualizadoSinErrores &&= result6 != null && result6.affectedRows == 1
         })
 
@@ -213,6 +194,44 @@ router.patch("/registerMatchResults", [middleware.verifyUser, middleware.verifyU
         }
 
     } catch (errror) {
+        return res.status(500).json({ message: "Error en el sistema" })
+    }
+})
+
+async function createPredictionsForAllUsers(teamA, teamB, matchDate, stage, championship, matchId) {
+
+    try {
+        let sql = `INSERT INTO predictions (SELECT ?, ?, ?, ?, null, null, null, ?, ?, s.ci FROM student s JOIN points p on p.ci  = s.ci  where idChampionship = ?);`
+        let params = [teamA, teamB, matchDate, championship, stage, matchId, championship]
+        let actualizados = await methods.insert(sql, params);
+        return actualizados
+    } catch (error) {
+        throw error
+    }
+
+}
+
+router.get("/getAllMatchs/:idChampionship", async (req, res) => {
+    try {
+        let idChampionship = req.params.idChampionship
+        if (idChampionship == undefined || !Number.isInteger(Number.parseInt(idChampionship))) {
+            return res.status(400).json({ message: "Formato de los datos erroneo" })
+        }
+
+        let matchs = []
+
+
+        let sql = `select cm.id, cm.matchDate , cm.resultTeamA, cm.resultTeamB , ta.name as labelA, tb.name as labelB, '' from championshipMatch cm inner join team t 
+        join obligatoriobd2.team ta on ta.id = cm.idTeamA join team tb on tb.id=cm.idTeamB  where cm.idChampionship  = ? group by  cm.id, cm.matchDate , cm.resultTeamA, cm.resultTeamB , ta.name, tb.name, '';
+        ;`
+        let params = [idChampionship]
+        let partidos = await methods.query(sql, params);
+
+        if (partidos == null || partidos.length == 0) {
+            throw new Error("No hay partidos")
+        }
+        return res.status(200).json({ "matchs": partidos })
+    } catch (error) {
         return res.status(500).json({ message: "Error en el sistema" })
     }
 })

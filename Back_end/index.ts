@@ -24,7 +24,7 @@ const bodyParser = require('body-parser');
 const { v4: uuidv4 } = require('uuid');
 
 // Constants
-const PORT = 3001;
+const PORT = 3000;
 
 // Create a mysql pool connection
 export let pool: Pool;
@@ -51,7 +51,7 @@ const app = express();
 var corsOptions = {
     origin: 'http://localhost:4200',
     optionsSuccessStatus: 200,
-    methods: "GET, PUT, POST, DELETE, HEAD"
+    methods: "GET, PUT, POST, DELETE, HEAD, PATCH"
 }
 // Allow images 
 app.use(bodyParser.json({ limit: '10mb' }));

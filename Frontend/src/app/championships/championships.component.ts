@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Championship } from 'Championship';
 import { ChampionshipsService } from '../services/championships.service';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ import { NgFor } from '@angular/common';
 import {NgIf} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MenuPrincipalComponent } from '../menu-principal/menu-principal.component';
+import { LoginService } from '../login.service';
 
 @Component({
   selector: 'app-championships',
@@ -17,9 +18,12 @@ import { MenuPrincipalComponent } from '../menu-principal/menu-principal.compone
   templateUrl: './championships.component.html',
   styleUrl: './championships.component.css'
 })
-export class ChampionshipsComponent {
+export class ChampionshipsComponent implements OnInit {
 
-  constructor( private service: ChampionshipsService, private router: Router, private fixtureService: FixtureService ) {}
+  isAdmin: boolean;
+  constructor( private service: ChampionshipsService, private router: Router, private fixtureService: FixtureService, private loginService: LoginService) {
+    this.isAdmin = this.loginService.getUserType().type == 'Admin';
+  }
 
   championships: Championship[] = [];
 
@@ -27,22 +31,37 @@ export class ChampionshipsComponent {
 
   ngOnInit(): void {
 
+
     console.log("Getting championships");
 
-    this.service.getChampionships().subscribe((championships) => {
-      console.log("Championships received: " + JSON.stringify(championships) );
-      championships.forEach(championship => {
-        this.championships.push(championship);
+    console.log(this.isAdmin)
+    if(this.isAdmin){
+      this.service.getAllChampionships().subscribe((championships) => {
+        console.log("Championships received: " + JSON.stringify(championships) );
+        championships.forEach(championship => {
+          this.championships.push(championship);
+        });
+        console.log("Championships: " + JSON.stringify(this.championships));
       });
-      console.log("Championships: " + JSON.stringify(this.championships));
-    });
+    } else {
+      this.service.getChampionships().subscribe((championships) => {
+        console.log("Championships received where i am admin: " + JSON.stringify(championships) );
+        championships.forEach(championship => {
+          this.championships.push(championship);
+        });
+        console.log("Championships: " + JSON.stringify(this.championships));
+      });
+    }
   }
 
   viewDetails(id: number){
-    this.router.navigate(['/fixture', id]);
-    console.log("Viewing details of championship with id: " + id);
+    if(this.isAdmin){
+      this.router.navigate(['/ranking', id]);
+    } else {
+      this.router.navigate(['/fixture', id]);
+      console.log("Viewing details of championship with id: " + id);
+    }
   }
-
   async openModal(){
     console.log("Opening modal");
     this.showModal = true;
